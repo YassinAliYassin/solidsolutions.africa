@@ -49,7 +49,7 @@ export default function SolidAI() {
       }
     `;
     document.head.appendChild(style);
-    return () => document.head.removeChild(style);
+    return () => { document.head.removeChild(style); return; };
   }, []);
 
   const features = [
