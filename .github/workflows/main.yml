@@ -27,11 +27,11 @@ jobs:
       - name: Verify Build
         run: ls -R dist
 
-      - name: Sync to Webway
+      - name: Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
+          server: 102.208.231.11
+          username: solidsol
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: ./solidsolutions.africa/
