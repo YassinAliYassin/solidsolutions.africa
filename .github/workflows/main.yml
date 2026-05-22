@@ -27,11 +27,11 @@ jobs:
       - name: Verify Build
         run: ls -R dist
 
-      - name: Deploy to cPanel via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Deploy to cPanel via SFTP
+        uses: easingthemes/ssh-deploy@v4.1.9
         with:
-          server: 102.208.231.15
-          username: solidsol
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: ./solidsolutions.africa/
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          remote-host: 102.208.231.15
+          remote-user: solidsol
+          source: "dist/"
+          target: "solidsolutions.africa"
