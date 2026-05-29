@@ -35,3 +35,4 @@ jobs:
           REMOTE_USER: solidsol
           SOURCE: "dist/"
           TARGET: "solidsolutions.africa"
+          ARGS: "-o StrictHostKeyChecking=no"
