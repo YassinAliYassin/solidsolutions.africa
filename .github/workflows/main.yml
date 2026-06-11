@@ -34,5 +34,5 @@ jobs:
           REMOTE_HOST: 102.208.231.15
           REMOTE_USER: solidsol
           SOURCE: "dist/"
-          TARGET: "solidsolutions.africa"
+          TARGET: "/home/solidsol/solidsolutions.africa"
           ARGS: "-o StrictHostKeyChecking=no"
