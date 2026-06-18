@@ -13,6 +13,7 @@ import Documentation from "./pages/Documentation";
 import BetaAccess from "./pages/BetaAccess";
 import ComingSoon from "./pages/ComingSoon";
 import PictureGallery from "./pages/PictureGallery";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/beta" element={<BetaAccess />} />
         <Route path="/coming-soon" element={<ComingSoon />} />
         <Route path="/gallery" element={<PictureGallery />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
