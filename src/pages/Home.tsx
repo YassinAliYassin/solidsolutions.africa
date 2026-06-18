@@ -122,6 +122,38 @@ export default function Home() {
   const [activeModal, setActiveModal] = useState<'privacy' | 'terms' | null>(null);
   const [lastScrollPos, setLastScrollPos] = useState(0);
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleMobileNav = (href: string) => {
+    setMobileMenuOpen(false);
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const navLinks = [
+    { label: "About", href: "#about" },
+    { label: "Mission", href: "#mission" },
+    { label: "Technology", href: "#pillars" },
+    { label: "Roadmap", href: "#roadmap" },
+  ];
+
+  const testimonials = [
+    {
+      quote: "Solid Solutions helped us build a clean, professional website that actually converts visitors into customers. The process was smooth and the result exceeded expectations.",
+      name: "Tendai M.",
+      role: "Founder, Harare Retail Co.",
+    },
+    {
+      quote: "We needed practical AI tools for our agricultural supply chain. SolidAI gave us a sector-specific agent that helps with planning and triage — no hype, just useful.",
+      name: "Grace K.",
+      role: "Operations Lead, AgriConnect",
+    },
+    {
+      quote: "The migration from our old hosting to a faster NGINX setup was seamless. Our site loads faster and we have better control over our infrastructure.",
+      name: "David N.",
+      role: "CTO, EduTech Zimbabwe",
+    },
+  ];
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -307,13 +339,52 @@ export default function Home() {
             <Logo className="h-24 w-auto" />
           </div>
           <div className="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-widest text-slate-500">
-            <a href="#about" className="hover:text-charcoal transition-colors">About</a>
-            <a href="#mission" className="hover:text-charcoal transition-colors">Mission</a>
-            <a href="#pillars" className="hover:text-charcoal transition-colors">Technology</a>
-            <a href="#roadmap" className="hover:text-charcoal transition-colors">Roadmap</a>
+            {navLinks.map((link) => (
+              <a key={link.label} href={link.href} className="hover:text-charcoal transition-colors">{link.label}</a>
+            ))}
             <a href="#contact" className="px-5 py-2 bg-charcoal text-white rounded shadow-xl hover:shadow-black/20 transition-all">Contact</a>
           </div>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden grid h-10 w-10 place-items-center rounded-lg border border-black/10 text-charcoal hover:bg-black/5 transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            )}
+          </button>
         </div>
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden border-t border-black/5 bg-white md:hidden"
+            >
+              <nav className="flex flex-col gap-1 px-6 py-4">
+                {navLinks.map((link) => (
+                  <button
+                    key={link.label}
+                    onClick={() => handleMobileNav(link.href)}
+                    className="flex h-11 items-center rounded-lg px-3 text-left text-sm font-medium text-slate-600 transition hover:bg-black/5 hover:text-charcoal"
+                  >
+                    {link.label}
+                  </button>
+                ))}
+                <button
+                  onClick={() => handleMobileNav("#contact")}
+                  className="mt-2 flex h-11 items-center justify-center rounded-lg bg-charcoal px-5 text-sm font-bold text-white transition hover:bg-slate-800"
+                >
+                  Contact
+                </button>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Hero Section */}
@@ -795,6 +866,41 @@ export default function Home() {
                 <div className="absolute top-[125px] right-1/4 w-1.5 h-1.5 rounded-full bg-black/10 translate-x-1/2 -translate-y-1/2"></div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-24 bg-bg-main border-y border-black/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-charcoal/60 mb-4">What clients say</p>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight text-charcoal">
+              Trusted by African businesses building with practical tech.
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((item, index) => (
+              <motion.article
+                key={item.name}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ delay: index * 0.08, duration: 0.45 }}
+                className="glass-card p-8 bg-white border-black/5 shadow-sm"
+              >
+                <p className="text-sm leading-relaxed text-slate-600 font-medium">"{item.quote}"</p>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="grid h-10 w-10 place-items-center rounded-full bg-charcoal text-sm font-bold text-white">
+                    {item.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-charcoal">{item.name}</p>
+                    <p className="text-xs text-slate-500 font-medium">{item.role}</p>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
           </div>
         </div>
       </section>
