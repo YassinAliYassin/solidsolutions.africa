@@ -4,16 +4,16 @@
  */
 
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  Cpu, 
-  Network, 
-  Database, 
-  Microscope, 
-  Smartphone, 
-  Globe, 
-  ArrowRight, 
-  Mail, 
-  MapPin, 
+import {
+  Cpu,
+  Network,
+  Database,
+  Microscope,
+  Smartphone,
+  Globe,
+  ArrowRight,
+  Mail,
+  MapPin,
   ChevronRight,
   Layers,
   Users,
@@ -21,7 +21,18 @@ import {
   Rocket,
   Code,
   Shield,
-  Brain
+  Brain,
+  Cloud,
+  LayoutDashboard,
+  CheckCircle,
+  Zap,
+  Target,
+  Heart,
+  Monitor,
+  Server,
+  BarChart3,
+  MessageSquare,
+  Building2
 } from "lucide-react";
 import { useState, useEffect, type ReactNode } from "react";
 import Lenis from "lenis";
@@ -43,7 +54,7 @@ const SectionTitle = ({ children, subtitle }: { children: ReactNode, subtitle?: 
 );
 
 const Card = ({ title, description, icon: Icon, highlight = false, href, onClick }: { title: string, description: string, icon: any, highlight?: boolean, href?: string, onClick?: () => void }) => (
-  <motion.div 
+  <motion.div
     whileHover={{ y: -5 }}
     className={`glass-card p-8 flex flex-col h-full ${highlight ? 'border-charcoal/5 bg-charcoal/5' : ''}`}
   >
@@ -53,7 +64,7 @@ const Card = ({ title, description, icon: Icon, highlight = false, href, onClick
     <h3 className="text-xl font-bold text-charcoal mb-3">{title}</h3>
     <p className="text-slate-600 leading-relaxed flex-grow font-medium">{description}</p>
     {onClick ? (
-      <button 
+      <button
         onClick={(e) => {
           e.preventDefault();
           onClick();
@@ -100,7 +111,7 @@ const FlipCard = ({ name, icon: Icon, description, href, onAction }: { name: str
         </div>
 
         {/* Back */}
-        <div 
+        <div
           className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center text-center bg-white text-black rotate-y-180 rounded-xl"
         >
           <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-2 text-black/60">{name}</h4>
@@ -132,9 +143,9 @@ export default function Home() {
 
   const navLinks = [
     { label: "About", href: "#about" },
-    { label: "Mission", href: "#mission" },
-    { label: "Technology", href: "#pillars" },
-    { label: "Roadmap", href: "#roadmap" },
+    { label: "Services", href: "#offerings" },
+    { label: "Sectors", href: "#sectors" },
+    { label: "Why Us", href: "#why" },
   ];
 
   const testimonials = [
@@ -149,7 +160,7 @@ export default function Home() {
       role: "Operations Lead, AgriConnect",
     },
     {
-      quote: "The migration from our old hosting to a faster NGINX setup was seamless. Our site loads faster and we have better control over our infrastructure.",
+      quote: "The migration from our old cPanel hosting to a faster NGINX setup was seamless. Our site loads faster and we have better control over our infrastructure.",
       name: "David N.",
       role: "CTO, EduTech Zimbabwe",
     },
@@ -175,16 +186,14 @@ export default function Home() {
 
     window.addEventListener("scroll", handleScroll);
 
-    // Restore scroll position on mount
     const savedPos = sessionStorage.getItem('home_scroll_pos');
     if (savedPos && !activeDetail) {
       setTimeout(() => {
         window.scrollTo(0, parseInt(savedPos));
       }, 100);
     }
-    
+
     return () => {
-      // Save scroll position on unmount
       if (!activeDetail) {
         sessionStorage.setItem('home_scroll_pos', window.scrollY.toString());
       }
@@ -282,14 +291,14 @@ export default function Home() {
     <div className="min-h-screen font-sans selection:bg-charcoal/10">
       <AnimatePresence mode="wait">
         {activeDetail ? (
-          <motion.div 
+          <motion.div
             key="detail"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             className="min-h-screen pt-32 pb-24 px-6 max-w-5xl mx-auto"
           >
-            <button 
+            <button
               onClick={handleCloseDetail}
               className="mb-12 flex items-center gap-2 text-slate-500 hover:text-charcoal transition-colors group"
             >
@@ -326,7 +335,7 @@ export default function Home() {
             </div>
           </motion.div>
         ) : (
-          <motion.div 
+          <motion.div
             key="home"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -390,41 +399,68 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden grid-pattern bg-white">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bg-main/50 to-bg-main pointer-events-none"></div>
-        
-        {/* Abstract Visuals */}
+
         <div className="absolute top-1/4 -right-20 w-96 h-96 bg-black/5 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-black/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
           <div className="max-w-4xl">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <span className="inline-block px-3 py-1 bg-black/5 text-charcoal text-[10px] font-bold tracking-[0.2em] uppercase rounded border border-black/10 mb-8 backdrop-blur-sm">
-                Africa's Next Generation
+                African SME Technology Studio
               </span>
-              
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight text-charcoal mb-6 leading-none uppercase">
-                <span className="block">Building</span>
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-charcoal to-slate-400">Africa's</span>
-                <span className="block">Future.</span>
+
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-charcoal mb-6 leading-none uppercase">
+                <span className="block">AI, Cloud</span>
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-charcoal to-slate-400">&amp; Web Systems</span>
+                <span className="block">for African SMEs</span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-slate-600 mb-12 leading-relaxed max-w-2xl font-medium">
-                An emerging initiative focused on artificial intelligence, digital infrastructure, and future hardware manufacturing. Building practical systems that support Africa’s evolving digital economy.
+                Solid Solutions is an African SME technology studio building practical AI, cloud, and web systems. We operate as a unified ecosystem — not isolated tools — combining strategy, design, automation, and infrastructure under one studio.
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-6">
-                <a href="#mission" className="px-8 py-4 bg-charcoal text-white font-bold uppercase tracking-wider text-sm rounded shadow-2xl hover:shadow-black/20 transition-all flex items-center justify-center gap-3 group">
-                  Explore Our Vision <ArrowRight size={18} className="transition-transform group-hover:translate-x-2" />
+                <a href="#offerings" className="px-8 py-4 bg-charcoal text-white font-bold uppercase tracking-wider text-sm rounded shadow-2xl hover:shadow-black/20 transition-all flex items-center justify-center gap-3 group">
+                  Our Services <ArrowRight size={18} className="transition-transform group-hover:translate-x-2" />
                 </a>
                 <a href="#contact" className="px-8 py-4 bg-black/5 text-charcoal font-bold uppercase tracking-wider text-sm rounded border border-black/10 hover:bg-black/10 transition-all flex items-center justify-center">
-                  Contact Us
+                  Get in Touch
                 </a>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Key Metrics */}
+      <section className="py-16 bg-charcoal text-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+            {[
+              { value: "7+", label: "AI Sector Agents" },
+              { value: "28+", label: "Solid Cloud Tools" },
+              { value: "3", label: "Connected Channels" },
+              { value: "50+", label: "SMEs Served" },
+              { value: "99%", label: "Uptime Target" },
+              { value: "24/7", label: "Support" },
+            ].map((metric, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                className="text-center"
+              >
+                <div className="text-3xl md:text-4xl font-black mb-2">{metric.value}</div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">{metric.label}</div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -433,439 +469,299 @@ export default function Home() {
       <section id="about" className="py-24 bg-bg-dark relative overflow-hidden border-y border-black/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center">
-            <SectionTitle>A Technology Initiative for Africa’s Digital Future</SectionTitle>
+            <SectionTitle>A Unified Technology Studio</SectionTitle>
             <p className="text-lg text-slate-600 mb-6 leading-relaxed font-medium">
-              Solid Solutions is focused on strengthening Africa’s role in the global technology ecosystem through research collaboration, infrastructure development, and long-term hardware innovation.
+              Solid Solutions is an African SME technology studio building practical AI, cloud, and web systems. It operates as a unified ecosystem — not isolated tools — combining strategy, design, automation, and infrastructure under one studio.
             </p>
             <p className="text-lg text-slate-600 leading-relaxed font-medium">
-              Our goal is to support a new generation of builders creating technologies designed for real-world environments.
+              Based in Harare, Zimbabwe, we serve small and medium enterprises across Africa with focused tools: SolidAI agents, Solid Cloud workspaces, and AionUI command layers — backed by clean infrastructure that helps small teams operate with less friction.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Mission Section */}
-      <section id="mission" className="py-24 grid-pattern bg-white">
+      {/* Core Offerings */}
+      <section id="offerings" className="py-24 grid-pattern bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <SectionTitle subtitle="Strengthening Africa’s technological capability through research, collaboration, and the development of scalable digital systems.">
-            Our Mission
+          <SectionTitle subtitle="We build focused tools that help African SMEs look credible, respond faster, and run cleaner operations.">
+            Core Offerings
           </SectionTitle>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-8 glass-card h-full bg-slate-50 border-black/5 shadow-sm">
-              <h3 className="text-charcoal font-black uppercase tracking-widest text-xs mb-4">The Challenge</h3>
-              <p className="text-slate-600 leading-relaxed font-medium">
-                Africa’s digital economy is growing rapidly, yet much of the underlying technology infrastructure and hardware manufacturing remains external.
-              </p>
-            </div>
-            <div className="p-8 glass-card h-full bg-slate-50 border-black/5 shadow-sm">
-              <h3 className="text-charcoal font-black uppercase tracking-widest text-xs mb-4">The Opportunity</h3>
-              <p className="text-slate-600 leading-relaxed font-medium">
-                A growing developer community and expanding connectivity create the foundation for new technological innovation.
-              </p>
-            </div>
-            <div className="p-8 glass-card h-full bg-slate-50 border-black/5 shadow-sm">
-              <h3 className="text-charcoal font-black uppercase tracking-widest text-xs mb-4">Our Focus</h3>
-              <p className="text-slate-600 leading-relaxed font-medium">
-                Supporting research, collaboration, and infrastructure that enable African developers and engineers to build globally competitive technologies.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Solid AI Featured Section */}
-      <section id="solid-ai" className="py-32 bg-charcoal text-white relative overflow-hidden">
-        <div className="absolute inset-0 grid-pattern opacity-10"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <span className="inline-block px-3 py-1 bg-white/10 text-white text-[10px] font-black tracking-[0.2em] uppercase rounded border border-white/20 mb-8">
-                Featured Initiative
-              </span>
-              <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-8 uppercase leading-none">
-                Solid AI: The <br /> Intelligence <br /> Layer
-              </h2>
-              <p className="text-xl text-white/70 leading-relaxed mb-12 font-medium max-w-xl">
-                Developing specialized large language models and cognitive systems designed to understand and process the unique linguistic and structural complexities of African environments.
-              </p>
-              <a href="/solidai" className="inline-flex items-center gap-3 px-8 py-4 bg-white text-charcoal font-black uppercase tracking-widest text-xs rounded shadow-2xl hover:scale-105 transition-all">
-                Explore SolidAI <ArrowRight size={16} />
-              </a>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <div className="glass-card bg-white/5 border-white/10 p-2 rounded-2xl">
-                <div className="bg-white/10 rounded-xl p-8 backdrop-blur-3xl">
-                  <div className="flex items-center gap-4 mb-8">
-                     <div className="w-12 h-12 rounded-lg bg-white text-charcoal flex items-center justify-center shadow-xl">
-                        <Brain size={24} />
-                     </div>
-                     <div>
-                        <h4 className="font-black uppercase tracking-widest text-sm">Neural Engine</h4>
-                        <p className="text-[10px] text-white/50 uppercase tracking-widest">Active Inference</p>
-                     </div>
-                  </div>
-                  <div className="space-y-4">
-                    {[
-                      { label: "Token Generation", value: "98.4%", progress: 98 },
-                      { label: "Context Window", value: "128k", progress: 85 },
-                      { label: "Latency", value: "12ms", progress: 92 }
-                    ].map((metric, i) => (
-                      <div key={i}>
-                        <div className="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-white/70">
-                          <span>{metric.label}</span>
-                          <span>{metric.value}</span>
-                        </div>
-                        <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-                          <motion.div 
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${metric.progress}%` }}
-                            className="h-full bg-white"
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              {/* Floating accents */}
-              <div className="absolute -top-10 -right-10 w-24 h-24 bg-white/5 rounded-full blur-2xl"></div>
-              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Core Technology Pillars */}
-      <section id="pillars" className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionTitle>Core Technology Pillars</SectionTitle>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card 
-              title="AI Hub" 
-              description="Research and developer collaboration focused on practical artificial intelligence applications for Africa." 
-              icon={Cpu}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Card
+              title="Websites & Brand Systems"
+              description="Fast, clean sites for African SMEs, founders, NGOs, and service businesses. Focus on credible online presence without bloated tooling."
+              icon={Globe}
+              highlight
+            />
+            <Card
+              title="AI Business Tools (SolidAI)"
+              description="Sector-specific agents, workflow assistants, and automations designed for practical business support across local markets."
+              icon={Brain}
               highlight
               href="/solid-llm"
             />
-            <Card 
-              title="SolidAI Platform" 
-              description="OpenAI-style AI platform with dark mode UI. Build intelligent applications with state-of-the-art language models." 
-              icon={Brain}
+            <Card
+              title="Cloud & Infrastructure"
+              description="Cloudflare, NGINX, cPanel migration. Hosting dashboards, deployment pipelines, and monitoring for cleaner operations."
+              icon={Cloud}
               highlight
-              href="/solidai"
             />
-            <Card 
-              title="Hardware Innovation" 
-              description="Exploring future smartphone assembly and embedded systems development to strengthen Africa's hardware ecosystem." 
-              icon={Smartphone}
+            <Card
+              title="Dashboards & Internal Apps"
+              description="Operational interfaces for files, billing, staff, client tasks, reports, and admin workflows."
+              icon={LayoutDashboard}
               highlight
-              onClick={() => handleOpenDetail('hardware')}
-            />
-            <Card 
-              title="Digital Infrastructure" 
-              description="Developing partnerships and systems that support scalable digital platforms." 
-              icon={Database}
-              highlight
-              onClick={() => handleOpenDetail('infrastructure')}
             />
           </div>
         </div>
       </section>
 
-      {/* Research & Innovation */}
-      <section className="py-24">
+      {/* Platform Ecosystem */}
+      <section className="py-24 bg-bg-dark border-y border-black/5">
         <div className="max-w-7xl mx-auto px-6">
-          <SectionTitle subtitle="Solid Solutions explores technologies that support scalable digital systems.">
-            Research and Innovation
+          <SectionTitle subtitle="Three integrated platforms working together under one studio.">
+            Platform Ecosystem
           </SectionTitle>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="glass-card p-8 bg-white border-black/5"
+            >
+              <div className="w-14 h-14 rounded-xl bg-charcoal text-white flex items-center justify-center mb-6 shadow-lg">
+                <Brain size={28} />
+              </div>
+              <h3 className="text-xl font-black text-charcoal mb-3">SolidAI</h3>
+              <p className="text-slate-600 leading-relaxed font-medium mb-4">
+                Sector-specific agents for agriculture, health, education, finance, legal, transport, energy, retail, and governance workflows.
+              </p>
+              <a href="/solid-llm" className="text-charcoal text-sm font-bold flex items-center gap-1 group">
+                Explore SolidAI <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="glass-card p-8 bg-white border-black/5"
+            >
+              <div className="w-14 h-14 rounded-xl bg-charcoal text-white flex items-center justify-center mb-6 shadow-lg">
+                <Cloud size={28} />
+              </div>
+              <h3 className="text-xl font-black text-charcoal mb-3">Solid Cloud</h3>
+              <p className="text-slate-600 leading-relaxed font-medium mb-4">
+                A private cloud workspace for files, tools, hosting utilities, AI helpers, team workflows, billing, and mobile-to-computer sync.
+              </p>
+              <span className="text-slate-400 text-sm font-bold">Coming Soon</span>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="glass-card p-8 bg-white border-black/5"
+            >
+              <div className="w-14 h-14 rounded-xl bg-charcoal text-white flex items-center justify-center mb-6 shadow-lg">
+                <Monitor size={28} />
+              </div>
+              <h3 className="text-xl font-black text-charcoal mb-3">AionUI</h3>
+              <p className="text-slate-600 leading-relaxed font-medium mb-4">
+                A desktop and Telegram-connected interface for managing agents, project actions, and Solid Solutions workflows from one place.
+              </p>
+              <span className="text-slate-400 text-sm font-bold">In Development</span>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* SolidAI Sectors */}
+      <section id="sectors" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionTitle subtitle="SolidAI provides sector-specific agents designed for practical business support across local markets.">
+            SolidAI Sectors
+          </SectionTitle>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { 
-                name: "Artificial Intelligence", 
-                icon: Brain,
-                description: "Researching neural networks and machine learning models to solve complex local and global challenges.",
-                href: "/solid-llm"
-              },
-              { 
-                name: "Embedded Systems", 
-                icon: Cpu,
-                description: "Designing specialized computing systems for dedicated functions within larger mechanical or electrical systems.",
-                onAction: () => handleOpenDetail('hardware')
-              },
-              { 
-                name: "Edge Computing", 
-                icon: Network,
-                description: "Optimizing data processing at the network edge to reduce latency and improve real-time performance.",
-                onAction: () => handleOpenDetail('infrastructure')
-              },
-              { 
-                name: "Digital Infrastructure", 
-                icon: Database,
-                description: "Building the foundational systems and networks that power scalable digital platforms and services.",
-                onAction: () => handleOpenDetail('infrastructure')
-              },
-              { 
-                name: "Robotics and Automation", 
-                icon: Rocket,
-                description: "Developing intelligent machines and automated processes to enhance efficiency in various industries.",
-                onAction: () => handleOpenDetail('systems')
-              },
-              { 
-                name: "Cybersecurity", 
-                icon: Shield,
-                description: "Implementing advanced security protocols and systems to protect critical data and digital assets.",
-                onAction: () => handleOpenDetail('systems')
-              }
-            ].map((item: any, i: number) => (
-              <FlipCard 
-                key={i} 
-                name={item.name} 
-                icon={item.icon} 
-                description={item.description} 
-                href={item.href}
-                onAction={item.onAction}
-              />
+              { emoji: "🌾", name: "Agriculture", desc: "Crop planning, weather schedules, market prices, logistics" },
+              { emoji: "🏥", name: "Health", desc: "Patient triage, appointment reminders, inventory, multilingual info" },
+              { emoji: "🎓", name: "Education", desc: "Lesson planning, exam revision, parent comms, admin reports" },
+              { emoji: "💰", name: "Finance", desc: "Invoice drafting, expense categorisation, cash-flow, client templates" },
+              { emoji: "⚖️", name: "Legal", desc: "Contract clauses, compliance checklists, client intake, case summaries" },
+              { emoji: "🚛", name: "Transport", desc: "Fleet coordination, route planning, driver logs, delivery tracking" },
+              { emoji: "⚡", name: "Energy", desc: "Solar inventory, installation quotes, maintenance scheduling" },
+              { emoji: "🏪", name: "Retail", desc: "Stock reconciliation, supplier orders, pricing, customer service" },
+            ].map((sector, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: i * 0.05, duration: 0.4 }}
+                whileHover={{ y: -4 }}
+                className="glass-card p-6 bg-white border-black/5 text-center group cursor-default"
+              >
+                <div className="text-3xl mb-3">{sector.emoji}</div>
+                <h4 className="text-sm font-black text-charcoal mb-2">{sector.name}</h4>
+                <p className="text-xs text-slate-500 font-medium leading-relaxed">{sector.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <p className="text-slate-500 font-medium italic max-w-2xl mx-auto">
+              "The right positioning is practical, not hype: SolidAI should help people draft, compare, plan, triage, and make better operational decisions while keeping expert review where it matters."
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Operating Stack */}
+      <section className="py-24 bg-bg-dark border-y border-black/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <SectionTitle>Operating Stack</SectionTitle>
+            <p className="text-slate-600 font-medium max-w-2xl mx-auto">
+              We prefer systems that can be inspected, deployed, automated, and improved. Simple frontends, clear APIs, and open AI tooling.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            {[
+              "React", "Vite", "Tailwind", "Node.js", "NGINX", "Cloudflare",
+              "OpenRouter", "Hugging Face", "Ollama", "Telegram"
+            ].map((tech, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.04, duration: 0.3 }}
+                className="px-5 py-2.5 bg-white border border-black/5 rounded-lg text-xs font-bold uppercase tracking-widest text-charcoal shadow-sm"
+              >
+                {tech}
+              </motion.span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Technology Architecture */}
-      <section className="py-24 bg-bg-dark overflow-hidden border-y border-black/5">
+      {/* Current Priorities */}
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <SectionTitle subtitle="Our vertical technology stack ensures seamless integration from silicon to software.">
-            Technology Architecture
-          </SectionTitle>
-          
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
-            {/* Visual Stack - Interactive */}
-            <div className="lg:col-span-7 perspective-1000">
-              <div className="flex flex-col gap-4 relative">
-                {[
-                  { id: 'apps', label: "Applications", color: "bg-charcoal text-white", desc: "High-performance digital platforms and specialized AI interfaces designed for enterprise-grade scalability.", icon: Code },
-                  { id: 'intel', label: "Intelligence Layer", color: "bg-slate-800 text-white", desc: "Neural processing units and machine learning models that provide automated decision-making and predictive analytics.", icon: Lightbulb },
-                  { id: 'infra', label: "Infrastructure", color: "bg-slate-100 text-charcoal", desc: "Distributed cloud networks and low-latency connectivity protocols optimized for real-world environments.", icon: Network },
-                  { id: 'hw', label: "Hardware", color: "bg-slate-50 text-charcoal", desc: "Custom-designed embedded systems and hardware assembly focused on edge-device efficiency.", icon: Smartphone }
-                ].map((layer, i) => (
-                  <motion.div
-                    key={layer.id}
-                    whileHover={{ scale: 1.02, y: -5 }}
-                    onClick={() => {
-                      const map: Record<string, string> = {
-                        apps: 'systems',
-                        intel: 'ai_hub',
-                        infra: 'infrastructure',
-                        hw: 'hardware'
-                      };
-                      handleOpenDetail(map[layer.id]);
-                    }}
-                    className={`group relative p-8 ${layer.color} border border-black/5 rounded-2xl shadow-xl cursor-pointer overflow-hidden`}
-                  >
-                    <div className="flex justify-between items-center relative z-10">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${i < 2 ? 'bg-white/10' : 'bg-black/10'}`}>
-                          <layer.icon size={20} />
-                        </div>
-                        <h4 className="text-lg font-extrabold tracking-tight uppercase">{layer.label}</h4>
-                      </div>
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-mono uppercase tracking-widest font-black">
-                        Layer 0{4-i} (Expand)
-                      </div>
-                    </div>
-                    <p className={`mt-4 text-sm max-w-xl leading-relaxed font-semibold ${i < 2 ? 'text-white/70' : 'text-slate-500'}`}>
-                      {layer.desc}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+          <SectionTitle>Current Priorities</SectionTitle>
 
-            {/* Context/Detail Side */}
-            <div className="lg:col-span-5 space-y-8">
-              <div className="glass-card p-8 border-black/5 bg-white shadow-2xl">
-                <h3 className="text-charcoal font-black uppercase text-xs tracking-widest mb-4">Vertical Integration</h3>
-                <p className="text-slate-600 leading-relaxed mb-6 font-medium">
-                  Our architecture is built as a cohesive ecosystem. Each layer is engineered to communicate directly with the adjacent tiers, eliminating the latency and security risks of fragmented systems.
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { label: "Latency", value: "< 50ms" },
-                    { label: "Uptime", value: "99.9%" },
-                    { label: "Security", value: "End-to-End" },
-                    { label: "Scale", value: "Elastic" }
-                  ].map((stat, i) => (
-                    <div key={i} className="p-4 bg-slate-50 rounded-xl border border-black/5">
-                      <div className="text-[10px] uppercase tracking-widest text-slate-500 font-black mb-1">{stat.label}</div>
-                      <div className="text-charcoal font-black text-lg">{stat.value}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="p-8 bg-charcoal rounded-2xl text-white relative overflow-hidden shadow-2xl shadow-charcoal/20">
-                <div className="relative z-10">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 rounded bg-white/10 flex items-center justify-center">
-                      <Layers size={20} />
-                    </div>
-                    <h4 className="font-black uppercase tracking-widest text-sm">System Resilience</h4>
-                  </div>
-                  <p className="text-white/70 text-sm leading-relaxed font-medium">
-                    Designed for high-availability, our architecture features automated failover and distributed redundancy at every layer of the stack.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Developer Ecosystem */}
-      <section className="py-24 relative bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="glass-card p-12 md:p-20 bg-slate-50 border-black/5 shadow-2xl">
-            <div className="max-w-3xl">
-              <SectionTitle subtitle="Solid Solutions welcomes collaboration from developers, engineers, researchers, and innovators.">
-                Developer Ecosystem
-              </SectionTitle>
-              <div className="grid sm:grid-cols-3 gap-8 mb-12">
-                <div>
-                  <h4 className="text-charcoal font-black uppercase text-xs tracking-widest mb-3">Collaboration</h4>
-                  <p className="text-slate-600 text-sm font-medium">Work on experimental AI and infrastructure projects.</p>
-                </div>
-                <div>
-                  <h4 className="text-charcoal font-black uppercase text-xs tracking-widest mb-3">Research</h4>
-                  <p className="text-slate-600 text-sm font-medium">Contribute to emerging technical initiatives.</p>
-                </div>
-                <div>
-                  <h4 className="text-charcoal font-black uppercase text-xs tracking-widest mb-3">Innovation</h4>
-                  <p className="text-slate-600 text-sm font-medium">Participate in early-stage technology development.</p>
-                </div>
-              </div>
-              <button 
-                onClick={() => {
-                  const element = document.getElementById('contact');
-                  if (element) element.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="px-8 py-4 bg-charcoal text-white font-black uppercase tracking-widest text-xs rounded shadow-xl hover:shadow-black/20 transition-all"
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: Brain, title: "SolidAI Platform", desc: "7 sector-focused agents for practical business support" },
+              { icon: Cloud, title: "Solid Cloud Tools", desc: "Personal and business workflow utilities" },
+              { icon: MessageSquare, title: "AionUI Telegram Bot", desc: "Connected to the Solid Solutions ecosystem" },
+              { icon: Server, title: "NGINX Migration", desc: "cPanel hosting → faster NGINX VPS infrastructure" },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                className="glass-card p-6 bg-slate-50 border-black/5"
               >
-                Join the Developer Network
-              </button>
-            </div>
+                <item.icon size={24} className="text-charcoal mb-4" />
+                <h4 className="text-sm font-black text-charcoal mb-2">{item.title}</h4>
+                <p className="text-xs text-slate-500 font-medium leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Development Roadmap */}
-      <section id="roadmap" className="py-24 bg-bg-dark border-y border-black/5">
+      {/* How We Build */}
+      <section className="py-24 bg-charcoal text-white">
         <div className="max-w-7xl mx-auto px-6">
-          <SectionTitle>Development Roadmap</SectionTitle>
-          <div className="relative pt-12">
-            <div className="absolute top-[4.5rem] left-0 w-full h-px bg-charcoal/10 hidden md:block"></div>
-            <div className="grid md:grid-cols-4 gap-8">
-              {[
-                { phase: "Phase 1", title: "Research and Planning", status: "Current", active: true, icon: Microscope },
-                { phase: "Phase 2", title: "Developer Collaboration", status: "Upcoming", active: false, icon: Users },
-                { phase: "Phase 3", title: "Technology Development", status: "Future", active: false, icon: Code },
-                { phase: "Phase 4", title: "Hardware Initiative", status: "Long-term", active: false, icon: Smartphone }
-              ].map((item, i) => (
-                <div key={i} className="relative">
-                  <div className={`w-10 h-10 rounded-lg mb-6 flex items-center justify-center relative z-10 ${item.active ? 'bg-charcoal text-white shadow-xl' : 'bg-slate-100 text-slate-400 border border-slate-200'}`}>
-                    <item.icon size={18} />
-                    {item.active && <div className="absolute inset-0 rounded-lg animate-ping bg-charcoal/20"></div>}
-                  </div>
-                  <h4 className={`font-black uppercase tracking-widest text-[10px] mb-1 ${item.active ? 'text-charcoal' : 'text-slate-400'}`}>{item.phase}</h4>
-                  <h5 className="text-charcoal font-black text-lg mb-2">{item.title}</h5>
-                  <p className="text-slate-500 text-sm font-medium">{item.status}</p>
+          <div className="text-center mb-16">
+            <SectionTitle>How We Build</SectionTitle>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Zap,
+                title: "Useful before flashly",
+                desc: "The first version must help someone do work: answer faster, organize files, publish a site, manage tasks, or understand a business decision."
+              },
+              {
+                icon: Target,
+                title: "Local context matters",
+                desc: "Tools designed for patchy connectivity, power cuts, informal workflows, and fast-moving teams."
+              },
+              {
+                icon: Shield,
+                title: "Own the stack",
+                desc: "Prefer systems that can be inspected, deployed, automated, and improved. Simple frontends, clear APIs, Cloudflare, NGINX, and open AI tooling."
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.4 }}
+                className="text-center"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-6">
+                  <item.icon size={28} />
                 </div>
-              ))}
-            </div>
+                <h3 className="text-lg font-black mb-3 uppercase tracking-wide">{item.title}</h3>
+                <p className="text-white/60 font-medium leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Vision Section */}
-      <section id="vision" className="py-24 grid-pattern bg-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <div className="max-w-3xl mx-auto">
-            <SectionTitle>Building Africa’s Technology Future</SectionTitle>
-            <p className="text-xl text-slate-600 leading-relaxed mb-12 font-medium">
-              Africa’s next wave of innovation will come from builders developing systems designed for real-world environments. Solid Solutions aims to contribute to this future through research, collaboration, and long-term technological development.
-            </p>
-            <div className="relative py-8 flex flex-col items-center">
-              {/* Flowchart Container */}
-              <div className="relative flex flex-col items-center w-full max-w-xl">
-                
-                {/* Root Node: Systems */}
-                <motion.div 
-                  whileHover={{ y: -3 }}
-                  onClick={() => handleOpenDetail('systems')}
-                  className="relative z-10 mb-12 group cursor-pointer"
-                >
-                  <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-xl bg-charcoal text-white flex items-center justify-center shadow-2xl mb-4 transition-transform group-hover:scale-105">
-                      <Layers size={32} />
-                    </div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.25em] text-charcoal bg-white px-3 py-1 border border-black/10 rounded-full shadow-sm">Systems</span>
-                  </div>
-                  
-                  {/* Vertical Stem */}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 w-px h-8 bg-black/10"></div>
-                </motion.div>
+      {/* Why Choose Solid Solutions */}
+      <section id="why" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionTitle>Why Choose Solid Solutions</SectionTitle>
 
-                {/* Horizontal Branch */}
-                <div className="absolute top-[125px] left-1/4 right-1/4 h-px bg-black/10"></div>
-                
-                {/* Children Nodes */}
-                <div className="grid grid-cols-2 gap-16 md:gap-32 w-full">
-                  {/* Community Node */}
-                  <motion.div 
-                    whileHover={{ y: -3 }}
-                    onClick={() => handleOpenDetail('community')}
-                    className="flex flex-col items-center relative group cursor-pointer"
-                  >
-                    {/* Vertical Connector */}
-                    <div className="absolute -top-8 left-1/2 w-px h-8 bg-black/10"></div>
-                    
-                    <div className="w-14 h-14 glass-card bg-white border-black/10 flex items-center justify-center text-charcoal mb-3 group-hover:border-charcoal/20 shadow-lg">
-                      <Users size={24} />
-                    </div>
-                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-charcoal">Community</span>
-                  </motion.div>
-                  
-                  {/* Research Node */}
-                  <motion.div 
-                    whileHover={{ y: -3 }}
-                    onClick={() => handleOpenDetail('research')}
-                    className="flex flex-col items-center relative group cursor-pointer"
-                  >
-                    {/* Vertical Connector */}
-                    <div className="absolute -top-8 left-1/2 w-px h-8 bg-black/10"></div>
-                    
-                    <div className="w-14 h-14 glass-card bg-white border-black/10 flex items-center justify-center text-charcoal mb-3 group-hover:border-charcoal/20 shadow-lg">
-                      <Microscope size={24} />
-                    </div>
-                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-charcoal">Research</span>
-                  </motion.div>
+          <div className="grid md:grid-cols-2 gap-8">
+            {[
+              {
+                icon: BarChart3,
+                title: "SME-first delivery",
+                desc: "Scoped around real budgets, small teams, and immediate operational value."
+              },
+              {
+                icon: Brain,
+                title: "AI with practical guardrails",
+                desc: "Automation supports drafting, triage, and workflow speed without replacing expert review."
+              },
+              {
+                icon: Server,
+                title: "Cloud-ready foundations",
+                desc: "Prepared for cleaner hosting, monitoring, migration, and long-term maintenance."
+              },
+              {
+                icon: Zap,
+                title: "Fast iteration loops",
+                desc: "Web, cloud, and agent workflows improve together."
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                className="glass-card p-8 bg-slate-50 border-black/5 flex gap-6"
+              >
+                <div className="w-12 h-12 rounded-xl bg-charcoal text-white flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <item.icon size={24} />
                 </div>
-
-                {/* Decorative Flow Indicators */}
-                <div className="absolute top-[125px] left-1/4 w-1.5 h-1.5 rounded-full bg-black/10 -translate-x-1/2 -translate-y-1/2"></div>
-                <div className="absolute top-[125px] right-1/4 w-1.5 h-1.5 rounded-full bg-black/10 translate-x-1/2 -translate-y-1/2"></div>
-              </div>
-            </div>
+                <div>
+                  <h3 className="text-lg font-black text-charcoal mb-2">{item.title}</h3>
+                  <p className="text-slate-600 font-medium leading-relaxed">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -905,13 +801,126 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Roadmap */}
+      <section id="roadmap" className="py-24 bg-bg-dark border-y border-black/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionTitle>Roadmap</SectionTitle>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                phase: "Now",
+                title: "Polishing & Alignment",
+                status: "Current",
+                active: true,
+                items: [
+                  "Polishing public site and aligning copy",
+                  "Keeping brand clear and consistent",
+                  "SolidAI platform with 7 sector agents",
+                  "AionUI Telegram bot integration"
+                ]
+              },
+              {
+                phase: "Next",
+                title: "Integration",
+                status: "In Progress",
+                active: false,
+                items: [
+                  "Connecting SolidAI Gateway & WebChat",
+                  "Telegram + AionUI + Solid Cloud loop",
+                  "cPanel → NGINX VPS migration path",
+                  "Client onboarding workflows"
+                ]
+              },
+              {
+                phase: "Pilot",
+                title: "Prototyping",
+                status: "Upcoming",
+                active: false,
+                items: [
+                  "Dashboards for mesh connectivity",
+                  "Power-aware operations tools",
+                  "Sector-specific SME workflows",
+                  "Cross-border collaboration features"
+                ]
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.4 }}
+                className={`glass-card p-8 ${item.active ? 'border-charcoal/20 bg-charcoal/5' : 'bg-white border-black/5'}`}
+              >
+                <div className={`inline-block px-3 py-1 rounded text-[10px] font-black uppercase tracking-[0.2em] mb-4 ${item.active ? 'bg-charcoal text-white' : 'bg-black/5 text-slate-500'}`}>
+                  {item.phase}
+                </div>
+                <h3 className="text-xl font-black text-charcoal mb-2">{item.title}</h3>
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">{item.status}</p>
+                <ul className="space-y-3">
+                  {item.items.map((point, j) => (
+                    <li key={j} className="flex items-start gap-3 text-sm text-slate-600 font-medium">
+                      <CheckCircle size={16} className="text-charcoal mt-0.5 flex-shrink-0" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Target Audiences */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionTitle>Who We Serve</SectionTitle>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Building2,
+                title: "For SMEs",
+                desc: "Practical systems to look credible, respond faster, and run cleaner operations."
+              },
+              {
+                icon: Code,
+                title: "For Builders",
+                desc: "Developer-friendly workflows, reusable components, and evolving agent tooling."
+              },
+              {
+                icon: Heart,
+                title: "For Ownership",
+                desc: "Infrastructure choices that reduce dependency, keep data closer, and support long-term control."
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.4 }}
+                className="text-center glass-card p-8 bg-slate-50 border-black/5"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-charcoal text-white flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <item.icon size={28} />
+                </div>
+                <h3 className="text-xl font-black text-charcoal mb-3">{item.title}</h3>
+                <p className="text-slate-600 font-medium leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="py-24 bg-white border-y border-black/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16">
             <div>
-              <SectionTitle subtitle="Solid Solutions welcomes collaboration with developers, engineers, researchers, institutions, and investors interested in advancing Africa’s technology ecosystem.">
-                Collaborate With Us
+              <SectionTitle subtitle="Solid Solutions welcomes collaboration with developers, engineers, researchers, institutions, and investors interested in advancing Africa's technology ecosystem.">
+                Get in Touch
               </SectionTitle>
               <div className="space-y-8">
                 <div className="flex items-start gap-4">
@@ -929,7 +938,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="text-charcoal font-black uppercase tracking-widest text-xs mb-1">Location</h4>
-                    <p className="text-slate-600 font-bold">Africa (Headquarters Pending)</p>
+                    <p className="text-slate-600 font-bold">Harare, Zimbabwe</p>
                   </div>
                 </div>
               </div>
@@ -946,15 +955,15 @@ export default function Home() {
                   <p className="text-slate-600 font-medium">Thank you! We'll respond to <strong>info@solidsolutions.africa</strong> soon.</p>
                 </div>
               ) : (
-                <form 
-                  action="https://formspree.io/f/xzdoprej" 
+                <form
+                  action="https://formspree.io/f/xzdoprej"
                   method="POST"
                   onSubmit={async (e) => {
                     e.preventDefault();
                     setFormStatus('submitting');
-                    
+
                     const formData = new FormData(e.currentTarget);
-                    
+
                     try {
                       const response = await fetch('https://formspree.io/f/xzdoprej', {
                         method: 'POST',
@@ -963,7 +972,7 @@ export default function Home() {
                           'Accept': 'application/json'
                         }
                       });
-                      
+
                       if (response.ok) {
                         setFormStatus('success');
                       } else {
@@ -979,36 +988,36 @@ export default function Home() {
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label className="text-xs font-black uppercase tracking-widest text-slate-500">Name</label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         name="name"
                         required
-                        className="w-full bg-white border border-black/10 rounded-lg px-4 py-3 text-charcoal focus:outline-none focus:border-charcoal/30 transition-colors font-medium shadow-sm" 
-                        placeholder="John Doe" 
+                        className="w-full bg-white border border-black/10 rounded-lg px-4 py-3 text-charcoal focus:outline-none focus:border-charcoal/30 transition-colors font-medium shadow-sm"
+                        placeholder="John Doe"
                       />
                     </div>
                     <div className="space-y-2">
                       <label className="text-xs font-black uppercase tracking-widest text-slate-500">Email</label>
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         name="email"
                         required
-                        className="w-full bg-white border border-black/10 rounded-lg px-4 py-3 text-charcoal focus:outline-none focus:border-charcoal/30 transition-colors font-medium shadow-sm" 
-                        placeholder="john@example.com" 
+                        className="w-full bg-white border border-black/10 rounded-lg px-4 py-3 text-charcoal focus:outline-none focus:border-charcoal/30 transition-colors font-medium shadow-sm"
+                        placeholder="john@example.com"
                       />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-black uppercase tracking-widest text-slate-500">Message</label>
-                    <textarea 
+                    <textarea
                       name="message"
-                      rows={4} 
+                      rows={4}
                       required
-                      className="w-full bg-white border border-black/10 rounded-lg px-4 py-3 text-charcoal focus:outline-none focus:border-charcoal/30 transition-colors font-medium shadow-sm" 
-                      placeholder="How can we collaborate?"
+                      className="w-full bg-white border border-black/10 rounded-lg px-4 py-3 text-charcoal focus:outline-none focus:border-charcoal/30 transition-colors font-medium shadow-sm"
+                      placeholder="How can we help?"
                     ></textarea>
                   </div>
-                  <button 
+                  <button
                     type="submit"
                     disabled={formStatus === 'submitting'}
                     className="w-full py-4 bg-charcoal text-white font-black uppercase tracking-widest text-xs rounded shadow-xl hover:shadow-black/20 transition-all disabled:opacity-50"
@@ -1053,7 +1062,7 @@ export default function Home() {
                 <h2 className="text-xl font-bold text-charcoal">
                   {activeModal === 'privacy' ? 'Privacy Policy' : 'Terms of Service'}
                 </h2>
-                <button 
+                <button
                   onClick={() => setActiveModal(null)}
                   className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors text-slate-500 hover:text-charcoal"
                 >
@@ -1065,16 +1074,16 @@ export default function Home() {
                   <div className="space-y-6 text-slate-600 leading-relaxed">
                     <p><strong>Effective Date:</strong> {new Date().toLocaleDateString()}</p>
                     <p>At Solid Solutions, we are committed to protecting your privacy. This short Privacy Policy outlines how we handle your information.</p>
-                    
+
                     <h3 className="text-charcoal font-bold text-lg mt-6 mb-2">1. Information We Collect</h3>
                     <p>We may collect basic contact information (such as your name and email address) when you voluntarily submit it through our contact forms or when you reach out to us at info@solidsolutions.africa.</p>
-                    
+
                     <h3 className="text-charcoal font-bold text-lg mt-6 mb-2">2. How We Use Your Information</h3>
                     <p>We use the information you provide solely to respond to your inquiries, facilitate collaboration, and keep you updated on our initiatives. We do not sell or share your personal information with third parties for marketing purposes.</p>
-                    
+
                     <h3 className="text-charcoal font-bold text-lg mt-6 mb-2">3. Data Security</h3>
                     <p>We implement reasonable security measures to protect your information from unauthorized access or disclosure.</p>
-                    
+
                     <h3 className="text-charcoal font-bold text-lg mt-6 mb-2">4. Contact Us</h3>
                     <p>If you have any questions about this Privacy Policy, please contact us at info@solidsolutions.africa.</p>
                   </div>
@@ -1082,16 +1091,16 @@ export default function Home() {
                   <div className="space-y-6 text-slate-600 leading-relaxed">
                     <p><strong>Effective Date:</strong> {new Date().toLocaleDateString()}</p>
                     <p>Welcome to Solid Solutions. By accessing our website and engaging with our initiatives, you agree to these simple Terms of Service.</p>
-                    
+
                     <h3 className="text-charcoal font-bold text-lg mt-6 mb-2">1. Use of Our Website</h3>
                     <p>Our website is provided for informational purposes to share our vision for Africa's technology future. You agree to use the site responsibly and not for any unlawful activities.</p>
-                    
+
                     <h3 className="text-charcoal font-bold text-lg mt-6 mb-2">2. Intellectual Property</h3>
                     <p>The content, design, and concepts presented on this website are the property of Solid Solutions unless otherwise noted. Please do not reproduce our materials without permission.</p>
-                    
+
                     <h3 className="text-charcoal font-bold text-lg mt-6 mb-2">3. Collaborations</h3>
                     <p>Any ideas, proposals, or feedback submitted to us (e.g., via info@solidsolutions.africa) are welcomed, but submission does not create a binding partnership or obligation unless explicitly agreed upon in writing.</p>
-                    
+
                     <h3 className="text-charcoal font-bold text-lg mt-6 mb-2">4. Limitation of Liability</h3>
                     <p>Solid Solutions provides this website "as is" and makes no warranties regarding its completeness or accuracy. We are not liable for any damages arising from your use of the site.</p>
                   </div>
