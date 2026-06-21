@@ -1,5 +1,4 @@
-import { Globe, Code, Network } from 'lucide-react';
-import { useState } from 'react';
+import { Globe, Code, Network, Mail, MapPin } from 'lucide-react';
 
 interface FooterProps {
   setActiveModal?: (modal: 'privacy' | 'terms' | null) => void;
@@ -7,7 +6,7 @@ interface FooterProps {
 
 export default function Footer({ setActiveModal }: FooterProps) {
   return (
-    <footer className="py-12 border-t border-black/5 bg-bg-main">
+    <footer className="py-16 border-t border-black/5 bg-bg-main">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
           <div className="sm:col-span-2 md:col-span-2">
@@ -17,17 +16,21 @@ export default function Footer({ setActiveModal }: FooterProps) {
               </div>
               <span className="text-lg font-black tracking-tight text-charcoal uppercase">SOLID SOLUTIONS</span>
             </div>
-            <p className="text-slate-500 max-w-sm font-medium leading-relaxed">
-              Developing practical technology for Africa's digital future. An emerging initiative focused on AI, infrastructure, and hardware.
+            <p className="text-slate-500 max-w-sm font-medium leading-relaxed mb-4">
+              An African SME technology studio building practical AI, cloud, and web systems. Based in Harare, Zimbabwe.
             </p>
+            <div className="flex items-center gap-4 text-slate-500 text-sm font-medium">
+              <span className="flex items-center gap-1.5"><MapPin size={14} /> Harare, Zimbabwe</span>
+              <span className="flex items-center gap-1.5"><Mail size={14} /> info@solidsolutions.africa</span>
+            </div>
           </div>
           <div>
-            <h4 className="text-charcoal font-black uppercase text-xs tracking-widest mb-6">Explore</h4>
+            <h4 className="text-charcoal font-black uppercase text-xs tracking-widest mb-6">Site</h4>
             <ul className="space-y-6 text-sm text-slate-500 font-bold uppercase tracking-wider">
-              <li><a href="#about" className="hover:text-charcoal transition-colors">About</a></li>
-              <li><a href="#mission" className="hover:text-charcoal transition-colors">Mission</a></li>
-              <li><a href="#pillars" className="hover:text-charcoal transition-colors">Research</a></li>
+              <li><a href="#offerings" className="hover:text-charcoal transition-colors">Services</a></li>
+              <li><a href="#sectors" className="hover:text-charcoal transition-colors">Sectors</a></li>
               <li><a href="#roadmap" className="hover:text-charcoal transition-colors">Roadmap</a></li>
+              <li><a href="#contact" className="hover:text-charcoal transition-colors">Contact</a></li>
             </ul>
           </div>
           <div>
@@ -44,7 +47,6 @@ export default function Footer({ setActiveModal }: FooterProps) {
                   <li><a href="#terms" className="hover:text-charcoal transition-colors">Terms of Service</a></li>
                 </>
               )}
-              <li><a href="#contact" className="hover:text-charcoal transition-colors">Contact</a></li>
             </ul>
           </div>
         </div>
