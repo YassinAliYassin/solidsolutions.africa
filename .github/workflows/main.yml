@@ -15,7 +15,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm ci
@@ -26,20 +27,27 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Verify Build
-        run: ls -la dist/
+        run: ls -R dist
 
-      - name: Deploy to cPanel via SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: 102.208.231.15
-          username: solid
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 22
-          source: "dist/**"
-          target: "/home/solidsol/public_html/"
-          strip_components: 1
-          overwrite: true
-          rm: true
+      - name: Install lftp
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+      - name: Deploy to cPanel via SFTP
+        timeout-minutes: 10
+        run: |
+          lftp -c "
+          set sftp:connect-program 'ssh -a -x -o StrictHostKeyChecking=no';
+          set net:max-retries 5;
+          set net:timeout 30;
+          set net:reconnect-interval-base 2;
+          set net:reconnect-interval-multiplier 1;
+          open -u solidsol,${{ secrets.FTP_PASSWORD }} sftp://102.208.231.15;
+          cd solidsolutions.africa;
+          mirror --reverse --delete --verbose ./dist .;
+          bye
+          "
 
       - name: Verify Deployment
-        run: echo "Deploy complete — https://solidsolutions.africa"
+        run: echo "Deployed to cPanel successfully"
