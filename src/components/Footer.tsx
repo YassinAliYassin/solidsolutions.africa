@@ -1,4 +1,5 @@
 import { Globe, Code, Network, Mail, MapPin } from 'lucide-react';
+import Logo from './Logo';
 
 interface FooterProps {
   setActiveModal?: (modal: 'privacy' | 'terms' | null) => void;
@@ -10,10 +11,8 @@ export default function Footer({ setActiveModal }: FooterProps) {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
           <div className="sm:col-span-2 md:col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-6 h-6 bg-charcoal rounded flex items-center justify-center">
-                <div className="w-3 h-3 border-2 border-white rounded-sm"></div>
-              </div>
+            <div className="flex items-center gap-3 mb-6">
+              <Logo size={32} className="shrink-0" />
               <span className="text-lg font-black tracking-tight text-charcoal uppercase">SOLID SOLUTIONS</span>
             </div>
             <p className="text-slate-500 max-w-sm font-medium leading-relaxed mb-4">

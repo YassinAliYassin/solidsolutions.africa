@@ -5,7 +5,6 @@
 
 import {
   Cpu,
-  Network,
   Database,
   Microscope,
   Smartphone,
@@ -16,8 +15,6 @@ import {
   ChevronRight,
   Layers,
   Users,
-  Lightbulb,
-  Rocket,
   Code,
   Shield,
   Brain,
@@ -82,47 +79,6 @@ const Card = ({ title, description, icon: Icon, highlight = false, href, onClick
     )}
   </div>
 );
-
-const FlipCard = ({ name, icon: Icon, description, href, onAction }: { name: string, icon: any, description: string, href?: string, onAction?: () => void, key?: any }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  return (
-    <div
-      className="perspective-1000 h-56 w-full group"
-      onMouseEnter={() => setIsFlipped(true)}
-      onMouseLeave={() => setIsFlipped(false)}
-    >
-      <div
-        className="relative w-full h-full preserve-3d transition-transform duration-500"
-        style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
-      >
-        {/* Front */}
-        <div className="absolute inset-0 backface-hidden glass-card p-6 flex flex-col items-center justify-center text-center">
-          <div className="w-12 h-12 rounded-lg bg-black/5 flex items-center justify-center mb-4 text-charcoal group-hover:bg-charcoal group-hover:text-white transition-colors duration-300">
-            <Icon size={24} />
-          </div>
-          <span className="text-sm font-bold text-charcoal">{name}</span>
-          <div className="mt-4 text-[10px] uppercase tracking-widest text-slate-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-            Hover to explore
-          </div>
-        </div>
-
-        {/* Back */}
-        <div
-          className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center text-center bg-white text-black rotate-y-180 rounded-xl"
-        >
-          <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-2 text-black/60">{name}</h4>
-          <p className="text-xs leading-relaxed text-black font-medium mb-4">{description}</p>
-          {href ? (
-            <a href={href} className="text-[10px] font-bold uppercase tracking-widest border-b border-black/20 hover:border-black transition-colors">Action <ArrowRight size={10} className="inline ml-1" /></a>
-          ) : onAction ? (
-            <button onClick={(e) => { e.stopPropagation(); onAction(); }} className="text-[10px] font-bold uppercase tracking-widest border-b border-black/20 hover:border-black transition-colors">Action <ArrowRight size={10} className="inline ml-1" /></button>
-          ) : null}
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -316,7 +272,7 @@ export default function Home() {
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-bg-main/80 backdrop-blur-lg border-b border-black/5 py-6' : 'bg-transparent py-8'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center gap-3 group cursor-pointer">
-            <Logo className="h-14 w-auto md:h-16" />
+            <Logo className="h-11 w-11 md:h-12 md:w-12 shrink-0" />
           </div>
           <div className="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-widest text-slate-500">
             {navLinks.map((link) => (
