@@ -33,25 +33,20 @@ jobs:
       - name: Verify Build
         run: ls -la dist/
 
-      - name: Install lftp
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-
-      - name: Deploy to cPanel via SFTP (SSH key)
+      - name: Deploy to cPanel via SSH
         timeout-minutes: 10
+        env:
+          DEPLOY_HOST: zacp111.webway.host
+          DEPLOY_USER: solidsol
+          DEPLOY_PATH: public_html
         run: |
           install -m 700 -d ~/.ssh
           printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H zacp111.webway.host >> ~/.ssh/known_hosts 2>/dev/null || true
-          lftp -c "
-          set sftp:connect-program 'ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o ConnectTimeout=30';
-          set net:max-retries 3;
-          set net:timeout 30;
-          open sftp://solidsol@zacp111.webway.host;
-          cd public_html;
-          mirror -R dist/ . --delete --verbose --exclude .git/;
-          bye
-          "
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o ConnectTimeout=30"
+          $SSH "${DEPLOY_USER}@${DEPLOY_HOST}" "mkdir -p ${DEPLOY_PATH} && rm -rf ${DEPLOY_PATH}/*"
+          tar -C dist -czf - . | $SSH "${DEPLOY_USER}@${DEPLOY_HOST}" "tar -C ${DEPLOY_PATH} -xzf -"
 
       - name: Verify Deployment
         run: |

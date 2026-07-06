@@ -1,5 +1,5 @@
 #!/bin/bash
-# Deploy dist/ to cPanel via rsync over SSH.
+# Deploy dist/ to cPanel via SSH tarball upload.
 # Usage: SSH_PRIVATE_KEY=~/.ssh/solid_solutions_deploy ./scripts/deploy.sh
 
 set -euo pipefail
@@ -22,14 +22,8 @@ fi
 
 echo "Deploying dist/ to ${USER}@${HOST}:${REMOTE}/"
 
-lftp -c "
-set sftp:connect-program 'ssh -i ${KEY} -o StrictHostKeyChecking=no -o ConnectTimeout=30';
-set net:max-retries 3;
-set net:timeout 30;
-open sftp://${USER}@${HOST};
-cd ${REMOTE};
-mirror -R dist/ . --delete --verbose --exclude .git/;
-bye
-"
+SSH="ssh -i '$KEY' -o StrictHostKeyChecking=no -o ConnectTimeout=30"
+eval "$SSH" "${USER}@${HOST}" "mkdir -p ${REMOTE} && rm -rf ${REMOTE}/*"
+tar -C dist -czf - . | eval "$SSH" "${USER}@${HOST}" "tar -C ${REMOTE} -xzf -"
 
 echo "Done — verify https://solidsolutions.africa"
