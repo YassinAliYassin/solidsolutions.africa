@@ -30,17 +30,22 @@ jobs:
       - name: Verify Build
         run: ls -la dist/
 
-      - name: Deploy to cPanel via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: zacp111.webway.host
-          username: solidsol
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          protocol: ftps
-          local-dir: ./dist/
-          server-dir: /public_html/
-          dangerous-clean-slate: false
+      - name: Install lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Deploy to cPanel via SFTP
+        timeout-minutes: 10
+        run: |
+          lftp -c "
+          set sftp:connect-program 'ssh -a -x -o StrictHostKeyChecking=no -o ConnectTimeout=20';
+          set net:max-retries 3;
+          set net:timeout 30;
+          open -u solidsol,${{ secrets.FTP_PASSWORD }} sftp://zacp111.webway.host;
+          cd public_html;
+          put dist/index.html -o index.html;
+          mirror -R dist/images images;
+          bye
+          "
 
       - name: Verify Deployment
         run: |
