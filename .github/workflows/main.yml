@@ -42,8 +42,7 @@ jobs:
           set net:timeout 30;
           open -u solidsol,${{ secrets.FTP_PASSWORD }} sftp://zacp111.webway.host;
           cd public_html;
-          put dist/index.html -o index.html;
-          mirror -R dist/images images;
+          mirror -R dist/ . --delete --verbose --exclude .git/ --exclude .git;
           bye
           "
 

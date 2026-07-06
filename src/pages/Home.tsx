@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { motion, AnimatePresence } from "motion/react";
 import {
   Cpu,
   Network,
@@ -35,9 +34,9 @@ import {
   Building2
 } from "lucide-react";
 import { useState, useEffect, type ReactNode } from "react";
-import Lenis from "lenis";
 import Footer from '../components/Footer';
 import Logo from '../components/Logo';
+import { Reveal } from '../components/Reveal';
 
 
 const SectionTitle = ({ children, subtitle }: { children: ReactNode, subtitle?: string }) => (
@@ -54,9 +53,8 @@ const SectionTitle = ({ children, subtitle }: { children: ReactNode, subtitle?: 
 );
 
 const Card = ({ title, description, icon: Icon, highlight = false, href, onClick }: { title: string, description: string, icon: any, highlight?: boolean, href?: string, onClick?: () => void }) => (
-  <motion.div
-    whileHover={{ y: -5 }}
-    className={`glass-card p-8 flex flex-col h-full ${highlight ? 'border-charcoal/5 bg-charcoal/5' : ''}`}
+  <div
+    className={`glass-card hover-lift p-8 flex flex-col h-full ${highlight ? 'border-charcoal/5 bg-charcoal/5' : ''}`}
   >
     <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-6 ${highlight ? 'bg-charcoal text-white shadow-lg' : 'bg-black/5 text-slate-500'}`}>
       <Icon size={24} />
@@ -82,7 +80,7 @@ const Card = ({ title, description, icon: Icon, highlight = false, href, onClick
         Learn more <ChevronRight size={16} className="ml-1 transition-transform group-hover:translate-x-1" />
       </div>
     )}
-  </motion.div>
+  </div>
 );
 
 const FlipCard = ({ name, icon: Icon, description, href, onAction }: { name: string, icon: any, description: string, href?: string, onAction?: () => void, key?: any }) => {
@@ -94,10 +92,9 @@ const FlipCard = ({ name, icon: Icon, description, href, onAction }: { name: str
       onMouseEnter={() => setIsFlipped(true)}
       onMouseLeave={() => setIsFlipped(false)}
     >
-      <motion.div
-        className="relative w-full h-full preserve-3d transition-all duration-500"
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+      <div
+        className="relative w-full h-full preserve-3d transition-transform duration-500"
+        style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
       >
         {/* Front */}
         <div className="absolute inset-0 backface-hidden glass-card p-6 flex flex-col items-center justify-center text-center">
@@ -122,7 +119,7 @@ const FlipCard = ({ name, icon: Icon, description, href, onAction }: { name: str
             <button onClick={(e) => { e.stopPropagation(); onAction(); }} className="text-[10px] font-bold uppercase tracking-widest border-b border-black/20 hover:border-black transition-colors">Action <ArrowRight size={10} className="inline ml-1" /></button>
           ) : null}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
@@ -167,30 +164,17 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     const savedPos = sessionStorage.getItem('home_scroll_pos');
     if (savedPos && !activeDetail) {
-      setTimeout(() => {
-        window.scrollTo(0, parseInt(savedPos));
-      }, 100);
+      requestAnimationFrame(() => {
+        window.scrollTo(0, parseInt(savedPos, 10));
+      });
     }
 
     return () => {
@@ -198,7 +182,6 @@ export default function Home() {
         sessionStorage.setItem('home_scroll_pos', window.scrollY.toString());
       }
       window.removeEventListener("scroll", handleScroll);
-      lenis.destroy();
     };
   }, [activeDetail]);
 
@@ -289,15 +272,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen font-sans selection:bg-charcoal/10">
-      <AnimatePresence mode="wait">
-        {activeDetail ? (
-          <motion.div
-            key="detail"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="min-h-screen pt-32 pb-24 px-6 max-w-5xl mx-auto"
-          >
+      {activeDetail ? (
+          <div className="min-h-screen pt-32 pb-24 px-6 max-w-5xl mx-auto fade-page">
             <button
               onClick={handleCloseDetail}
               className="mb-12 flex items-center gap-2 text-slate-500 hover:text-charcoal transition-colors group"
@@ -333,19 +309,14 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         ) : (
-          <motion.div
-            key="home"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
+          <div className="fade-page">
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-bg-main/80 backdrop-blur-lg border-b border-black/5 py-6' : 'bg-transparent py-8'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center gap-3 group cursor-pointer">
-            <Logo className="h-24 w-auto" />
+            <Logo className="h-14 w-auto md:h-16" />
           </div>
           <div className="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-widest text-slate-500">
             {navLinks.map((link) => (
@@ -365,15 +336,8 @@ export default function Home() {
             )}
           </button>
         </div>
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden border-t border-black/5 bg-white md:hidden"
-            >
+        {mobileMenuOpen && (
+            <div className="overflow-hidden border-t border-black/5 bg-white md:hidden mobile-menu">
               <nav className="flex flex-col gap-1 px-6 py-4">
                 {navLinks.map((link) => (
                   <button
@@ -391,9 +355,8 @@ export default function Home() {
                   Contact
                 </button>
               </nav>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
       </nav>
 
       {/* Hero Section */}
@@ -405,11 +368,7 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
           <div className="max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
+            <Reveal immediate>
               <span className="inline-block px-3 py-1 bg-black/5 text-charcoal text-[10px] font-bold tracking-[0.2em] uppercase rounded border border-black/10 mb-8 backdrop-blur-sm">
                 African SME Technology Studio
               </span>
@@ -432,7 +391,7 @@ export default function Home() {
                   Get in Touch
                 </a>
               </div>
-            </motion.div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -446,20 +405,13 @@ export default function Home() {
               { value: "28+", label: "Solid Cloud Tools" },
               { value: "3", label: "Connected Channels" },
               { value: "50+", label: "SMEs Served" },
-              { value: "99%", label: "Uptime Target" },
+              { value: "<2s", label: "Page Load Target" },
               { value: "24/7", label: "Support" },
             ].map((metric, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.4 }}
-                className="text-center"
-              >
+              <Reveal key={i} delay={i * 80} className="text-center">
                 <div className="text-3xl md:text-4xl font-black mb-2">{metric.value}</div>
                 <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">{metric.label}</div>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -525,10 +477,7 @@ export default function Home() {
           </SectionTitle>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="glass-card p-8 bg-white border-black/5"
-            >
+            <div className="glass-card hover-lift p-8 bg-white border-black/5">
               <div className="w-14 h-14 rounded-xl bg-charcoal text-white flex items-center justify-center mb-6 shadow-lg">
                 <Brain size={28} />
               </div>
@@ -539,12 +488,9 @@ export default function Home() {
               <a href="/solid-llm" className="text-charcoal text-sm font-bold flex items-center gap-1 group">
                 Explore SolidAI <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </a>
-            </motion.div>
+            </div>
 
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="glass-card p-8 bg-white border-black/5"
-            >
+            <div className="glass-card hover-lift p-8 bg-white border-black/5">
               <div className="w-14 h-14 rounded-xl bg-charcoal text-white flex items-center justify-center mb-6 shadow-lg">
                 <Cloud size={28} />
               </div>
@@ -553,12 +499,9 @@ export default function Home() {
                 A private cloud workspace for files, tools, hosting utilities, AI helpers, team workflows, billing, and mobile-to-computer sync.
               </p>
               <span className="text-slate-400 text-sm font-bold">Coming Soon</span>
-            </motion.div>
+            </div>
 
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="glass-card p-8 bg-white border-black/5"
-            >
+            <div className="glass-card hover-lift p-8 bg-white border-black/5">
               <div className="w-14 h-14 rounded-xl bg-charcoal text-white flex items-center justify-center mb-6 shadow-lg">
                 <Monitor size={28} />
               </div>
@@ -567,7 +510,7 @@ export default function Home() {
                 A desktop and Telegram-connected interface for managing agents, project actions, and Solid Solutions workflows from one place.
               </p>
               <span className="text-slate-400 text-sm font-bold">In Development</span>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -590,19 +533,11 @@ export default function Home() {
               { emoji: "⚡", name: "Energy", desc: "Solar inventory, installation quotes, maintenance scheduling" },
               { emoji: "🏪", name: "Retail", desc: "Stock reconciliation, supplier orders, pricing, customer service" },
             ].map((sector, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: i * 0.05, duration: 0.4 }}
-                whileHover={{ y: -4 }}
-                className="glass-card p-6 bg-white border-black/5 text-center group cursor-default"
-              >
+              <Reveal key={i} delay={i * 50} className="glass-card p-6 bg-white border-black/5 text-center group cursor-default hover-lift">
                 <div className="text-3xl mb-3">{sector.emoji}</div>
                 <h4 className="text-sm font-black text-charcoal mb-2">{sector.name}</h4>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed">{sector.desc}</p>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
 
@@ -629,16 +564,9 @@ export default function Home() {
               "React", "Vite", "Tailwind", "Node.js", "NGINX", "Cloudflare",
               "OpenRouter", "Hugging Face", "Ollama", "Telegram"
             ].map((tech, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.04, duration: 0.3 }}
-                className="px-5 py-2.5 bg-white border border-black/5 rounded-lg text-xs font-bold uppercase tracking-widest text-charcoal shadow-sm"
-              >
+              <Reveal key={i} as="span" delay={i * 40} className="px-5 py-2.5 bg-white border border-black/5 rounded-lg text-xs font-bold uppercase tracking-widest text-charcoal shadow-sm">
                 {tech}
-              </motion.span>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -656,18 +584,11 @@ export default function Home() {
               { icon: MessageSquare, title: "AionUI Telegram Bot", desc: "Connected to the Solid Solutions ecosystem" },
               { icon: Server, title: "NGINX Migration", desc: "cPanel hosting → faster NGINX VPS infrastructure" },
             ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: i * 0.08, duration: 0.4 }}
-                className="glass-card p-6 bg-slate-50 border-black/5"
-              >
+              <Reveal key={i} delay={i * 80} className="glass-card p-6 bg-slate-50 border-black/5">
                 <item.icon size={24} className="text-charcoal mb-4" />
                 <h4 className="text-sm font-black text-charcoal mb-2">{item.title}</h4>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed">{item.desc}</p>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -698,20 +619,13 @@ export default function Home() {
                 desc: "Prefer systems that can be inspected, deployed, automated, and improved. Simple frontends, clear APIs, Cloudflare, NGINX, and open AI tooling."
               },
             ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.4 }}
-                className="text-center"
-              >
+              <Reveal key={i} delay={i * 100} className="text-center">
                 <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-6">
                   <item.icon size={28} />
                 </div>
                 <h3 className="text-lg font-black mb-3 uppercase tracking-wide">{item.title}</h3>
                 <p className="text-white/60 font-medium leading-relaxed">{item.desc}</p>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -745,14 +659,7 @@ export default function Home() {
                 desc: "Web, cloud, and agent workflows improve together."
               },
             ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.4 }}
-                className="glass-card p-8 bg-slate-50 border-black/5 flex gap-6"
-              >
+              <Reveal key={i} delay={i * 80} className="glass-card p-8 bg-slate-50 border-black/5 flex gap-6">
                 <div className="w-12 h-12 rounded-xl bg-charcoal text-white flex items-center justify-center flex-shrink-0 shadow-lg">
                   <item.icon size={24} />
                 </div>
@@ -760,7 +667,7 @@ export default function Home() {
                   <h3 className="text-lg font-black text-charcoal mb-2">{item.title}</h3>
                   <p className="text-slate-600 font-medium leading-relaxed">{item.desc}</p>
                 </div>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -777,14 +684,7 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((item, index) => (
-              <motion.article
-                key={item.name}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.35 }}
-                transition={{ delay: index * 0.08, duration: 0.45 }}
-                className="glass-card p-8 bg-white border-black/5 shadow-sm"
-              >
+              <Reveal key={item.name} as="article" delay={index * 80} className="glass-card p-8 bg-white border-black/5 shadow-sm">
                 <p className="text-sm leading-relaxed text-slate-600 font-medium">"{item.quote}"</p>
                 <div className="mt-6 flex items-center gap-3">
                   <div className="grid h-10 w-10 place-items-center rounded-full bg-charcoal text-sm font-bold text-white">
@@ -795,7 +695,7 @@ export default function Home() {
                     <p className="text-xs text-slate-500 font-medium">{item.role}</p>
                   </div>
                 </div>
-              </motion.article>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -845,12 +745,9 @@ export default function Home() {
                 ]
               },
             ].map((item, i) => (
-              <motion.div
+              <Reveal
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.4 }}
+                delay={i * 100}
                 className={`glass-card p-8 ${item.active ? 'border-charcoal/20 bg-charcoal/5' : 'bg-white border-black/5'}`}
               >
                 <div className={`inline-block px-3 py-1 rounded text-[10px] font-black uppercase tracking-[0.2em] mb-4 ${item.active ? 'bg-charcoal text-white' : 'bg-black/5 text-slate-500'}`}>
@@ -866,7 +763,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -895,20 +792,13 @@ export default function Home() {
                 desc: "Infrastructure choices that reduce dependency, keep data closer, and support long-term control."
               },
             ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.4 }}
-                className="text-center glass-card p-8 bg-slate-50 border-black/5"
-              >
+              <Reveal key={i} delay={i * 100} className="text-center glass-card p-8 bg-slate-50 border-black/5">
                 <div className="w-16 h-16 rounded-2xl bg-charcoal text-white flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <item.icon size={28} />
                 </div>
                 <h3 className="text-xl font-black text-charcoal mb-3">{item.title}</h3>
                 <p className="text-slate-600 font-medium leading-relaxed">{item.desc}</p>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -1037,26 +927,18 @@ export default function Home() {
       {/* Footer */}
       <Footer setActiveModal={setActiveModal} />
 
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
 
       {/* Modals */}
-      <AnimatePresence>
-        {activeModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-charcoal/40 backdrop-blur-sm"
+      {activeModal && (
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-charcoal/40 backdrop-blur-sm modal-overlay"
             onClick={() => setActiveModal(null)}
           >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
+            <div
               onClick={(e) => e.stopPropagation()}
-              className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] border border-black/10"
+              className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] border border-black/10 modal-panel"
             >
               <div className="p-6 border-b border-black/5 flex justify-between items-center bg-bg-dark sticky top-0 z-10">
                 <h2 className="text-xl font-bold text-charcoal">
@@ -1106,10 +988,9 @@ export default function Home() {
                   </div>
                 )}
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
     </div>
   );
 }
