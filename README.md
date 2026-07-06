@@ -146,8 +146,14 @@ solidsolutions.africa/
 │   ├── App.tsx         # Router and lazy route definitions
 │   └── index.css       # Global styles and Tailwind imports
 ├── public/             # Static assets (images, .htaccess)
+├── scripts/            # Maintainer utilities (screenshot capture)
 ├── prisma/             # Prisma schema (SQLite, future CMS use)
-├── .github/workflows/  # CI/CD — Auto Deploy on push to main
+├── .github/
+│   ├── workflows/      # CI (lint + build) and Auto Deploy
+│   ├── ISSUE_TEMPLATE/ # Bug report and feature request forms
+│   └── dependabot.yml  # Weekly dependency update PRs
+├── CONTRIBUTING.md
+├── SECURITY.md
 └── vite.config.ts      # Vite config with manual chunk splitting
 ```
 
@@ -170,6 +176,8 @@ Contributions are welcome — bug fixes, copy improvements, accessibility tweaks
 See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full guide: setup, branch workflow, code conventions, PR checklist, and issue reporting.
 
 Use the [bug report](.github/ISSUE_TEMPLATE/bug_report.yml) or [feature request](.github/ISSUE_TEMPLATE/feature_request.yml) templates when opening issues. Pull requests use the [PR template](.github/pull_request_template.md) automatically.
+
+Report security issues via [SECURITY.md](SECURITY.md) — not public issues.
 
 ---
 

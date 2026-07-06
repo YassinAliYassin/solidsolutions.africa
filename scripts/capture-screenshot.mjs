@@ -1,7 +1,6 @@
 import { chromium } from 'playwright';
 
-// Use localhost — 127.0.0.1 triggers the HTTPS redirect in index.html
-const url = process.argv[2] ?? 'http://localhost:4173/';
+const url = process.argv[2] ?? 'http://127.0.0.1:4173/';
 const out = process.argv[3] ?? 'public/images/homepage-screenshot.png';
 
 const browser = await chromium.launch();

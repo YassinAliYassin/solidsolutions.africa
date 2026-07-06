@@ -1,40 +1,28 @@
 #!/bin/bash
-# sync-to-github.sh - Complete sync script for Solid Solutions repo
-# Author: Hermes Agent (Autonomous AI)
-# Run this from your local repo directory
+# sync-to-github.sh — Pull rebase and push to origin/main
+# Run from the repo root.
 
-echo "🔧 HERMES SYNC SCRIPT FOR SOLID SOLUTIONS"
-echo "========================================"
+set -euo pipefail
 
-# Check if we're in a git repo
+echo "Solid Solutions — GitHub sync"
+echo "=============================="
+
 if [ ! -d ".git" ]; then
-    echo "❌ Not a git repository! cd to your local repo first."
+    echo "Error: not a git repository. cd to the repo first."
     exit 1
 fi
 
-echo "\n1️⃣ Pulling latest changes from GitHub (Hermes Agent commits)..."
-git pull --rebase origin master
+echo ""
+echo "1. Pulling latest from origin/main..."
+git pull --rebase origin main
 
-if [ $? -ne 0 ]; then
-    echo "❌ Pull failed! You might have local changes."
-    echo "   Stash your changes first: git stash"
-    echo "   Then run this script again."
-    exit 1
-fi
-
-echo "\n2️⃣ Checking status..."
+echo ""
+echo "2. Status:"
 git status
 
-echo "\n3️⃣ Pushing to GitHub..."
-git push origin master
+echo ""
+echo "3. Pushing to origin/main..."
+git push origin main
 
-if [ $? -eq 0 ]; then
-    echo "\n✅ SYNC COMPLETE! Your changes are now on GitHub."
-    echo "   GitHub Actions will auto-deploy to solidsolutions.africa"
-else
-    echo "\n❌ Push failed! Check the error message above."
-fi
-
-echo "\n========================================"
-echo "💡 If you still see errors, they're OLD emails from deleted workflows."
-echo "   Ignore them - the 'Auto Deploy' workflow is working perfectly."
+echo ""
+echo "Done. GitHub Actions will deploy to https://solidsolutions.africa"
