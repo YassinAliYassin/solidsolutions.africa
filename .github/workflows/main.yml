@@ -33,24 +33,19 @@ jobs:
       - name: Verify Build
         run: ls -la dist/
 
-      - name: Install lftp
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-
-      - name: Deploy to cPanel via SFTP
+      - name: Deploy to cPanel via rsync/SSH
         timeout-minutes: 10
         run: |
-          lftp -c "
-          set sftp:connect-program 'ssh -a -x -o StrictHostKeyChecking=no -o ConnectTimeout=20';
-          set net:max-retries 3;
-          set net:timeout 30;
-          open -u solidsol,${{ secrets.FTP_PASSWORD }} sftp://zacp111.webway.host;
-          cd public_html;
-          mirror -R dist/ . --delete --verbose --exclude .git/ --exclude .git;
-          bye
-          "
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H zacp111.webway.host >> ~/.ssh/known_hosts 2>/dev/null || true
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o ConnectTimeout=30" \
+            dist/ solidsol@zacp111.webway.host:public_html/
 
       - name: Verify Deployment
         run: |
           sleep 5
-          curl -skI --max-time 30 --resolve solidsolutions.africa:443:102.208.231.15 https://solidsolutions.africa/ | head -5 || true
+          curl -skI --max-time 30 --resolve solidsolutions.africa:443:102.208.231.11 https://solidsolutions.africa/ | head -5 || true
           echo "Deploy complete — https://solidsolutions.africa"

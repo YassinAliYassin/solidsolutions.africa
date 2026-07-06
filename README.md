@@ -111,15 +111,22 @@ The site runs without these values. The on-site chat widget currently uses built
 Pushes to `main` trigger the **Auto Deploy** GitHub Actions workflow:
 
 1. `npm ci` → `npm run build`
-2. Upload `dist/` to cPanel via SFTP (`lftp`)
+2. Upload `dist/` to cPanel via **rsync over SSH**
 3. Post-deploy health check against the live domain
 
 ### Required GitHub secrets
 
 | Secret | Purpose |
 |--------|---------|
+| `SSH_PRIVATE_KEY` | Deploy key for `solidsol@zacp111.webway.host` (public key must be in cPanel → SSH Access) |
 | `GEMINI_API_KEY` | Build-time env injection (reserved for future AI features) |
-| `FTP_PASSWORD` | SFTP password for the cPanel deploy user |
+
+### Manual deploy (local)
+
+```bash
+npm run build
+SSH_PRIVATE_KEY=~/.ssh/solid_solutions_deploy ./scripts/deploy.sh
+```
 
 ### Manual deploy trigger
 
