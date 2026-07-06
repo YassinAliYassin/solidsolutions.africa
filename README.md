@@ -111,7 +111,7 @@ The site runs without these values. The on-site chat widget currently uses built
 Pushes to `main` trigger the **Auto Deploy** GitHub Actions workflow:
 
 1. `npm ci` → `npm run build`
-2. Upload `dist/` to cPanel via **rsync over SSH**
+2. Upload `dist/` to cPanel via **SFTP with SSH key**
 3. Post-deploy health check against the live domain
 
 ### Required GitHub secrets

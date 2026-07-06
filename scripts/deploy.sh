@@ -22,8 +22,14 @@ fi
 
 echo "Deploying dist/ to ${USER}@${HOST}:${REMOTE}/"
 
-rsync -avz --delete \
-  -e "ssh -i '$KEY' -o StrictHostKeyChecking=no -o ConnectTimeout=30" \
-  dist/ "${USER}@${HOST}:${REMOTE}/"
+lftp -c "
+set sftp:connect-program 'ssh -i ${KEY} -o StrictHostKeyChecking=no -o ConnectTimeout=30';
+set net:max-retries 3;
+set net:timeout 30;
+open sftp://${USER}@${HOST};
+cd ${REMOTE};
+mirror -R dist/ . --delete --verbose --exclude .git/;
+bye
+"
 
 echo "Done — verify https://solidsolutions.africa"
