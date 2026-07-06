@@ -164,56 +164,7 @@ This is the **canonical** repository for the Solid Solutions public website.
 
 Contributions are welcome — bug fixes, copy improvements, accessibility tweaks, performance work, and new pages or components that fit the Solid Solutions brand.
 
-### Getting started
-
-1. Fork the repo and clone your fork.
-2. Create a branch from `main`:
-   ```bash
-   git checkout -b fix/short-description
-   ```
-3. Install dependencies and run the dev server:
-   ```bash
-   npm install
-   npm run dev
-   ```
-4. Make your changes and verify locally:
-   ```bash
-   npm run lint
-   npm run build
-   ```
-
-### Pull request guidelines
-
-- Open PRs against `main` with a clear title and a short description of what changed and why.
-- Keep changes focused — one concern per PR when possible.
-- Match existing patterns: TypeScript, functional React components, Tailwind utility classes, lazy-loaded routes for new pages.
-- Do not commit secrets, `.env` files, or `dist/` output.
-- If you add a new route, update the **Site routes** table in this README.
-
-### What we're looking for
-
-| Area | Examples |
-|------|----------|
-| UI/UX | Mobile layout fixes, contrast, keyboard navigation |
-| Content | Copy edits, sector pages, documentation improvements |
-| Performance | Bundle size, lazy loading, image optimization |
-| Accessibility | ARIA labels, focus states, semantic HTML |
-| i18n | Future support for local languages across African markets |
-
-### Reporting issues
-
-Open a [GitHub issue](https://github.com/YassinAliYassin/solidsolutions.africa/issues) with:
-
-- Steps to reproduce (for bugs)
-- Expected vs actual behaviour
-- Browser and device, if UI-related
-- Screenshots when helpful
-
-For security concerns, email [info@solidsolutions.africa](mailto:info@solidsolutions.africa) instead of filing a public issue.
-
-### Code of conduct
-
-Be respectful and constructive. We build tools for African SMEs — keep feedback practical, inclusive, and focused on helping real businesses.
+See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full guide: setup, branch workflow, code conventions, PR checklist, and issue reporting.
 
 ---
 
