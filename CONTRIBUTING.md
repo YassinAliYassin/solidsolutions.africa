@@ -31,7 +31,7 @@ git remote add upstream https://github.com/YassinAliYassin/solidsolutions.africa
 
 npm install
 cp .env.example .env.local   # optional
-npm run dev                    # http://localhost:3000
+npm run dev                    # http://localhost:3000 (use localhost, not 127.0.0.1)
 ```
 
 Keep your fork up to date:
@@ -176,6 +176,19 @@ For issues filed without a template, include:
 Be respectful and constructive. Solid Solutions builds tools for African SMEs — keep discussions practical, inclusive, and focused on real-world impact.
 
 Harassment, discrimination, and bad-faith behaviour are not tolerated.
+
+---
+
+## Maintainer: regenerate README screenshot
+
+```bash
+npm run build
+npm run preview -- --port 4173 --host localhost
+npx playwright install chromium
+node scripts/capture-screenshot.mjs
+```
+
+Use `localhost`, not `127.0.0.1` — the site redirects non-localhost HTTP to HTTPS.
 
 ---
 

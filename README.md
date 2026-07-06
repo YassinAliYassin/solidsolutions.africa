@@ -4,8 +4,11 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![Node](https://img.shields.io/badge/node-22%2B-green?style=flat-square)](package.json)
 [![Deploy](https://img.shields.io/badge/deploy-GitHub%20Actions-2088FF?style=flat-square)](.github/workflows/main.yml)
+[![CI](https://github.com/YassinAliYassin/solidsolutions.africa/actions/workflows/ci.yml/badge.svg)](https://github.com/YassinAliYassin/solidsolutions.africa/actions/workflows/ci.yml)
 
 **African SME technology studio** — practical AI, cloud, and web systems for small and medium enterprises across Africa.
+
+![Solid Solutions homepage](public/images/homepage-screenshot.png)
 
 | | |
 |---|---|
