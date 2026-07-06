@@ -154,7 +154,12 @@ Merging to `main` triggers the **Auto Deploy** workflow. Maintainers may request
 
 ## Reporting issues
 
-Open a [GitHub issue](https://github.com/YassinAliYassin/solidsolutions.africa/issues) with:
+Use the repository issue templates when possible:
+
+- [Bug report](.github/ISSUE_TEMPLATE/bug_report.yml)
+- [Feature request](.github/ISSUE_TEMPLATE/feature_request.yml)
+
+For issues filed without a template, include:
 
 - Clear title
 - Steps to reproduce (for bugs)

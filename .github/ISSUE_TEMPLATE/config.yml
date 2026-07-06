@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Contributing guide
+    url: https://github.com/YassinAliYassin/solidsolutions.africa/blob/main/CONTRIBUTING.md
+    about: Read how to set up, submit PRs, and match project conventions
+  - name: Security report
+    url: mailto:info@solidsolutions.africa
+    about: Report security issues privately via email — do not open a public issue

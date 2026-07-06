@@ -166,6 +166,8 @@ Contributions are welcome — bug fixes, copy improvements, accessibility tweaks
 
 See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full guide: setup, branch workflow, code conventions, PR checklist, and issue reporting.
 
+Use the [bug report](.github/ISSUE_TEMPLATE/bug_report.yml) or [feature request](.github/ISSUE_TEMPLATE/feature_request.yml) templates when opening issues. Pull requests use the [PR template](.github/pull_request_template.md) automatically.
+
 ---
 
 ## License

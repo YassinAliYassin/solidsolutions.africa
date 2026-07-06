@@ -1,0 +1,51 @@
+name: Feature request
+description: Suggest a new page, component, or improvement
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea that fits the Solid Solutions brand? We'd love to hear it.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+      description: What problem does this solve for African SMEs or site visitors?
+      placeholder: SMEs need a clearer pricing section on the homepage…
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe what you'd like to see.
+      placeholder: Add a pricing table with three tiers…
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any other approaches you thought about?
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - UI / UX
+        - Content / copy
+        - Performance
+        - Accessibility
+        - New page or route
+        - Chat widget / AI
+        - Documentation
+        - Other
+    validations:
+      required: true
