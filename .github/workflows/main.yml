@@ -36,7 +36,7 @@ jobs:
       - name: Deploy to cPanel via SSH
         timeout-minutes: 10
         env:
-          DEPLOY_HOST: zacp111.webway.host
+          DEPLOY_HOST: 102.208.231.15
           DEPLOY_USER: solidsol
           DEPLOY_PATH: public_html
         run: |
@@ -51,5 +51,5 @@ jobs:
       - name: Verify Deployment
         run: |
           sleep 5
-          curl -skI --max-time 30 --resolve solidsolutions.africa:443:102.208.231.11 https://solidsolutions.africa/ | head -5 || true
+          curl -skI --max-time 30 --resolve solidsolutions.africa:443:102.208.231.15 https://solidsolutions.africa/ | head -5 || true
           echo "Deploy complete — https://solidsolutions.africa"
