@@ -1,10 +1,18 @@
 # Solid Solutions
 
+[![Live site](https://img.shields.io/badge/site-solidsolutions.africa-1a1a2e?style=flat-square)](https://solidsolutions.africa)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
+[![Node](https://img.shields.io/badge/node-22%2B-green?style=flat-square)](package.json)
+[![Deploy](https://img.shields.io/badge/deploy-GitHub%20Actions-2088FF?style=flat-square)](.github/workflows/main.yml)
+
 **African SME technology studio** — practical AI, cloud, and web systems for small and medium enterprises across Africa.
 
-🌐 **Live site:** [solidsolutions.africa](https://solidsolutions.africa)  
-📍 **Based in:** Harare, Zimbabwe  
-📧 **Contact:** info@solidsolutions.africa
+| | |
+|---|---|
+| **Live site** | [solidsolutions.africa](https://solidsolutions.africa) |
+| **Location** | Harare, Zimbabwe |
+| **Contact** | [info@solidsolutions.africa](mailto:info@solidsolutions.africa) |
+| **Telegram** | [@solidsolutions](https://t.me/solidsolutions) |
 
 ---
 
@@ -47,7 +55,8 @@ Solid Solutions is a unified technology studio — not a collection of isolated 
 | Routing | React Router 7 (lazy-loaded routes) |
 | Animation | Motion, Lenis smooth scroll |
 | Icons | Lucide React, Font Awesome |
-| AI chat | Gemini API (optional, powers the site chatbot) |
+| Chat widget | Rule-based assistant (OpenRouter integration planned) |
+| Hosting | cPanel via SFTP, GitHub Actions CI/CD |
 
 ---
 
@@ -56,18 +65,17 @@ Solid Solutions is a unified technology studio — not a collection of isolated 
 **Prerequisites:** Node.js 22+
 
 ```bash
-# Clone the repo
+# HTTPS
 git clone https://github.com/YassinAliYassin/solidsolutions.africa.git
 cd solidsolutions.africa
 
-# Install dependencies
+# or SSH
+git clone git@github.com:YassinAliYassin/solidsolutions.africa.git
+cd solidsolutions.africa
+
 npm install
-
-# Copy environment template and add your Gemini key (optional — for ChatBot)
-cp .env.example .env.local
-
-# Start dev server (http://localhost:3000)
-npm run dev
+cp .env.example .env.local   # optional
+npm run dev                    # http://localhost:3000
 ```
 
 ### Scripts
@@ -84,14 +92,14 @@ npm run dev
 
 ## Environment variables
 
-Create `.env.local` (or set in CI secrets):
+Copy `.env.example` to `.env.local` for local development:
 
 ```env
-GEMINI_API_KEY=your_gemini_api_key   # Powers the on-site ChatBot
-APP_URL=https://solidsolutions.africa # Used for self-referential links
+GEMINI_API_KEY=your_gemini_api_key    # Reserved for future AI integrations
+APP_URL=https://solidsolutions.africa # Self-referential links and metadata
 ```
 
-`GEMINI_API_KEY` is injected at build time via Vite. The site runs without it; the ChatBot simply won't have AI responses.
+The site runs without these values. The on-site chat widget currently uses built-in rule-based responses.
 
 ---
 
@@ -107,7 +115,7 @@ Pushes to `main` trigger the **Auto Deploy** GitHub Actions workflow:
 
 | Secret | Purpose |
 |--------|---------|
-| `GEMINI_API_KEY` | Gemini API key for build-time ChatBot config |
+| `GEMINI_API_KEY` | Build-time env injection (reserved for future AI features) |
 | `FTP_PASSWORD` | SFTP password for the cPanel deploy user |
 
 ### Manual deploy trigger
@@ -116,7 +124,12 @@ Pushes to `main` trigger the **Auto Deploy** GitHub Actions workflow:
 gh workflow run "Auto Deploy" --repo YassinAliYassin/solidsolutions.africa
 ```
 
-The `gh-pages` branch holds a static mirror for GitHub Pages. Production traffic is served from cPanel at [solidsolutions.africa](https://solidsolutions.africa).
+**Branches:**
+
+- `main` — source code (canonical)
+- `gh-pages` — static mirror for GitHub Pages
+
+Production traffic is served from cPanel at [solidsolutions.africa](https://solidsolutions.africa).
 
 ---
 
@@ -130,7 +143,7 @@ solidsolutions.africa/
 │   ├── App.tsx         # Router and lazy route definitions
 │   └── index.css       # Global styles and Tailwind imports
 ├── public/             # Static assets (images, .htaccess)
-├── dist/               # Build output (gitignored)
+├── prisma/             # Prisma schema (SQLite, future CMS use)
 ├── .github/workflows/  # CI/CD — Auto Deploy on push to main
 └── vite.config.ts      # Vite config with manual chunk splitting
 ```
@@ -139,9 +152,11 @@ solidsolutions.africa/
 
 ## Repository
 
-This is the **canonical** repository for the Solid Solutions public website. Source lives on `main`; built assets deploy to cPanel automatically.
+This is the **canonical** repository for the Solid Solutions public website.
 
-**GitHub:** [github.com/YassinAliYassin/solidsolutions.africa](https://github.com/YassinAliYassin/solidsolutions.africa)
+- **GitHub:** [github.com/YassinAliYassin/solidsolutions.africa](https://github.com/YassinAliYassin/solidsolutions.africa)
+- **Clone (SSH):** `git@github.com:YassinAliYassin/solidsolutions.africa.git`
+- **Clone (HTTPS):** `https://github.com/YassinAliYassin/solidsolutions.africa.git`
 
 ---
 
