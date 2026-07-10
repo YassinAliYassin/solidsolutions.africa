@@ -12,6 +12,7 @@ import {
 import AgentStatusBadge from '../components/solidai/AgentStatusBadge';
 import TaskProgressBar from '../components/solidai/TaskProgressBar';
 import QuickAgentSwitcher from '../components/solidai/QuickAgentSwitcher';
+import MobileNav from '../components/MobileNav';
 
 export default function SolidAI() {
   const heroRef = useRef(null);
@@ -106,7 +107,7 @@ export default function SolidAI() {
     <div className="min-h-screen bg-[#0a0a0f] text-white">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-[#0a0a0f]/80 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between relative">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
               <FontAwesomeIcon icon={faBrain} className="text-white text-sm" />
@@ -119,9 +120,21 @@ export default function SolidAI() {
             <a href="#docs" className="text-sm text-gray-300 hover:text-white transition">Docs</a>
             <a href="#about" className="text-sm text-gray-300 hover:text-white transition">About</a>
           </div>
-          <button className="px-5 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-sm font-medium transition">
-            Get Started
-          </button>
+          <div className="flex items-center gap-3">
+            <button className="hidden md:block px-5 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-sm font-medium transition">
+              Get Started
+            </button>
+            <MobileNav
+              dark
+              links={[
+                { label: "Features", href: "#features" },
+                { label: "Pricing", href: "#pricing" },
+                { label: "Docs", href: "#docs" },
+                { label: "About", href: "#about" },
+              ]}
+              cta={{ label: "Get Started", href: "#" }}
+            />
+          </div>
         </div>
       </nav>
 

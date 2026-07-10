@@ -16,6 +16,7 @@ import {
   Code
 } from "lucide-react";
 import Footer from '../components/Footer';
+import MobileNav from '../components/MobileNav';
 import { useState, useEffect, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import Lenis from "lenis";
@@ -60,7 +61,7 @@ export default function SolidLLM() {
     <div className="min-h-screen font-sans selection:bg-black/10 bg-bg-main text-charcoal">
       {/* Navigation - Match main site style */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-bg-main/80 backdrop-blur-lg border-b border-black/5 py-4' : 'bg-transparent py-6'}`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative">
           <a href="/" onClick={handleBack} className="flex items-center gap-2 group">
             <div className="w-8 h-8 bg-charcoal rounded flex items-center justify-center transition-transform group-hover:scale-110">
               <div className="w-3 h-3 border-2 border-white rounded-sm"></div>
@@ -76,6 +77,15 @@ export default function SolidLLM() {
               Back to Home
             </a>
           </div>
+          <MobileNav
+            links={[
+              { label: "About", href: "/solid-llm/about" },
+              { label: "Features", href: "#features" },
+              { label: "Capabilities", href: "#capabilities" },
+              { label: "Architecture", href: "#architecture" },
+            ]}
+            cta={{ label: "Back to Home", href: "/" }}
+          />
         </div>
       </nav>
 
