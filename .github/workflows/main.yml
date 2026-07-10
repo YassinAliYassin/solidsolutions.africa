@@ -36,9 +36,10 @@ jobs:
       - name: Install lftp
         run: sudo apt-get update && sudo apt-get install -y lftp
 
-      # Live DNS for solidsolutions.africa → 102.208.231.11 (cPanel solidsol).
-      # Password SFTP works; SSH key auth does not on this host.
-      # Avoid full public_html wipe (addon-domain folders may live there).
+      # Live DNS: solidsolutions.africa → 102.208.231.11 (cPanel user solidsol).
+      # Use lftp's built-in SFTP (password auth). Do not shell out to OpenSSH —
+      # this host rejects pubkey and OpenSSH never offers password.
+      # Avoid wiping public_html (addon-domain folders may live there).
       - name: Deploy to cPanel via SFTP
         timeout-minutes: 10
         env:
@@ -51,27 +52,28 @@ jobs:
             echo "FTP_PASSWORD secret is empty" >&2
             exit 1
           fi
-          lftp <<EOF
-          set sftp:auto-confirm yes
-          set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
-          set net:max-retries 3
-          set net:timeout 90
-          open -u "${DEPLOY_USER}","${FTP_PASSWORD}" sftp://${DEPLOY_HOST}
-          cd ${DEPLOY_PATH}
-          mirror --reverse --verbose --parallel=4 dist/assets assets
-          mirror --reverse --verbose dist/images images
-          put dist/index.html -o index.html
-          bye
-          EOF
-          if [ -f dist/.htaccess ]; then
-            lftp <<EOF
+          # Quote carefully: password contains ; and !
+          lftp -c "
             set sftp:auto-confirm yes
-            set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
-            open -u "${DEPLOY_USER}","${FTP_PASSWORD}" sftp://${DEPLOY_HOST}
+            set net:max-retries 2
+            set net:timeout 60
+            set cmd:fail-exit yes
+            open -u '${DEPLOY_USER}','${FTP_PASSWORD}' sftp://${DEPLOY_HOST}
             cd ${DEPLOY_PATH}
-            put dist/.htaccess -o .htaccess
+            mirror --reverse --verbose --parallel=4 dist/assets assets
+            mirror --reverse --verbose dist/images images
+            put dist/index.html -o index.html
             bye
-            EOF
+          "
+          if [ -f dist/.htaccess ]; then
+            lftp -c "
+              set sftp:auto-confirm yes
+              set cmd:fail-exit yes
+              open -u '${DEPLOY_USER}','${FTP_PASSWORD}' sftp://${DEPLOY_HOST}
+              cd ${DEPLOY_PATH}
+              put dist/.htaccess -o .htaccess
+              bye
+            "
           fi
 
       - name: Verify Deployment
