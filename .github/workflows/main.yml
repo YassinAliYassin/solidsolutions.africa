@@ -33,23 +33,49 @@ jobs:
       - name: Verify Build
         run: ls -la dist/
 
-      - name: Deploy to cPanel via SSH
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      # Live DNS for solidsolutions.africa → 102.208.231.11 (cPanel solidsol).
+      # Password SFTP works; SSH key auth does not on this host.
+      # Avoid full public_html wipe (addon-domain folders may live there).
+      - name: Deploy to cPanel via SFTP
         timeout-minutes: 10
         env:
-          DEPLOY_HOST: 102.208.231.15
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          DEPLOY_HOST: 102.208.231.11
           DEPLOY_USER: solidsol
           DEPLOY_PATH: public_html
         run: |
-          install -m 700 -d ~/.ssh
-          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
-          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o ConnectTimeout=30"
-          $SSH "${DEPLOY_USER}@${DEPLOY_HOST}" "mkdir -p ${DEPLOY_PATH} && rm -rf ${DEPLOY_PATH}/*"
-          tar -C dist -czf - . | $SSH "${DEPLOY_USER}@${DEPLOY_HOST}" "tar -C ${DEPLOY_PATH} -xzf -"
+          if [ -z "$FTP_PASSWORD" ]; then
+            echo "FTP_PASSWORD secret is empty" >&2
+            exit 1
+          fi
+          lftp <<EOF
+          set sftp:auto-confirm yes
+          set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+          set net:max-retries 3
+          set net:timeout 90
+          open -u "${DEPLOY_USER}","${FTP_PASSWORD}" sftp://${DEPLOY_HOST}
+          cd ${DEPLOY_PATH}
+          mirror --reverse --verbose --parallel=4 dist/assets assets
+          mirror --reverse --verbose dist/images images
+          put dist/index.html -o index.html
+          bye
+          EOF
+          if [ -f dist/.htaccess ]; then
+            lftp <<EOF
+            set sftp:auto-confirm yes
+            set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+            open -u "${DEPLOY_USER}","${FTP_PASSWORD}" sftp://${DEPLOY_HOST}
+            cd ${DEPLOY_PATH}
+            put dist/.htaccess -o .htaccess
+            bye
+            EOF
+          fi
 
       - name: Verify Deployment
         run: |
           sleep 5
-          curl -skI --max-time 30 --resolve solidsolutions.africa:443:102.208.231.15 https://solidsolutions.africa/ | head -5 || true
+          curl -skI --max-time 30 --resolve solidsolutions.africa:443:102.208.231.11 https://solidsolutions.africa/ | head -8 || true
           echo "Deploy complete — https://solidsolutions.africa"
