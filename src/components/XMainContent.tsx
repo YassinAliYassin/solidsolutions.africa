@@ -6,6 +6,7 @@ interface XMainContentProps {
 
 export default function XMainContent({ onLaunchSolidLLM }: XMainContentProps) {
   const [showMore, setShowMore] = useState(false);
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   return (
     <main className="flex-1 ml-72 max-w-3xl border-r border-[#eff3f4] min-h-screen overflow-y-auto">
@@ -52,12 +53,43 @@ export default function XMainContent({ onLaunchSolidLLM }: XMainContentProps) {
               Try SolidLLM Free
             </a>
             <button
-              onClick={() => alert('Watch the 87-second Africa-first demo video')}
+              onClick={() => setShowDemoModal(true)}
               className="px-10 py-4 border-2 border-[#1D9BF0] text-[#1D9BF0] font-bold text-xl rounded-3xl flex items-center gap-3 hover:bg-[#f0f9ff]"
             >
               <i className="fa-solid fa-play"></i>
               Watch 87-second demo
             </button>
+
+            {showDemoModal && (
+              <div
+                role="dialog"
+                aria-modal="true"
+                aria-label="Demo video"
+                onClick={() => setShowDemoModal(false)}
+                className="fixed inset-0 z-[70] grid place-items-center bg-black/60 p-4"
+              >
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="w-full max-w-lg rounded-3xl bg-white p-8 text-center shadow-2xl"
+                >
+                  <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-[#f0f9ff] text-[#1D9BF0] text-2xl">
+                    <i className="fa-solid fa-film"></i>
+                  </div>
+                  <h2 className="text-2xl font-bold text-[#0f1419]">87-second demo — coming soon</h2>
+                  <p className="mt-3 text-[#536471] leading-relaxed">
+                    Our Africa-first product demo is being finalised. Drop your email at
+                    <span className="font-semibold text-[#1D9BF0]"> info@solidsolutions.africa</span> and we'll
+                    send it the moment it's live.
+                  </p>
+                  <button
+                    onClick={() => setShowDemoModal(false)}
+                    className="mt-6 px-8 py-3 bg-[#1D9BF0] hover:bg-[#1a8cd8] text-white font-bold rounded-3xl transition-all"
+                  >
+                    Got it
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           <div className="mt-8 flex items-center gap-8 text-sm">
             <div className="flex -space-x-4">
