@@ -31,17 +31,31 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Verify Build
-        run: ls -la dist/
+        run: ls -la dist/ && test -f dist/index.html
 
+      # Primary production host while Webway cPanel (zacp111) is offline.
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "Missing Vercel secrets (VERCEL_TOKEN / VERCEL_ORG_ID / VERCEL_PROJECT_ID)" >&2
+            exit 1
+          fi
+          npm install -g vercel@latest
+          # Deploy pre-built dist/ (framework-less static output)
+          vercel deploy dist --prod --yes --token="$VERCEL_TOKEN"
+
+      # Best-effort legacy cPanel path (zacp111 may be down).
       - name: Install lftp
+        continue-on-error: true
         run: sudo apt-get update && sudo apt-get install -y lftp
 
-      # Live DNS: solidsolutions.africa → 102.208.231.11 (cPanel user solidsol).
-      # Use lftp's built-in SFTP (password auth). Do not shell out to OpenSSH —
-      # this host rejects pubkey and OpenSSH never offers password.
-      # Avoid wiping public_html (addon-domain folders may live there).
-      - name: Deploy to cPanel via SFTP
-        timeout-minutes: 10
+      - name: Deploy to cPanel via SFTP (optional)
+        continue-on-error: true
+        timeout-minutes: 5
         env:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           DEPLOY_HOST: 102.208.231.11
@@ -49,14 +63,17 @@ jobs:
           DEPLOY_PATH: public_html
         run: |
           if [ -z "$FTP_PASSWORD" ]; then
-            echo "FTP_PASSWORD secret is empty" >&2
-            exit 1
+            echo "FTP_PASSWORD secret empty — skipping cPanel deploy"
+            exit 0
           fi
-          # Quote carefully: password contains ; and !
+          if ! timeout 8 bash -c "echo >/dev/tcp/${DEPLOY_HOST}/22" 2>/dev/null; then
+            echo "cPanel host ${DEPLOY_HOST} unreachable — skipping"
+            exit 0
+          fi
           lftp -c "
             set sftp:auto-confirm yes
-            set net:max-retries 2
-            set net:timeout 60
+            set net:max-retries 1
+            set net:timeout 20
             set cmd:fail-exit yes
             open -u '${DEPLOY_USER}','${FTP_PASSWORD}' sftp://${DEPLOY_HOST}
             cd ${DEPLOY_PATH}
@@ -64,20 +81,12 @@ jobs:
             mirror --reverse --verbose dist/images images
             put dist/index.html -o index.html
             bye
-          "
-          if [ -f dist/.htaccess ]; then
-            lftp -c "
-              set sftp:auto-confirm yes
-              set cmd:fail-exit yes
-              open -u '${DEPLOY_USER}','${FTP_PASSWORD}' sftp://${DEPLOY_HOST}
-              cd ${DEPLOY_PATH}
-              put dist/.htaccess -o .htaccess
-              bye
-            "
-          fi
+          " || echo "cPanel SFTP failed (host may still be down)"
 
       - name: Verify Deployment
         run: |
-          sleep 5
-          curl -skI --max-time 30 --resolve solidsolutions.africa:443:102.208.231.11 https://solidsolutions.africa/ | head -8 || true
-          echo "Deploy complete — https://solidsolutions.africa"
+          sleep 3
+          echo "=== Vercel alias ==="
+          curl -sI --max-time 20 https://solidsolutions-africa.vercel.app/ | head -8 || true
+          echo "=== Custom domain ==="
+          curl -sI --max-time 20 https://solidsolutions.africa/ | head -8 || true

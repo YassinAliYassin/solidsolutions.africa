@@ -12,6 +12,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write
+      pages: write
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
@@ -33,7 +34,9 @@ jobs:
           git fetch origin gh-pages --depth=1 || true
           git checkout --orphan gh-pages-deploy
           git reset --hard
+          # Only publish the production build — never node_modules or source
           cp -r dist/. .
+          # Custom domain for GitHub Pages (apex DNS must point at GitHub or be unused)
           echo "solidsolutions.africa" > CNAME
           touch .nojekyll
           git add -A

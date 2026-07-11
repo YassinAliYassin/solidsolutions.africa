@@ -110,38 +110,15 @@ The site runs without these values. The on-site chat widget currently uses built
 
 Pushes to `main` trigger the **Auto Deploy** GitHub Actions workflow:
 
-1. `npm ci` → `npm run build`
-2. Upload `dist/` to cPanel via **SFTP with SSH key**
-3. Post-deploy health check against the live domain
+1. Lint + production build
+2. Deploy `dist/` to **Vercel** (primary production host)
+3. Best-effort mirror to Webway cPanel when that host is reachable
+4. Post-deploy health checks against the Vercel alias and custom domain
 
-### Required GitHub secrets
+**Emergency live URL:** https://solidsolutions-africa.vercel.app
 
-| Secret | Purpose |
-|--------|---------|
-| `SSH_PRIVATE_KEY` | Deploy key for `solidsol@zacp111.webway.host` (public key must be in cPanel → SSH Access) |
-| `GEMINI_API_KEY` | Build-time env injection (reserved for future AI features) |
+Custom domain: [solidsolutions.africa](https://solidsolutions.africa) (DNS must point at Vercel while Webway `zacp111` is offline).
 
-### Manual deploy (local)
-
-```bash
-npm run build
-SSH_PRIVATE_KEY=~/.ssh/solid_solutions_deploy ./scripts/deploy.sh
-```
-
-### Manual deploy trigger
-
-```bash
-gh workflow run "Auto Deploy" --repo YassinAliYassin/solidsolutions.africa
-```
-
-**Branches:**
-
-- `main` — source code (canonical)
-- `gh-pages` — static mirror for GitHub Pages
-
-Production traffic is served from cPanel at [solidsolutions.africa](https://solidsolutions.africa).
-
----
 
 ## Project structure
 
