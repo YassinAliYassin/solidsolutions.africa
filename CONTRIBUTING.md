@@ -193,7 +193,7 @@ node scripts/capture-screenshot.mjs
 ## Questions
 
 - **Email:** [info@solidsolutions.africa](mailto:info@solidsolutions.africa)
-- **Telegram:** [@solidsolutions](https://t.me/solidsolutions)
+- **Telegram:** [@AionUi_solidsolutions_bot](https://t.me/AionUi_solidsolutions_bot)
 - **Issues:** [github.com/YassinAliYassin/solidsolutions.africa/issues](https://github.com/YassinAliYassin/solidsolutions.africa/issues)
 
 ---
