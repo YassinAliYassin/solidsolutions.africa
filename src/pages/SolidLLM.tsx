@@ -71,7 +71,7 @@ export default function SolidLLM() {
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
             <a href="/solid-llm/about" className="hover:text-charcoal transition-colors">About</a>
             <a href="#features" className="hover:text-charcoal transition-colors">Features</a>
-            <a href="#capabilities" className="hover:text-charcoal transition-colors">Capabilities</a>
+            <a href="#features" className="hover:text-charcoal transition-colors">Capabilities</a>
             <a href="#architecture" className="hover:text-charcoal transition-colors">Architecture</a>
             <a href="/" onClick={handleBack} className="px-5 py-2 border border-charcoal text-charcoal rounded-full hover:bg-charcoal hover:text-white transition-all">
               Back to Home

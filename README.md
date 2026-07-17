@@ -15,7 +15,7 @@
 | **Live site** | [solidsolutions.africa](https://solidsolutions.africa) |
 | **Location** | Harare, Zimbabwe |
 | **Contact** | [info@solidsolutions.africa](mailto:info@solidsolutions.africa) |
-| **Telegram** | [@solidsolutionsafrica](https://t.me/solidsolutions.africa) |
+| **Telegram** | [@solidsolutionsafrica](https://t.me/solidsolutionsafrica) |
 
 ---
 

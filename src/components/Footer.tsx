@@ -26,10 +26,10 @@ export default function Footer({ setActiveModal }: FooterProps) {
           <div>
             <h4 className="text-charcoal font-black uppercase text-xs tracking-widest mb-6">Site</h4>
             <ul className="space-y-6 text-sm text-slate-500 font-bold uppercase tracking-wider">
-              <li><a href="#offerings" className="hover:text-charcoal transition-colors">Services</a></li>
-              <li><a href="#sectors" className="hover:text-charcoal transition-colors">Sectors</a></li>
-              <li><a href="#roadmap" className="hover:text-charcoal transition-colors">Roadmap</a></li>
-              <li><a href="#contact" className="hover:text-charcoal transition-colors">Contact</a></li>
+              <li><a href="/#offerings" className="hover:text-charcoal transition-colors">Services</a></li>
+              <li><a href="/#sectors" className="hover:text-charcoal transition-colors">Sectors</a></li>
+              <li><a href="/#roadmap" className="hover:text-charcoal transition-colors">Roadmap</a></li>
+              <li><a href="/#contact" className="hover:text-charcoal transition-colors">Contact</a></li>
             </ul>
           </div>
           <div>
@@ -42,8 +42,8 @@ export default function Footer({ setActiveModal }: FooterProps) {
                 </>
               ) : (
                 <>
-                  <li><a href="#privacy" className="hover:text-charcoal transition-colors">Privacy Policy</a></li>
-                  <li><a href="#terms" className="hover:text-charcoal transition-colors">Terms of Service</a></li>
+                  <li><a href="/solid-llm/about" className="hover:text-charcoal transition-colors">Privacy Policy</a></li>
+                  <li><a href="/solid-llm/about" className="hover:text-charcoal transition-colors">Terms of Service</a></li>
                 </>
               )}
             </ul>

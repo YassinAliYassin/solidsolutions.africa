@@ -401,6 +401,7 @@ export default function Home() {
               description="Fast, clean sites for African SMEs, founders, NGOs, and service businesses. Focus on credible online presence without bloated tooling."
               icon={Globe}
               highlight
+              href="#contact"
             />
             <Card
               title="AI Business Tools (SolidAI)"
@@ -414,12 +415,14 @@ export default function Home() {
               description="Cloudflare, NGINX, cPanel migration. Hosting dashboards, deployment pipelines, and monitoring for cleaner operations."
               icon={Cloud}
               highlight
+              href="#contact"
             />
             <Card
               title="Dashboards & Internal Apps"
               description="Operational interfaces for files, billing, staff, client tasks, reports, and admin workflows."
               icon={LayoutDashboard}
               highlight
+              href="#contact"
             />
           </div>
         </div>
