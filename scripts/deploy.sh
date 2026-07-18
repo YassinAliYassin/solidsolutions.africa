@@ -9,10 +9,23 @@ if [ ! -d dist ] || [ ! -f dist/index.html ]; then
   npm run build
 fi
 
+# vercel deploy only uploads dist/, so SPA rewrites + project link must be inside it
+cp vercel.json dist/vercel.json
+if [ -f .vercel/project.json ]; then
+  mkdir -p dist/.vercel
+  cp .vercel/project.json dist/.vercel/project.json
+fi
+
 if command -v vercel >/dev/null 2>&1; then
-  echo "Deploying dist/ to Vercel production..."
+  echo "Deploying dist/ to Vercel production (solidsolutions-africa)..."
   vercel deploy dist --prod --yes
-  echo "Done — https://solidsolutions-africa.vercel.app"
+  echo "Done — https://solidsolutions.africa"
+  # Smoke-check SPA routes after deploy
+  sleep 3
+  for path in / /solid-llm /beta /gallery; do
+    code=$(curl -sS -o /dev/null -w "%{http_code}" "https://solidsolutions.africa$path")
+    echo "  $code $path"
+  done
 else
   echo "vercel CLI not found; install with: npm i -g vercel"
   exit 1

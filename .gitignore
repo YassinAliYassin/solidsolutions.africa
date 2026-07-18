@@ -8,3 +8,9 @@ coverage/
 .env*
 !.env.example
 .worktrees/
+
+# Never commit build artifacts at repo root (source lives in src/ + public/)
+/assets/
+/images/
+.vercel/
+.vercel

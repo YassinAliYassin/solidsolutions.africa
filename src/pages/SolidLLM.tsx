@@ -71,7 +71,7 @@ export default function SolidLLM() {
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
             <a href="/solid-llm/about" className="hover:text-charcoal transition-colors">About</a>
             <a href="#features" className="hover:text-charcoal transition-colors">Features</a>
-            <a href="#features" className="hover:text-charcoal transition-colors">Capabilities</a>
+            <a href="#capabilities" className="hover:text-charcoal transition-colors">Capabilities</a>
             <a href="#architecture" className="hover:text-charcoal transition-colors">Architecture</a>
             <a href="/" onClick={handleBack} className="px-5 py-2 border border-charcoal text-charcoal rounded-full hover:bg-charcoal hover:text-white transition-all">
               Back to Home
@@ -147,7 +147,7 @@ export default function SolidLLM() {
       {/* Feature Grid */}
       <section id="features" className="py-24 bg-bg-main">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
+          <div id="capabilities" className="text-center mb-20 scroll-mt-28">
             <h2 className="text-4xl font-bold text-charcoal mb-4">Uncompromising Performance</h2>
             <p className="text-slate-600 max-w-xl mx-auto">SolidAI is built from the ground up to address the specific challenges of deploying advanced AI across the African continent.</p>
           </div>

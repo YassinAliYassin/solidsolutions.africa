@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBrain,
@@ -116,23 +116,26 @@ export default function SolidAI() {
           </div>
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-sm text-gray-300 hover:text-white transition">Features</a>
-            <a href="#pricing" className="text-sm text-gray-300 hover:text-white transition">Pricing</a>
-            <a href="#docs" className="text-sm text-gray-300 hover:text-white transition">Docs</a>
-            <a href="#about" className="text-sm text-gray-300 hover:text-white transition">About</a>
+            <a href="#agents" className="text-sm text-gray-300 hover:text-white transition">Agents</a>
+            <a href="/solidai/docs" className="text-sm text-gray-300 hover:text-white transition">Docs</a>
+            <a href="/solid-llm/about" className="text-sm text-gray-300 hover:text-white transition">About</a>
           </div>
           <div className="flex items-center gap-3">
-            <button className="hidden md:block px-5 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-sm font-medium transition">
+            <a
+              href="/beta"
+              className="hidden md:block px-5 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-sm font-medium transition"
+            >
               Get Started
-            </button>
+            </a>
             <MobileNav
               dark
               links={[
                 { label: "Features", href: "#features" },
-                { label: "Pricing", href: "#pricing" },
-                { label: "Docs", href: "#docs" },
-                { label: "About", href: "#about" },
+                { label: "Agents", href: "#agents" },
+                { label: "Docs", href: "/solidai/docs" },
+                { label: "About", href: "/solid-llm/about" },
               ]}
-              cta={{ label: "Get Started", href: "#" }}
+              cta={{ label: "Get Started", href: "/beta" }}
             />
           </div>
         </div>
@@ -227,7 +230,7 @@ export default function SolidAI() {
       </section>
 
       {/* AI Agents Demo Section */}
-      <section className="py-20 px-6">
+      <section id="agents" className="py-20 px-6 scroll-mt-24">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -294,9 +297,12 @@ export default function SolidAI() {
               Join thousands of developers already building with SolidAI.
               Start with 1000 free API calls.
             </p>
-            <button className="px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold transition glow">
+            <a
+              href="/beta"
+              className="inline-block px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold transition glow"
+            >
               Create Free Account
-            </button>
+            </a>
           </motion.div>
         </div>
       </section>
@@ -312,12 +318,12 @@ export default function SolidAI() {
               <span className="font-bold gradient-text">SolidAI</span>
             </div>
             <p className="text-sm text-gray-500">
-              © 2026 Solid Solutions. All rights reserved.
+              © {new Date().getFullYear()} Solid Solutions. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition">Privacy</a>
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition">Terms</a>
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition">Contact</a>
+              <a href="/" className="text-sm text-gray-400 hover:text-white transition">Home</a>
+              <a href="/solidai/docs" className="text-sm text-gray-400 hover:text-white transition">Docs</a>
+              <a href="/#contact" className="text-sm text-gray-400 hover:text-white transition">Contact</a>
             </div>
           </div>
         </div>

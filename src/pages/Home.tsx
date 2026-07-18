@@ -36,13 +36,25 @@ import Logo from '../components/Logo';
 import { Reveal } from '../components/Reveal';
 
 
-const SectionTitle = ({ children, subtitle }: { children: ReactNode, subtitle?: string }) => (
+const SectionTitle = ({
+  children,
+  subtitle,
+  light = false,
+}: {
+  children: ReactNode;
+  subtitle?: string;
+  light?: boolean;
+}) => (
   <div className="mb-12">
-    <h2 className="text-3xl md:text-4xl font-black tracking-tight text-charcoal mb-4">
+    <h2
+      className={`text-3xl md:text-4xl font-black tracking-tight mb-4 ${
+        light ? "text-white" : "text-charcoal"
+      }`}
+    >
       {children}
     </h2>
     {subtitle && (
-      <p className="text-slate-600 max-w-2xl font-medium">
+      <p className={`max-w-2xl font-medium ${light ? "text-white/70" : "text-slate-600"}`}>
         {subtitle}
       </p>
     )}
@@ -557,7 +569,7 @@ export default function Home() {
       <section className="py-24 bg-charcoal text-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <SectionTitle>How We Build</SectionTitle>
+            <SectionTitle light>How We Build</SectionTitle>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">

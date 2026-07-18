@@ -30,8 +30,20 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
-      - name: Verify Build
-        run: ls -la dist/ && test -f dist/index.html
+      - name: Prepare SPA deploy package
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          # `vercel deploy dist` only uploads dist/, so SPA rewrites + project
+          # linkage must live inside that folder.
+          cp vercel.json dist/vercel.json
+          mkdir -p dist/.vercel
+          printf '{"projectId":"%s","orgId":"%s","projectName":"solidsolutions-africa"}\n' \
+            "$VERCEL_PROJECT_ID" "$VERCEL_ORG_ID" > dist/.vercel/project.json
+          test -f dist/index.html
+          test -f dist/vercel.json
+          ls -la dist/
 
       # Primary production host while Webway cPanel (zacp111) is offline.
       - name: Deploy to Vercel
@@ -45,8 +57,23 @@ jobs:
             exit 1
           fi
           npm install -g vercel@latest
-          # Deploy pre-built dist/ (framework-less static output)
+          # Deploy pre-built dist/ (static output + SPA rewrites) to the linked project
           vercel deploy dist --prod --yes --token="$VERCEL_TOKEN"
+
+      - name: Verify SPA routes
+        run: |
+          sleep 5
+          fail=0
+          for path in / /solid-llm /beta /gallery /solidai /documentation; do
+            code=$(curl -sS -o /tmp/ssa_check.html -w "%{http_code}" "https://solidsolutions.africa$path")
+            if [ "$code" != "200" ] || ! grep -q 'id="root"' /tmp/ssa_check.html; then
+              echo "FAIL $code $path"
+              fail=1
+            else
+              echo "OK   $code $path"
+            fi
+          done
+          exit $fail
 
       # Best-effort legacy cPanel path (zacp111 may be down).
       - name: Install lftp
