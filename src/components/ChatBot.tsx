@@ -268,30 +268,40 @@ export function ChatBot() {
   }, [isOpen]);
 
   const sendText = async (userMessage: string) => {
-    if (!userMessage.trim() || isLoading) return;
+    const trimmed = userMessage.trim();
+    if (!trimmed || isLoading) return;
+
+    // Recent turns for context (server re-sanitises and caps this).
+    const history = messages
+      .filter((m) => m.role === "user" || m.role === "assistant")
+      .slice(-8)
+      .map((m) => ({ role: m.role, content: m.content }));
 
     setInput("");
-    setMessages((prev) => [...prev, { role: "user", content: userMessage.trim() }]);
+    setMessages((prev) => [...prev, { role: "user", content: trimmed }]);
     setIsLoading(true);
 
+    // Live LLM via same-origin serverless endpoint; falls back to the built-in
+    // rule-based assistant if the API is unreachable or not yet configured, so
+    // the widget always answers.
+    let reply: string;
     try {
-      await new Promise((r) => setTimeout(r, 400));
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: replyFor(userMessage) },
-      ]);
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: trimmed, history }),
+      });
+      const data = res.ok ? await res.json().catch(() => null) : null;
+      reply =
+        data && typeof data.reply === "string" && data.reply.trim()
+          ? data.reply.trim()
+          : replyFor(trimmed);
     } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content:
-            "Sorry — something went wrong. Please try again or email info@solidsolutions.africa.",
-        },
-      ]);
-    } finally {
-      setIsLoading(false);
+      reply = replyFor(trimmed);
     }
+
+    setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+    setIsLoading(false);
   };
 
   const handleSend = () => void sendText(input);

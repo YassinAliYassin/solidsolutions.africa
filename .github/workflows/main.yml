@@ -30,22 +30,10 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
-      - name: Prepare SPA deploy package
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
-          # `vercel deploy dist` only uploads dist/, so SPA rewrites + project
-          # linkage must live inside that folder.
-          cp vercel.json dist/vercel.json
-          mkdir -p dist/.vercel
-          printf '{"projectId":"%s","orgId":"%s","projectName":"solidsolutions-africa"}\n' \
-            "$VERCEL_PROJECT_ID" "$VERCEL_ORG_ID" > dist/.vercel/project.json
-          test -f dist/index.html
-          test -f dist/vercel.json
-          ls -la dist/
-
       # Primary production host while Webway cPanel (zacp111) is offline.
+      # Uses Vercel's prebuilt flow so the /api serverless functions (the
+      # website LLM assistant) ship alongside the static site — plain
+      # `vercel deploy dist` would only upload dist/ and drop the functions.
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -57,8 +45,9 @@ jobs:
             exit 1
           fi
           npm install -g vercel@latest
-          # Deploy pre-built dist/ (static output + SPA rewrites) to the linked project
-          vercel deploy dist --prod --yes --token="$VERCEL_TOKEN"
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          vercel build --prod --token="$VERCEL_TOKEN"
+          vercel deploy --prebuilt --prod --yes --token="$VERCEL_TOKEN"
 
       - name: Verify SPA routes
         run: |
