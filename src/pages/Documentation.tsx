@@ -9,8 +9,10 @@ import { useState, useEffect, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import Lenis from "lenis";
 import { Check } from "lucide-react";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export default function Documentation() {
+  useDocumentTitle("Documentation");
   const [isScrolled, setIsScrolled] = useState(false);
   const [copied, setCopied] = useState(false);
   const navigate = useNavigate();

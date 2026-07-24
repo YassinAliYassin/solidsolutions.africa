@@ -13,9 +13,11 @@ import AgentStatusBadge from '../components/solidai/AgentStatusBadge';
 import TaskProgressBar from '../components/solidai/TaskProgressBar';
 import QuickAgentSwitcher from '../components/solidai/QuickAgentSwitcher';
 import MobileNav from '../components/MobileNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function SolidAI() {
   const heroRef = useRef(null);
+  useDocumentTitle("SolidAI Platform");
 
   useEffect(() => {
     // Gradient animation for text
@@ -56,33 +58,33 @@ export default function SolidAI() {
   const features = [
     {
       icon: faBrain,
-      title: 'Advanced AI Models',
-      desc: 'State-of-the-art language models trained on diverse datasets for African contexts and global applications.'
+      title: 'Sector-Specific Agents',
+      desc: 'Agents scoped to real African SME workflows — agriculture, health, education, finance, and more — not general-purpose chat.'
     },
     {
       icon: faRocket,
-      title: 'Lightning Fast',
-      desc: 'Optimized inference with <50ms latency. Built on high-performance infrastructure across Africa.'
+      title: 'Built for Local Conditions',
+      desc: 'Designed to stay useful on patchy connectivity and modest hardware, starting lightweight and adding capability as it’s validated.'
     },
     {
       icon: faShieldAlt,
-      title: 'Enterprise Security',
-      desc: 'SOC 2 compliant with end-to-end encryption. Your data never leaves your control.'
+      title: 'Privacy-Conscious by Design',
+      desc: 'Data handling built around minimal collection and local control. Formal compliance certifications are on the roadmap, not yet in place.'
     },
     {
       icon: faCode,
       title: 'Developer First',
-      desc: 'RESTful APIs, SDKs for Python/Node/Go, and comprehensive docs with live playground.'
+      desc: 'Clear APIs and documentation planned alongside the platform, so integrations stay simple as agents mature.'
     },
     {
       icon: faChartLine,
-      title: 'Scalable Infrastructure',
-      desc: 'Auto-scaling clusters across 3 regions. Handle millions of requests with 99.9% uptime.'
+      title: 'Grows With Demand',
+      desc: 'Infrastructure choices made to scale sensibly as usage grows, rather than over-provisioning for numbers we don’t have yet.'
     },
     {
       icon: faUsers,
       title: 'Team Collaboration',
-      desc: 'Shared workspaces, role-based access, and usage analytics for teams of any size.'
+      desc: 'Shared workspaces and role-based access planned for teams once the core agents are live.'
     }
   ];
 
@@ -150,8 +152,8 @@ export default function SolidAI() {
             transition={{ duration: 0.8 }}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-gray-300 mb-8">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-              Now in Public Beta
+              <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+              In Active Development
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
@@ -160,31 +162,31 @@ export default function SolidAI() {
             </h1>
 
             <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Build intelligent applications with SolidAI's powerful language models.
-              Designed for developers, trusted by enterprises, built for scale.
+              We're building sector-specific AI agents for African SMEs — practical
+              tools for agriculture, health, education, finance, and beyond.
             </p>
 
             <div className="flex items-center justify-center gap-4 flex-wrap">
-              <button className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold transition glow">
-                Start Building Free
-              </button>
-              <button className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full text-lg font-semibold transition">
+              <a href="/beta" className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold transition glow">
+                Request Early Access
+              </a>
+              <a href="/solidai/docs" className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full text-lg font-semibold transition">
                 View Documentation
-              </button>
+              </a>
             </div>
 
             <div className="mt-16 flex items-center justify-center gap-8 text-sm text-gray-500">
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon icon={faShieldAlt} />
-                <span>SOC 2 Certified</span>
+                <span>Privacy-Conscious Design</span>
               </div>
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon icon={faRocket} />
-                <span>{'<50ms'} Latency</span>
+                <span>Edge-First Architecture</span>
               </div>
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon icon={faUsers} />
-                <span>10k+ Developers</span>
+                <span>8 Sectors Targeted</span>
               </div>
             </div>
           </motion.div>
@@ -239,10 +241,10 @@ export default function SolidAI() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-4">
-              Try <span className="gradient-text">SolidAI Agents</span>
+              Preview: <span className="gradient-text">SolidAI Agents</span>
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Experience our sector-specific AI agents in action
+              A working preview of the interface — sector agents are still in development.
             </p>
           </motion.div>
 
@@ -294,14 +296,14 @@ export default function SolidAI() {
               Ready to build the <span className="gradient-text">future</span>?
             </h2>
             <p className="text-gray-400 mb-8 max-w-xl mx-auto">
-              Join thousands of developers already building with SolidAI.
-              Start with 1000 free API calls.
+              Join our early access list and help shape which SolidAI agents we
+              build and ship first.
             </p>
             <a
               href="/beta"
               className="inline-block px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold transition glow"
             >
-              Create Free Account
+              Request Early Access
             </a>
           </motion.div>
         </div>

@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 import Logo from "../components/Logo";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 const galleryItems = [
   { size: 50, label: "Small Logo (50x50)" },
@@ -18,6 +19,7 @@ const galleryItems = [
 ];
 
 export default function PictureGallery() {
+  useDocumentTitle("Gallery");
   const navigate = useNavigate();
 
   return (

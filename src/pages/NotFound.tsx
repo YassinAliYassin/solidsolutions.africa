@@ -5,8 +5,10 @@
 
 import { motion } from "motion/react";
 import { ArrowLeft, Home, Search, Mail, MapPin } from "lucide-react";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export default function NotFound() {
+  useDocumentTitle("Page Not Found");
   return (
     <div className="min-h-screen font-sans selection:bg-charcoal/10 bg-bg-main flex flex-col">
       {/* Navigation */}

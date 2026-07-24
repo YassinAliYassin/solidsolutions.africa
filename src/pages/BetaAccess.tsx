@@ -8,10 +8,14 @@ import { ArrowLeft, Zap, Rocket, Users, Lock, ChevronRight } from "lucide-react"
 import { useState, useEffect, FormEvent, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import Lenis from "lenis";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export default function BetaAccess() {
+  useDocumentTitle("Request Early Access");
   const [isScrolled, setIsScrolled] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleBack = (e: MouseEvent) => {
@@ -38,9 +42,32 @@ export default function BetaAccess() {
     };
   }, []);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setError(false);
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const response = await fetch('https://formspree.io/f/xzdoprej', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -78,13 +105,13 @@ export default function BetaAccess() {
               Shape the <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-charcoal to-slate-400">Intelligent</span> <br /> Future.
             </h1>
             <p className="text-xl text-slate-600 leading-relaxed mb-12 max-w-xl font-medium">
-              We're opening a limited number of spots for our private beta, including exclusive early access to our <span className="text-charcoal font-black">Alpha Model v1.2 Release</span>. Join the developer cohort helping us optimize SolidAI for real-world deployments across Africa.
+              We're opening a limited number of spots on our early access list as SolidAI agents come online. Join the cohort helping us shape SolidAI for real-world deployments across Africa.
             </p>
 
             <div className="space-y-6">
               {[
-                { icon: Zap, text: "Early access to Model v1.2 weights" },
-                { icon: Users, text: "Dedicated technical support channel" },
+                { icon: Zap, text: "First access as new agents ship" },
+                { icon: Users, text: "Direct line to the team building it" },
                 { icon: Rocket, text: "Influence our product roadmap" }
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4">
@@ -128,28 +155,43 @@ export default function BetaAccess() {
                 <h2 className="text-2xl font-black mb-2 text-charcoal tracking-tight">Request Access</h2>
                 <p className="text-slate-500 mb-8 text-sm font-medium">Tell us about your project or organization.</p>
                 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form
+                  action="https://formspree.io/f/xzdoprej"
+                  method="POST"
+                  onSubmit={handleSubmit}
+                  className="space-y-6"
+                >
+                  <input type="hidden" name="_subject" value="SolidAI Beta Access Request" />
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">First Name</label>
-                      <input required className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/30 transition-all font-medium" placeholder="Jane" />
+                      <label htmlFor="beta-first-name" className="text-[10px] font-black uppercase tracking-widest text-slate-500">First Name</label>
+                      <input id="beta-first-name" required name="firstName" className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/30 transition-all font-medium" placeholder="Jane" />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Last Name</label>
-                      <input required className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/30 transition-all font-medium" placeholder="Doe" />
+                      <label htmlFor="beta-last-name" className="text-[10px] font-black uppercase tracking-widest text-slate-500">Last Name</label>
+                      <input id="beta-last-name" required name="lastName" className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/30 transition-all font-medium" placeholder="Doe" />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Work Email</label>
-                    <input required type="email" className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/30 transition-all font-medium" placeholder="jane@company.com" />
+                    <label htmlFor="beta-email" className="text-[10px] font-black uppercase tracking-widest text-slate-500">Work Email</label>
+                    <input id="beta-email" required type="email" name="email" className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/30 transition-all font-medium" placeholder="jane@company.com" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Project Description</label>
-                    <textarea rows={3} className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/30 transition-all font-medium" placeholder="How do you plan to use SolidAI?"></textarea>
+                    <label htmlFor="beta-message" className="text-[10px] font-black uppercase tracking-widest text-slate-500">Project Description</label>
+                    <textarea id="beta-message" rows={3} name="message" className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/30 transition-all font-medium" placeholder="How do you plan to use SolidAI?"></textarea>
                   </div>
-                  <button type="submit" className="w-full py-4 bg-charcoal text-white font-black uppercase tracking-widest text-xs rounded shadow-2xl hover:shadow-black/20 transition-all flex items-center justify-center gap-2 group">
-                    Join Waitlist <ChevronRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full py-4 bg-charcoal text-white font-black uppercase tracking-widest text-xs rounded shadow-2xl hover:shadow-black/20 transition-all flex items-center justify-center gap-2 group disabled:opacity-50"
+                  >
+                    {submitting ? 'Submitting...' : (
+                      <>Join Waitlist <ChevronRight size={14} className="transition-transform group-hover:translate-x-1" /></>
+                    )}
                   </button>
+                  {error && (
+                    <p className="text-red-600 text-xs font-bold text-center">Something went wrong. Please email info@solidsolutions.africa directly.</p>
+                  )}
                 </form>
               </>
             )}

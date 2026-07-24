@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function SolidAIDocs() {
   const [copiedCode, setCopiedCode] = useState('');
+  useDocumentTitle("SolidAI API Docs");
 
   const copyToClipboard = (code: string, id: string) => {
     navigator.clipboard.writeText(code);
@@ -48,16 +50,17 @@ export default function SolidAIDocs() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600/20 border border-blue-600/30 rounded-full text-sm text-blue-400 mb-6">
-            <span>📚</span>
-            <span>API Documentation</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-600/20 border border-yellow-600/30 rounded-full text-sm text-yellow-400 mb-6">
+            <span>🚧</span>
+            <span>Planned API — Not Yet Live</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
             SolidAI API
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Build intelligent applications with state-of-the-art language models. 
-            REST API with SDKs for Python, Node.js, and Go.
+            A preview of the API shape we're designing — a REST API with SDKs for
+            Python and Node.js. Nothing below is live yet; request early access
+            to be notified when it ships.
           </p>
         </motion.div>
 
@@ -79,7 +82,7 @@ export default function SolidAIDocs() {
                 <span className="text-yellow-400">🔑</span>
                 Step 1: Get API Key
               </h3>
-              <p className="text-gray-400 mb-4">Sign up at SolidAI and get your API key from the dashboard.</p>
+              <p className="text-gray-400 mb-4">Planned flow — once live, you'll sign up and get your API key from a dashboard.</p>
               <CodeBlock
                 id="api-key"
                 code={`curl -X POST https://api.solidai.africa/v1/auth/signup \\
@@ -170,30 +173,20 @@ console.log(response.choices[0].message.content);`}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl font-bold mb-8">Available Models</h2>
-          
+          <h2 className="text-3xl font-bold mb-8">Planned Model Tiers</h2>
+
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { name: 'solidai-7b', desc: 'Fast, efficient model for simple tasks', latency: '<20ms', context: '32k' },
-              { name: 'solidai-13b', desc: 'Balanced performance and speed', latency: '<35ms', context: '64k' },
-              { name: 'solidai-70b', desc: 'Most capable model for complex tasks', latency: '<50ms', context: '128k' }
+              { name: 'solidai-lite', desc: 'Fast, efficient tier for simple, high-volume tasks' },
+              { name: 'solidai-standard', desc: 'Balanced tier for general sector-agent workloads' },
+              { name: 'solidai-pro', desc: 'Most capable tier, for complex multi-step reasoning' }
             ].map((model, i) => (
               <div key={i} className="glass-card p-6 rounded-2xl border border-white/10">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold">{model.name}</h3>
-                  <span className="px-3 py-1 bg-green-600/20 text-green-400 rounded-full text-xs">Active</span>
+                  <span className="px-3 py-1 bg-yellow-600/20 text-yellow-400 rounded-full text-xs">Planned</span>
                 </div>
                 <p className="text-gray-400 text-sm mb-4">{model.desc}</p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Latency</span>
-                    <span className="text-blue-400">{model.latency}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Context</span>
-                    <span className="text-purple-400">{model.context}</span>
-                  </div>
-                </div>
               </div>
             ))}
           </div>
@@ -206,16 +199,16 @@ console.log(response.choices[0].message.content);`}
           viewport={{ once: true }}
           className="mt-20 text-center glass-card p-12 rounded-3xl border border-white/10"
         >
-          <div className="text-5xl mb-6">✅</div>
-          <h2 className="text-3xl font-bold mb-4">Ready to Build?</h2>
+          <div className="text-5xl mb-6">🚧</div>
+          <h2 className="text-3xl font-bold mb-4">Want Early Access?</h2>
           <p className="text-gray-400 mb-8 max-w-xl mx-auto">
-            Join 10,000+ developers building with SolidAI. Start with 1,000 free API calls.
+            Join the early access list to be notified when the SolidAI API ships.
           </p>
           <a
-            href="/solidai"
+            href="/beta"
             className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold transition shadow-lg shadow-blue-600/25"
           >
-            Create Free Account
+            Request Early Access
             <span>🚀</span>
           </a>
         </motion.div>

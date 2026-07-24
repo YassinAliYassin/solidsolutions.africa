@@ -8,8 +8,10 @@ import { ArrowLeft, Globe, Mail } from "lucide-react";
 import { useState, useEffect, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import Lenis from "lenis";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export default function ComingSoon() {
+  useDocumentTitle("Coming Soon");
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
 

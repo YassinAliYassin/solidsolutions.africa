@@ -20,10 +20,12 @@ import MobileNav from '../components/MobileNav';
 import { useState, useEffect, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import Lenis from "lenis";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export default function SolidLLM() {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+  useDocumentTitle("SolidAI — Intelligence Optimized for Africa");
 
   const handleBack = (e: MouseEvent) => {
     e.preventDefault();
@@ -191,11 +193,11 @@ export default function SolidLLM() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-charcoal mb-8 tracking-tight">The Architecture of Next-Gen AI.</h2>
+              <h2 className="text-4xl md:text-5xl font-bold text-charcoal mb-8 tracking-tight">The Direction We're Building In.</h2>
               <p className="text-lg text-slate-600 mb-12 leading-relaxed">
-                Our model utilizes a hybrid Mixture-of-Experts (MoE) architecture, enabling dynamic allocation of parameters for specific tasks. This results in faster response times and significantly lower energy consumption for large-scale operations.
+                SolidAI is in active development. We're designing toward sector-specific agents that run efficiently on modest hardware and patchy connectivity — starting with rule-based and lightweight assistants, moving toward more capable models as each sector's use case is validated.
               </p>
-              
+
               <ul className="space-y-6">
                 {[
                   "Hyper-local NLP for diverse African dialects",
@@ -212,28 +214,28 @@ export default function SolidLLM() {
                 ))}
               </ul>
             </div>
-            
+
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
                 <div className="h-40 bg-white rounded-2xl p-6 flex flex-col justify-end text-charcoal border border-charcoal/10">
-                  <div className="text-3xl font-bold mb-1">1.2B</div>
-                  <div className="text-[10px] uppercase tracking-widest opacity-60">Edge Parameters</div>
+                  <div className="text-3xl font-bold mb-1">8</div>
+                  <div className="text-[10px] uppercase tracking-widest opacity-60">Sectors Targeted</div>
                 </div>
                 <div className="h-64 bg-charcoal/5 rounded-2xl p-6 flex flex-col justify-end text-charcoal border border-charcoal/10">
                   <Globe className="mb-auto opacity-20" size={40} />
-                  <div className="text-3xl font-bold mb-1">50+</div>
-                  <div className="text-[10px] uppercase tracking-widest opacity-60">African Dialects</div>
+                  <div className="text-3xl font-bold mb-1">Zimbabwe</div>
+                  <div className="text-[10px] uppercase tracking-widest opacity-60">First Market</div>
                 </div>
               </div>
               <div className="space-y-4 pt-8">
                 <div className="h-64 bg-charcoal rounded-2xl p-6 flex flex-col justify-end text-white">
                   <Cpu className="mb-auto opacity-20" size={40} />
-                  <div className="text-3xl font-bold mb-1">4bit</div>
-                  <div className="text-[10px] uppercase tracking-widest opacity-60">Native Precision</div>
+                  <div className="text-3xl font-bold mb-1">Edge-First</div>
+                  <div className="text-[10px] uppercase tracking-widest opacity-60">Design Priority</div>
                 </div>
                 <div className="h-40 bg-white text-charcoal rounded-2xl p-6 flex flex-col justify-end border border-charcoal/10">
-                  <div className="text-3xl font-bold mb-1">Sub-10ms</div>
-                  <div className="text-[10px] uppercase tracking-widest opacity-60">Inference Latency</div>
+                  <div className="text-3xl font-bold mb-1">In Dev</div>
+                  <div className="text-[10px] uppercase tracking-widest opacity-60">Current Status</div>
                 </div>
               </div>
             </div>
@@ -247,14 +249,14 @@ export default function SolidLLM() {
           <div className="max-w-3xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold mb-8 uppercase tracking-tight">Ready to Build <br /> with SolidAI?</h2>
             <p className="text-xl text-white/70 mb-12 leading-relaxed">
-              Join our developer network and get early access to our APIs and specialized models for industrial and financial applications.
+              Join our developer network and get early access as we roll out SolidAI agents, and help shape which sectors we prioritize next.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <a href="/beta" className="w-full sm:w-auto px-10 py-5 bg-white text-charcoal font-bold uppercase tracking-widest text-xs rounded hover:bg-white/90 transition-all text-center">
-                Request Developer Key
+                Request Early Access
               </a>
               <a href="/#contact" className="w-full sm:w-auto px-10 py-5 bg-transparent border border-white/30 font-bold uppercase tracking-widest text-xs rounded hover:bg-white/5 transition-all text-center">
-                Contact Enterprise Sales
+                Talk to Us
               </a>
             </div>
           </div>
