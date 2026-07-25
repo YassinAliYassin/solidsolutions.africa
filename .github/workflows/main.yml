@@ -39,6 +39,7 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
           if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
             echo "Missing Vercel secrets (VERCEL_TOKEN / VERCEL_ORG_ID / VERCEL_PROJECT_ID)" >&2
@@ -46,6 +47,17 @@ jobs:
           fi
           npm install -g vercel@latest
           vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+          # Sync the OpenRouter key from the GitHub secret into Vercel's
+          # production env so the /api/chat function has it at runtime. printf
+          # (no trailing newline) avoids corrupting the token value.
+          if [ -n "$OPENROUTER_API_KEY" ]; then
+            vercel env rm OPENROUTER_API_KEY production --yes --token="$VERCEL_TOKEN" 2>/dev/null || true
+            printf '%s' "$OPENROUTER_API_KEY" | vercel env add OPENROUTER_API_KEY production --token="$VERCEL_TOKEN"
+          else
+            echo "Note: OPENROUTER_API_KEY secret not set — chat widget will use rule-based fallback." >&2
+          fi
+
           vercel build --prod --token="$VERCEL_TOKEN"
           vercel deploy --prebuilt --prod --yes --token="$VERCEL_TOKEN"
 
