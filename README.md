@@ -32,6 +32,22 @@ Solid Solutions is a unified technology studio — not a collection of isolated 
 
 ---
 
+## Architecture
+
+```mermaid
+flowchart TB
+    USER[Visitor] -->|HTTPS| WEB[React SPA :3000]
+    WEB -->|lazy routes| ROUTES[React Router 7]
+    WEB -->|/api/chat| CHAT[Chat assistant]<-->|OpenRouter| LLM[LLM provider]
+    WEB -->|build| DIST[dist/ - static]
+    DIST -->|deploy WFs| GH[GitHub Actions CI/CD]
+    GH -->|SFTP| CPANEL[cPanel hosting]
+    DIST -->|gh-pages| PAGES[GitHub Pages preview]
+    WEB --> PRISMA[Prisma / scripts (optional data layer)]
+```
+
+---
+
 ## Site routes
 
 | Path | Page |
