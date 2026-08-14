@@ -5,6 +5,13 @@ on:
       - main
   workflow_dispatch:
 
+# Serialize production deploys: back-to-back "push to main" events (e.g.
+# Dependabot merges) would otherwise deploy the same commit twice in
+# parallel, racing on Vercel + cPanel. latest-wins deploys the newest main.
+concurrency:
+  group: auto-deploy
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest

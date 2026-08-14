@@ -6,6 +6,14 @@ on:
       - main
   workflow_dispatch:
 
+# Serialize gh-pages mirror deploys: parallel "push to main" events (e.g.
+# Dependabot merges landing back-to-back) each force-push to the shared
+# gh-pages ref, and the slower runner hits a "cannot lock ref" rejection.
+# latest-wins ensures only the newest build ends up on the mirror.
+concurrency:
+  group: gh-pages-deploy
+  cancel-in-progress: true
+
 jobs:
   deploy-gh-pages:
     runs-on: ubuntu-latest
