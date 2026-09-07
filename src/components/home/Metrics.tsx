@@ -6,15 +6,15 @@
 import { Reveal } from '../Reveal';
 
 const METRICS = [
-  { value: "8", label: "SolidAI Sectors Planned" },
-  { value: "3", label: "Platforms in Development" },
+  { value: "8", label: "SolidAI sectors" },
+  { value: "3", label: "Platforms in the studio" },
   { value: "2024", label: "Founded" },
-  { value: "24/7", label: "Support" },
+  { value: "Harare", label: "Studio base" },
 ];
 
 export default function Metrics() {
   return (
-    <section className="py-16 bg-charcoal text-white">
+    <section className="py-14 md:py-16 bg-charcoal text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {METRICS.map((metric, i) => (

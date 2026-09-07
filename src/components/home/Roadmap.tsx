@@ -10,23 +10,23 @@ import { SectionTitle } from './shared';
 const PHASES = [
   {
     phase: "Now",
-    title: "Polishing & Alignment",
+    title: "Studio & SolidAI",
     status: "Current",
     active: true,
     items: [
-      "Polishing public site and aligning copy",
-      "Keeping brand clear and consistent",
-      "SolidAI platform with 8 sector agents",
-      "AionUI Telegram bot integration"
+      "Public site with clear, consistent brand and copy",
+      "SolidAI platform with eight sector agents",
+      "AionUI Telegram bot integration",
+      "Website and cloud delivery for SMEs"
     ]
   },
   {
     phase: "Next",
     title: "Integration",
-    status: "In Progress",
+    status: "In progress",
     active: false,
     items: [
-      "Connecting SolidAI Gateway & WebChat",
+      "Connecting SolidAI Gateway and WebChat",
       "Telegram + AionUI + Solid Cloud loop",
       "cPanel → NGINX VPS migration path",
       "Client onboarding workflows"
@@ -48,11 +48,13 @@ const PHASES = [
 
 export default function Roadmap() {
   return (
-    <section id="roadmap" className="py-24 bg-bg-dark border-y border-black/5">
+    <section id="roadmap" className="py-20 md:py-24 bg-bg-dark border-y border-black/5 scroll-mt-28">
       <div className="max-w-7xl mx-auto px-6">
-        <SectionTitle>Roadmap</SectionTitle>
+        <SectionTitle subtitle="What the studio is shipping now, wiring next, and piloting after that.">
+          Roadmap
+        </SectionTitle>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
           {PHASES.map((item, i) => (
             <Reveal
               key={i}
@@ -67,7 +69,7 @@ export default function Roadmap() {
               <ul className="space-y-3">
                 {item.items.map((point, j) => (
                   <li key={j} className="flex items-start gap-3 text-sm text-slate-600 font-medium">
-                    <CheckCircle size={16} className="text-charcoal mt-0.5 flex-shrink-0" />
+                    <CheckCircle size={16} className="text-charcoal mt-0.5 flex-shrink-0" aria-hidden="true" />
                     {point}
                   </li>
                 ))}

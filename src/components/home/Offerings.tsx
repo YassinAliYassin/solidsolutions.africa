@@ -8,40 +8,41 @@ import { SectionTitle, Card } from './shared';
 
 export default function Offerings() {
   return (
-    <section id="offerings" className="py-24 grid-pattern bg-white">
+    <section id="offerings" className="py-20 md:py-24 grid-pattern bg-white scroll-mt-28">
       <div className="max-w-7xl mx-auto px-6">
-        <SectionTitle subtitle="We build focused tools that help African SMEs look credible, respond faster, and run cleaner operations.">
-          Core Offerings
+        <SectionTitle subtitle="Focused work for African SMEs: a credible site, useful AI, reliable hosting, and internal tools that stay simple.">
+          What we build
         </SectionTitle>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           <Card
-            title="Websites & Brand Systems"
-            description="Fast, clean sites for African SMEs, founders, NGOs, and service businesses. Focus on credible online presence without bloated tooling."
+            title="Websites & brand systems"
+            description="Fast, clean sites for SMEs, founders, NGOs, and service businesses. A credible presence without bloated tooling."
             icon={Globe}
-            highlight
             href="#contact"
+            cta="Request a site"
           />
           <Card
-            title="AI Business Tools (SolidAI)"
-            description="Sector-specific agents, workflow assistants, and automations designed for practical business support across local markets."
+            title="SolidAI business tools"
+            description="Sector-specific agents and workflow assistants for drafting, planning, and triage across local markets — with expert review where it matters."
             icon={Brain}
             highlight
             href="/solid-llm"
+            cta="Explore SolidAI"
           />
           <Card
-            title="Cloud & Infrastructure"
-            description="Cloudflare, NGINX, cPanel migration. Hosting dashboards, deployment pipelines, and monitoring for cleaner operations."
+            title="Solid Cloud & infrastructure"
+            description="Hosting, Cloudflare, NGINX, and cPanel migration. Dashboards, deploy pipelines, and monitoring for cleaner operations."
             icon={Cloud}
-            highlight
             href="#contact"
+            cta="Talk infrastructure"
           />
           <Card
-            title="Dashboards & Internal Apps"
-            description="Operational interfaces for files, billing, staff, client tasks, reports, and admin workflows."
+            title="Dashboards & internal apps"
+            description="Operational interfaces for files, billing, staff, client tasks, reports, and admin workflows — scoped to the team that will use them."
             icon={LayoutDashboard}
-            highlight
             href="#contact"
+            cta="Discuss a dashboard"
           />
         </div>
       </div>

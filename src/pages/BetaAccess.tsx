@@ -102,10 +102,10 @@ export default function BetaAccess() {
               <span>Limited Early Access</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 uppercase leading-[0.9] text-charcoal">
-              Shape the <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-charcoal to-slate-400">Intelligent</span> <br /> Future.
+              Get early <br /> access to <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-charcoal to-slate-400">SolidAI</span>
             </h1>
             <p className="text-xl text-slate-600 leading-relaxed mb-12 max-w-xl font-medium">
-              We're opening a limited number of spots on our early access list as SolidAI agents come online. Join the cohort helping us shape SolidAI for real-world deployments across Africa.
+              A limited early-access list as SolidAI agents come online. Help us decide which sectors we ship first for African SMEs.
             </p>
 
             <div className="space-y-6">
@@ -165,16 +165,16 @@ export default function BetaAccess() {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label htmlFor="beta-first-name" className="text-[10px] font-black uppercase tracking-widest text-slate-500">First Name</label>
-                      <input id="beta-first-name" required name="firstName" className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/30 transition-all font-medium" placeholder="Jane" />
+                      <input id="beta-first-name" required name="firstName" autoComplete="given-name" className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/40 focus:ring-2 focus:ring-charcoal/10 transition-all font-medium" placeholder="Tendai" />
                     </div>
                     <div className="space-y-2">
                       <label htmlFor="beta-last-name" className="text-[10px] font-black uppercase tracking-widest text-slate-500">Last Name</label>
-                      <input id="beta-last-name" required name="lastName" className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/30 transition-all font-medium" placeholder="Doe" />
+                      <input id="beta-last-name" required name="lastName" autoComplete="family-name" className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/40 focus:ring-2 focus:ring-charcoal/10 transition-all font-medium" placeholder="Moyo" />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="beta-email" className="text-[10px] font-black uppercase tracking-widest text-slate-500">Work Email</label>
-                    <input id="beta-email" required type="email" name="email" className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/30 transition-all font-medium" placeholder="jane@company.com" />
+                    <input id="beta-email" required type="email" name="email" autoComplete="email" className="w-full bg-slate-50 border border-black/10 rounded-lg px-4 py-3 focus:outline-none focus:border-charcoal/40 focus:ring-2 focus:ring-charcoal/10 transition-all font-medium" placeholder="tendai@business.co.zw" />
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="beta-message" className="text-[10px] font-black uppercase tracking-widest text-slate-500">Project Description</label>

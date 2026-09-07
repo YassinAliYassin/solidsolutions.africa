@@ -17,6 +17,13 @@
   body {
     @apply bg-bg-main text-slate-800 antialiased selection:bg-black/10 selection:text-black;
   }
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--color-charcoal);
+    outline-offset: 2px;
+  }
 }
 
 .glass-card {
@@ -64,8 +71,29 @@
   transition: transform 0.25s ease;
 }
 
-.hover-lift:hover {
-  transform: translateY(-5px);
+@media (hover: hover) and (pointer: fine) {
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: #1A1A1A;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 0.375rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
 }
 
 .fade-page {
