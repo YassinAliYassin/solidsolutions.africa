@@ -32,6 +32,14 @@ export default function Nav({ isScrolled, mobileMenuOpen, setMobileMenuOpen, nav
     };
   }, [mobileMenuOpen]);
 
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768) setMobileMenuOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [setMobileMenuOpen]);
+
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled || mobileMenuOpen ? 'bg-bg-main/90 backdrop-blur-lg border-b border-black/5 py-3 md:py-4' : 'bg-transparent py-5 md:py-8'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
