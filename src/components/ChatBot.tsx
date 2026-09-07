@@ -28,14 +28,9 @@ export function replyFor(userMessage: string): string {
     lower.includes("fee") ||
     lower.includes("charge")
   ) {
-    return `We offer scoped, SME-friendly pricing:
+    return `We quote to the work — websites, SolidAI agents, and cloud setup are scoped to your team and budget.
 
-• Websites: from $500 for a complete business site
-• SolidAI Agents: free trial, then $29/month per agent
-• Cloud setup: $200–$500 depending on complexity
-• Custom projects: quoted to your requirements
-
-Payment plans available for SMEs. Want a custom quote?`;
+Payment plans are available for SMEs. Email info@solidsolutions.africa and we will send a clear quote.`;
   }
 
   if (
@@ -94,7 +89,7 @@ Today we ship software first: websites, SolidAI agents, cloud, and dashboards. A
 • Monitoring and backups
 • Edge-friendly architectures where bandwidth is limited
 
-Typical setup: $200–$500 depending on scope. Want a walkthrough?`;
+Want a walkthrough? Email info@solidsolutions.africa.`;
   }
 
   if (
@@ -106,12 +101,12 @@ Typical setup: $200–$500 depending on scope. Want a walkthrough?`;
   ) {
     return `Current focus:
 
-1. SolidAI sector agents (free trial live)
-2. SME websites & dashboards
+1. SolidAI sector agents (in active development)
+2. SME websites and dashboards
 3. Cloud / hosting packages
 4. Later: hardware and deeper edge tooling
 
-Tell me which track you care about and I’ll point you to the right next step.`;
+Tell me which track you care about and I will point you to the right next step.`;
   }
 
   if (
@@ -132,7 +127,7 @@ Tell me which track you care about and I’ll point you to the right next step.`
 • Finance — invoices, expenses
 • Legal, transport, energy, retail — and more
 
-Each agent is built for day-to-day business support. Want to try one?`;
+Each agent is built for day-to-day business support. Request early access at /beta or email info@solidsolutions.africa.`;
   }
 
   if (
@@ -165,7 +160,7 @@ Learn more at solidsolutions.africa or email info@solidsolutions.africa.`;
 3. Cloud & infrastructure
 4. Dashboards & internal apps
 
-SolidAI agents are on free trial. Which area interests you?`;
+Which area interests you?`;
   }
 
   return `Thanks for your message — I'm the Solid Solutions assistant.
@@ -185,7 +180,7 @@ export function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hello! I'm the Solid Solutions assistant. How can I help you today?",
+      content: "Hello — I'm the Solid Solutions assistant. Ask about services, SolidAI, or how to get in touch.",
     },
   ]);
   const [input, setInput] = useState("");

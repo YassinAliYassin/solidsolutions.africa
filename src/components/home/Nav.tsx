@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { useEffect } from "react";
 import Logo from '../Logo';
 
 interface NavLink {
@@ -24,23 +25,38 @@ export default function Nav({ isScrolled, mobileMenuOpen, setMobileMenuOpen, nav
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-bg-main/80 backdrop-blur-lg border-b border-black/5 py-6' : 'bg-transparent py-8'}`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled || mobileMenuOpen ? 'bg-bg-main/90 backdrop-blur-lg border-b border-black/5 py-3 md:py-4' : 'bg-transparent py-5 md:py-8'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <div className="flex items-center gap-3 group cursor-pointer">
-          <Logo className="h-11 w-11 md:h-12 md:w-12 shrink-0" />
-        </div>
+        <a href="/" className="flex items-center gap-3 group" aria-label="Solid Solutions home">
+          <Logo className="h-10 w-10 md:h-11 md:w-11 shrink-0" />
+          <span className="hidden sm:block text-sm md:text-base font-black tracking-tight text-charcoal uppercase leading-none">
+            Solid Solutions
+          </span>
+        </a>
         <div className="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-widest text-slate-500">
           {navLinks.map((link) => (
-            <a key={link.label} href={link.href} className="hover:text-charcoal transition-colors">{link.label}</a>
+            <a key={link.label} href={link.href} className="hover:text-charcoal transition-colors">
+              {link.label}
+            </a>
           ))}
-          <a href="#contact" className="px-5 py-2 bg-charcoal text-white rounded shadow-xl hover:shadow-black/20 transition-all">Contact</a>
+          <a href="#contact" className="px-5 py-2 bg-charcoal text-white rounded shadow-xl hover:shadow-black/20 transition-all">
+            Contact
+          </a>
         </div>
         <button
           onClick={() => setMobileMenuOpen((prev) => !prev)}
           className="md:hidden grid h-10 w-10 place-items-center rounded-lg border border-black/10 text-charcoal hover:bg-black/5 transition-colors"
-          aria-label="Toggle menu"
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-nav"
         >
           {mobileMenuOpen ? (
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
@@ -50,8 +66,8 @@ export default function Nav({ isScrolled, mobileMenuOpen, setMobileMenuOpen, nav
         </button>
       </div>
       {mobileMenuOpen && (
-        <div className="overflow-hidden border-t border-black/5 bg-white md:hidden mobile-menu">
-          <nav className="flex flex-col gap-1 px-6 py-4">
+        <div id="mobile-nav" className="overflow-hidden border-t border-black/5 bg-white md:hidden mobile-menu">
+          <nav className="flex flex-col gap-1 px-6 py-4" aria-label="Mobile">
             {navLinks.map((link) => (
               <button
                 key={link.label}
@@ -65,7 +81,7 @@ export default function Nav({ isScrolled, mobileMenuOpen, setMobileMenuOpen, nav
               onClick={() => handleMobileNav("#contact")}
               className="mt-2 flex h-11 items-center justify-center rounded-lg bg-charcoal px-5 text-sm font-bold text-white transition hover:bg-slate-800"
             >
-              Contact
+              Start a conversation
             </button>
           </nav>
         </div>

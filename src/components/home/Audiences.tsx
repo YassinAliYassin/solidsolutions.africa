@@ -15,23 +15,25 @@ const AUDIENCES = [
   },
   {
     icon: Code,
-    title: "For Builders",
+    title: "For builders",
     desc: "Developer-friendly workflows, reusable components, and evolving agent tooling."
   },
   {
     icon: Heart,
-    title: "For Ownership",
+    title: "For ownership",
     desc: "Infrastructure choices that reduce dependency, keep data closer, and support long-term control."
   },
 ];
 
 export default function Audiences() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-20 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        <SectionTitle>Who We Serve</SectionTitle>
+        <SectionTitle subtitle="SMEs first. Builders and long-term owners are welcome.">
+          Who we serve
+        </SectionTitle>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
           {AUDIENCES.map((item, i) => (
             <Reveal key={i} delay={i * 100} className="text-center glass-card p-8 bg-slate-50 border-black/5">
               <div className="w-16 h-16 rounded-2xl bg-charcoal text-white flex items-center justify-center mx-auto mb-6 shadow-lg">
