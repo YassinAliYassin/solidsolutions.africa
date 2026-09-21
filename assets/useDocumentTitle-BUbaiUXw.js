@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-CbXtAM7H.js";import{r as t}from"./react-vendor-BD62_gQY.js";var n=e(t(),1),r=`Solid Solutions`;function i(e){(0,n.useEffect)(()=>{let t=document.title;return document.title=e?`${e} | ${r}`:r,()=>{document.title=t}},[e])}export{i as t};
