@@ -7,15 +7,14 @@ import { motion } from "motion/react";
 import { 
   Brain, 
   Cpu, 
-  MessageSquare, 
   Globe, 
-  ArrowLeft, 
   Sparkles,
   Zap,
   Shield,
   Code
 } from "lucide-react";
 import Footer from '../components/Footer';
+import Logo from '../components/Logo';
 import MobileNav from '../components/MobileNav';
 import { useState, useEffect, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
@@ -64,11 +63,9 @@ export default function SolidLLM() {
       {/* Navigation - Match main site style */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-bg-main/80 backdrop-blur-lg border-b border-black/5 py-4' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative">
-          <a href="/" onClick={handleBack} className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-charcoal rounded flex items-center justify-center transition-transform group-hover:scale-110">
-              <div className="w-3 h-3 border-2 border-white rounded-sm"></div>
-            </div>
-            <span className="text-xl font-bold tracking-tight text-charcoal uppercase">SOLID SOLUTIONS</span>
+          <a href="/" onClick={handleBack} className="flex items-center gap-2 group" aria-label="Solid Solutions home">
+            <Logo className="h-8 w-8 shrink-0 transition-transform group-hover:scale-105" />
+            <span className="text-xl font-bold tracking-tight text-charcoal uppercase">Solid Solutions</span>
           </a>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
             <a href="/solid-llm/about" className="hover:text-charcoal transition-colors">About</a>
@@ -108,7 +105,7 @@ export default function SolidLLM() {
               className="inline-flex items-center gap-2 px-4 py-2 bg-charcoal/5 rounded-full border border-charcoal/10 text-charcoal text-xs font-bold uppercase tracking-widest mb-8"
             >
               <Sparkles size={14} className="text-slate-600" />
-              <span>Solid Solutions AI Research & Development Hub</span>
+              <span>SolidAI · Solid Solutions</span>
             </motion.div>
             
             <motion.h1 
@@ -126,7 +123,7 @@ export default function SolidLLM() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-xl text-slate-600 mb-12 leading-relaxed max-w-2xl mx-auto"
             >
-              Our dedicated center for exploring the practical applications of artificial intelligence in the African context. Moving beyond theoretical models to build AI that understands local languages and powers the next generation of digital infrastructure.
+              Sector-specific agents for African SMEs — practical tools that draft, plan, and triage. Designed toward local languages and modest infrastructure, with expert review where it matters.
             </motion.p>
 
             <motion.div 
@@ -150,25 +147,25 @@ export default function SolidLLM() {
       <section id="features" className="py-24 bg-bg-main">
         <div className="max-w-7xl mx-auto px-6">
           <div id="capabilities" className="text-center mb-20 scroll-mt-28">
-            <h2 className="text-4xl font-bold text-charcoal mb-4">Uncompromising Performance</h2>
-            <p className="text-slate-600 max-w-xl mx-auto">SolidAI is built from the ground up to address the specific challenges of deploying advanced AI across the African continent.</p>
+            <h2 className="text-4xl font-bold text-charcoal mb-4">Built for African conditions</h2>
+            <p className="text-slate-600 max-w-xl mx-auto">SolidAI is being designed for the practical challenges of running AI for SMEs — patchy connectivity, modest hardware, and work that still needs a human in the loop.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                title: "Hyper-Local NLP",
-                desc: "Deep understanding of diverse regional dialects and languages, moving beyond standard English-centric training.",
+                title: "Local language support",
+                desc: "Designed toward regional languages and dialects, rather than assuming English-only business workflows.",
                 icon: Brain
               },
               {
-                title: "Edge Efficiency",
-                desc: "Optimized model quantization that allows sophisticated reasoning on low-power hardware without constant cloud connectivity.",
+                title: "Edge-aware design",
+                desc: "Starting lightweight so assistants stay useful on modest hardware and unreliable connectivity.",
                 icon: Cpu
               },
               {
-                title: "Privacy-First",
-                desc: "Sovereign data management protocols ensuring that sensitive African data stays within defined boundaries.",
+                title: "Privacy-conscious",
+                desc: "Collect less, keep control closer. Formal certifications are on the roadmap, not a claim we make today.",
                 icon: Shield
               }
             ].map((feature, i) => (
@@ -200,10 +197,10 @@ export default function SolidLLM() {
 
               <ul className="space-y-6">
                 {[
-                  "Hyper-local NLP for diverse African dialects",
-                  "Agri-Tech Intelligence for crop disease detection",
-                  "Predictive models for inclusive financial services",
-                  "Edge-AI Deployment on low-power hardware"
+                  "Local-language support for African markets",
+                  "Agriculture workflows for planning and logistics",
+                  "Finance helpers for invoices and cash-flow",
+                  "Edge-first design for low-power hardware"
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-4">
                     <div className="w-6 h-6 rounded-full bg-charcoal text-white flex items-center justify-center flex-shrink-0">

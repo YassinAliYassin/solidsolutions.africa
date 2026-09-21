@@ -22,10 +22,10 @@ import Contact from '../components/home/Contact';
 import LegalModals, { type LegalModal } from '../components/home/LegalModals';
 
 const NAV_LINKS = [
-  { label: "About", href: "#about" },
   { label: "Services", href: "#offerings" },
+  { label: "Platforms", href: "#platforms" },
   { label: "Sectors", href: "#sectors" },
-  { label: "Why Us", href: "#why" },
+  { label: "Roadmap", href: "#roadmap" },
 ];
 
 export default function Home() {
@@ -55,6 +55,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen font-sans selection:bg-charcoal/10">
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <div className="fade-page">
         <Nav
           isScrolled={isScrolled}
@@ -62,19 +65,21 @@ export default function Home() {
           setMobileMenuOpen={setMobileMenuOpen}
           navLinks={NAV_LINKS}
         />
-        <Hero />
-        <Metrics />
-        <About />
-        <Offerings />
-        <Ecosystem />
-        <Sectors />
-        <Stack />
-        <Priorities />
-        <HowWeBuild />
-        <WhyUs />
-        <Roadmap />
-        <Audiences />
-        <Contact />
+        <main id="main">
+          <Hero />
+          <Metrics />
+          <About />
+          <Offerings />
+          <Ecosystem />
+          <Sectors />
+          <Stack />
+          <Priorities />
+          <HowWeBuild />
+          <WhyUs />
+          <Roadmap />
+          <Audiences />
+          <Contact />
+        </main>
         <Footer setActiveModal={setActiveModal} />
       </div>
 

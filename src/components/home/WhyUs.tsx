@@ -26,17 +26,19 @@ const REASONS = [
   {
     icon: Zap,
     title: "Fast iteration loops",
-    desc: "Web, cloud, and agent workflows improve together."
+    desc: "Web, cloud, and agent workflows improve together — one studio, one backlog."
   },
 ];
 
 export default function WhyUs() {
   return (
-    <section id="why" className="py-24 bg-white">
+    <section id="why" className="py-20 md:py-24 bg-white scroll-mt-28">
       <div className="max-w-7xl mx-auto px-6">
-        <SectionTitle>Why Choose Solid Solutions</SectionTitle>
+        <SectionTitle subtitle="Built for small teams, real budgets, and African operating conditions.">
+          Why Solid Solutions
+        </SectionTitle>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           {REASONS.map((item, i) => (
             <Reveal key={i} delay={i * 80} className="glass-card p-8 bg-slate-50 border-black/5 flex gap-6">
               <div className="w-12 h-12 rounded-xl bg-charcoal text-white flex items-center justify-center flex-shrink-0 shadow-lg">

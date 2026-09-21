@@ -7,15 +7,14 @@ import { SectionTitle } from './shared';
 
 export default function About() {
   return (
-    <section id="about" className="py-24 bg-bg-dark relative overflow-hidden border-y border-black/5">
+    <section id="about" className="py-20 md:py-24 bg-bg-dark relative overflow-hidden border-y border-black/5 scroll-mt-28">
       <div className="max-w-7xl mx-auto px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <SectionTitle>A Unified Technology Studio</SectionTitle>
-          <p className="text-lg text-slate-600 mb-6 leading-relaxed font-medium">
-            Solid Solutions is an African SME technology studio building practical AI, cloud, and web systems. It operates as a unified ecosystem — not isolated tools — combining strategy, design, automation, and infrastructure under one studio.
-          </p>
+          <SectionTitle subtitle="Strategy, design, automation, and infrastructure under one roof — so African SMEs are not buying a website from one vendor and a chatbot from another.">
+            One studio, not a pile of tools
+          </SectionTitle>
           <p className="text-lg text-slate-600 leading-relaxed font-medium">
-            Based in Harare, Zimbabwe, we serve small and medium enterprises across Africa with focused tools: SolidAI agents, Solid Cloud workspaces, and AionUI command layers — backed by clean infrastructure that helps small teams operate with less friction.
+            From Harare, we ship SolidAI agents, Solid Cloud workspaces, and the AionUI command layer as a single ecosystem. The aim is simple: help small teams look credible online, respond faster, and run day-to-day work with less friction.
           </p>
         </div>
       </div>

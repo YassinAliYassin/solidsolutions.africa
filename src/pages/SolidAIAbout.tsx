@@ -66,7 +66,7 @@ export default function SolidAIAbout() {
             <div className="w-8 h-8 bg-white rounded flex items-center justify-center transition-transform group-hover:scale-110">
               <ArrowLeft className="text-black" size={16} />
             </div>
-            <span className="text-xl font-bold tracking-tight text-white uppercase">ABOUT SOLID AI</span>
+            <span className="text-xl font-bold tracking-tight text-white uppercase">About SolidAI</span>
           </a>
         </div>
       </nav>
@@ -99,7 +99,7 @@ export default function SolidAIAbout() {
               transition={{ delay: 0.4 }}
               className="text-xl text-slate-400 leading-relaxed"
             >
-              SolidAI is more than just a large language model. It's a foundational effort to build digital sovereignty through localized intelligence, optimized for Africa's unique infrastructure and linguistic diversity.
+              SolidAI is not a general-purpose chatbot. It is a studio effort to build sector agents that understand local work, stay useful on modest infrastructure, and keep a human in the loop.
             </motion.p>
           </div>
         </div>
@@ -113,9 +113,9 @@ export default function SolidAIAbout() {
               <div className="w-12 h-12 rounded-xl bg-white text-black flex items-center justify-center">
                 <Target size={24} />
               </div>
-              <h3 className="text-2xl font-bold text-white">Hyper-Localization</h3>
+              <h3 className="text-2xl font-bold text-white">Local context</h3>
               <p className="text-slate-400 leading-relaxed">
-                Standard LLMs are trained on predominantly Western data. We prioritize the training and fine-tuning of models on African dialects, socio-economic contexts, and regional knowledge systems.
+                Most models are trained on Western data. We are designing SolidAI toward African dialects, informal workflows, and the knowledge small teams actually use.
               </p>
             </div>
             
@@ -123,9 +123,9 @@ export default function SolidAIAbout() {
               <div className="w-12 h-12 rounded-xl bg-white text-black flex items-center justify-center">
                 <Compass size={24} />
               </div>
-              <h3 className="text-2xl font-bold text-white">Resilient Architecture</h3>
+              <h3 className="text-2xl font-bold text-white">Resilient architecture</h3>
               <p className="text-slate-400 leading-relaxed">
-                We design for environments where connectivity can be inconsistent. Our models are optimized for edge deployment, allowing complex reasoning to happen on-device or on local nodes.
+                We design for inconsistent connectivity. Agents start lightweight so they stay useful on modest hardware, then gain capability as each sector use case is validated.
               </p>
             </div>
             
@@ -133,9 +133,9 @@ export default function SolidAIAbout() {
               <div className="w-12 h-12 rounded-xl bg-white text-black flex items-center justify-center">
                 <ShieldCheck size={24} />
               </div>
-              <h3 className="text-2xl font-bold text-white">Data Sovereignty</h3>
+              <h3 className="text-2xl font-bold text-white">Closer data control</h3>
               <p className="text-slate-400 leading-relaxed">
-                We believe in the "Right to Data." Our systems are built to ensure that critical African infrastructure and personal information remain governed by local privacy and security standards.
+                Collect less, keep control closer. Formal compliance certifications are on the roadmap — not a claim we make today.
               </p>
             </div>
           </div>
@@ -164,7 +164,7 @@ export default function SolidAIAbout() {
             <div>
               <h2 className="text-4xl font-bold mb-8 tracking-tight uppercase">Evolving Beyond <br /> Prediction.</h2>
               <p className="text-lg text-white/70 mb-8 leading-relaxed">
-                Most AI today is trained to predict the next word. SolidAI is being developed to solve actual problems—from optimizing supply chains in remote areas to providing accurate medical guidance in local languages.
+                Most AI today is trained to predict the next word. SolidAI is being developed to help with real SME work — drafting, planning, triage, and operations — while keeping expert review where it matters.
               </p>
               
               <div className="space-y-4">
@@ -172,7 +172,7 @@ export default function SolidAIAbout() {
                   { icon: Users, text: "Community-driven research and feedback loops" },
                   { icon: Cpu, text: "Hardware-aware model optimization" },
                   { icon: Database, text: "Clean, verified, and inclusive datasets" },
-                  { icon: Globe, text: "Deployment across terrestrial and satellite networks" }
+                  { icon: Globe, text: "Designed for patchy terrestrial networks" }
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/5">
                     <item.icon size={20} className="text-white/60" />
@@ -200,7 +200,7 @@ export default function SolidAIAbout() {
             <a href="/coming-soon" className="hover:text-white transition-colors">Twitter</a>
             <a href="/coming-soon" className="hover:text-white transition-colors">GitHub</a>
           </div>
-          <p className="text-slate-600 text-sm">© 2026 Solid Solutions. Intelligence for the Future.</p>
+          <p className="text-slate-600 text-sm">© {new Date().getFullYear()} Solid Solutions. Practical AI, cloud, and web systems.</p>
         </div>
       </footer>
     </div>

@@ -157,8 +157,8 @@ export default function SolidAI() {
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              The Future of AI in<br />
-              <span className="gradient-text">Africa & Beyond</span>
+              Sector agents for<br />
+              <span className="gradient-text">African SMEs</span>
             </h1>
 
             <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
@@ -203,10 +203,10 @@ export default function SolidAI() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-4">
-              Built for <span className="gradient-text">Modern AI</span>
+              Built for <span className="gradient-text">how SMEs work</span>
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Everything you need to integrate cutting-edge AI into your applications
+              Practical agents for local workflows — not a generic chatbot bolted onto your business.
             </p>
           </motion.div>
 
@@ -293,7 +293,7 @@ export default function SolidAI() {
             className="glass-card rounded-3xl p-12 glow"
           >
             <h2 className="text-4xl font-bold mb-4">
-              Ready to build the <span className="gradient-text">future</span>?
+              Ready to shape <span className="gradient-text">SolidAI</span>?
             </h2>
             <p className="text-gray-400 mb-8 max-w-xl mx-auto">
               Join our early access list and help shape which SolidAI agents we
