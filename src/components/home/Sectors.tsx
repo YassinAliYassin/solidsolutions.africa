@@ -29,7 +29,7 @@ export default function Sectors() {
           {SECTORS.map((sector, i) => (
             <Reveal key={i} delay={i * 50} className="glass-card p-5 md:p-6 bg-white border-black/5 text-center group cursor-default hover-lift">
               <div className="text-3xl mb-3" aria-hidden="true">{sector.emoji}</div>
-              <h4 className="text-sm font-black text-charcoal mb-2">{sector.name}</h4>
+              <h3 className="text-sm font-black text-charcoal mb-2">{sector.name}</h3>
               <p className="text-xs text-slate-500 font-medium leading-relaxed">{sector.desc}</p>
             </Reveal>
           ))}

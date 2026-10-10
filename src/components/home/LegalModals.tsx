@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { useEffect } from "react";
+
 const LEGAL_EFFECTIVE_DATE = "January 1, 2026";
 
 export type LegalModal = 'privacy' | 'terms' | null;
@@ -13,6 +15,15 @@ interface LegalModalsProps {
 }
 
 export default function LegalModals({ activeModal, onClose }: LegalModalsProps) {
+  useEffect(() => {
+    if (!activeModal) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeModal, onClose]);
+
   if (!activeModal) return null;
 
   return (
@@ -21,14 +32,18 @@ export default function LegalModals({ activeModal, onClose }: LegalModalsProps) 
       onClick={onClose}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="legal-modal-title"
         onClick={(e) => e.stopPropagation()}
         className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] border border-black/10 modal-panel"
       >
         <div className="p-6 border-b border-black/5 flex justify-between items-center bg-bg-dark sticky top-0 z-10">
-          <h2 className="text-xl font-bold text-charcoal">
+          <h2 id="legal-modal-title" className="text-xl font-bold text-charcoal">
             {activeModal === 'privacy' ? 'Privacy Policy' : 'Terms of Service'}
           </h2>
           <button
+            type="button"
             onClick={onClose}
             aria-label="Close"
             className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors text-slate-500 hover:text-charcoal"

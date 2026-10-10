@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { MessageSquare } from "lucide-react";
 
 const ChatBot = lazy(() =>
@@ -20,27 +20,15 @@ function ChatFabShell({ onClick }: { onClick: () => void }) {
 }
 
 export function DeferredChatBot() {
-  const [ready, setReady] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const enable = () => setReady(true);
-
-    if ("requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(enable, { timeout: 3000 });
-      return () => window.cancelIdleCallback(id);
-    }
-
-    const id = globalThis.setTimeout(enable, 2500);
-    return () => globalThis.clearTimeout(id);
-  }, []);
-
-  if (!ready) {
-    return <ChatFabShell onClick={() => setReady(true)} />;
+  if (!open) {
+    return <ChatFabShell onClick={() => setOpen(true)} />;
   }
 
   return (
     <Suspense fallback={<ChatFabShell onClick={() => {}} />}>
-      <ChatBot />
+      <ChatBot initialOpen />
     </Suspense>
   );
 }

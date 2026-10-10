@@ -19,7 +19,9 @@ const galleryItems = [
 ];
 
 export default function PictureGallery() {
-  useDocumentTitle("Gallery");
+  useDocumentTitle("Gallery", {
+    description: "The Solid Solutions logo shown at several sizes.",
+  });
   const navigate = useNavigate();
 
   return (
@@ -83,12 +85,12 @@ export default function PictureGallery() {
               info@solidsolutions.africa
             </a>
           </p>
-          <button
-            onClick={() => navigate("/#contact")}
-            className="px-8 py-3 bg-charcoal text-white font-black uppercase tracking-widest text-xs rounded shadow-xl hover:shadow-black/20 transition-all"
+          <a
+            href="/#contact"
+            className="inline-flex px-8 py-3 bg-charcoal text-white font-black uppercase tracking-widest text-xs rounded shadow-xl hover:shadow-black/20 transition-all"
           >
             Get in Touch
-          </button>
+          </a>
         </div>
       </div>
     </motion.div>

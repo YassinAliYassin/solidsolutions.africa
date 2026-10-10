@@ -39,7 +39,7 @@ export default function Ecosystem() {
             <a href="#contact" className="text-charcoal text-sm font-bold flex items-center gap-1 group w-fit">
               Ask about Solid Cloud <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </a>
-            <span className="mt-3 text-[10px] font-black uppercase tracking-widest text-slate-400">Coming soon</span>
+            <span className="mt-3 text-xs font-black uppercase tracking-widest text-slate-600">Coming soon</span>
           </div>
 
           <div className="glass-card hover-lift p-8 bg-white border-black/5 flex flex-col">
@@ -53,7 +53,7 @@ export default function Ecosystem() {
             <a href="#contact" className="text-charcoal text-sm font-bold flex items-center gap-1 group w-fit">
               Ask about AionUI <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </a>
-            <span className="mt-3 text-[10px] font-black uppercase tracking-widest text-slate-400">In development</span>
+            <span className="mt-3 text-xs font-black uppercase tracking-widest text-slate-600">In development</span>
           </div>
         </div>
       </div>

@@ -5,13 +5,14 @@ type LogoProps = SVGAttributes<SVGSVGElement> & {
 };
 
 export default function Logo({ className, size = 48, width, height, ...props }: LogoProps) {
+  const hidden = props["aria-hidden"] === true || props["aria-hidden"] === "true";
   return (
     <svg
       viewBox="0 0 48 48"
       width={width ?? size}
       height={height ?? size}
-      role="img"
-      aria-label="Solid Solutions"
+      role={hidden ? undefined : "img"}
+      aria-label={hidden ? undefined : "Solid Solutions"}
       className={className}
       {...props}
     >

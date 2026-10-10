@@ -7,11 +7,12 @@ import { motion } from "motion/react";
 import { ArrowLeft, Globe, Mail } from "lucide-react";
 import { useState, useEffect, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import Lenis from "lenis";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export default function ComingSoon() {
-  useDocumentTitle("Coming Soon");
+  useDocumentTitle("Coming Soon", {
+    description: "Some Solid Solutions channels are not live yet. Email info@solidsolutions.africa in the meantime.",
+  });
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
 
@@ -25,18 +26,10 @@ export default function ComingSoon() {
   };
 
   useEffect(() => {
-    const lenis = new Lenis();
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      lenis.destroy();
-    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (

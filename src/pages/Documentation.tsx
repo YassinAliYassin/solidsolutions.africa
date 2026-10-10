@@ -7,12 +7,13 @@ import { motion } from "motion/react";
 import { ArrowLeft, Book, Code, Terminal, Zap, Search, ChevronRight } from "lucide-react";
 import { useState, useEffect, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import Lenis from "lenis";
 import { Check } from "lucide-react";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export default function Documentation() {
-  useDocumentTitle("Documentation");
+  useDocumentTitle("Documentation", {
+    description: "Documentation for integrating SolidAI. Early access is requested on the beta page.",
+  });
   const [isScrolled, setIsScrolled] = useState(false);
   const [copied, setCopied] = useState(false);
   const navigate = useNavigate();
@@ -33,18 +34,10 @@ export default function Documentation() {
   };
 
   useEffect(() => {
-    const lenis = new Lenis();
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      lenis.destroy();
-    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -79,16 +72,16 @@ export default function Documentation() {
             <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-4">Getting Started</h4>
             <ul className="space-y-3 text-sm text-slate-500 font-bold">
               <li className="text-charcoal font-black">Introduction</li>
-              <li className="hover:text-charcoal cursor-pointer transition-colors">Quickstart Guide</li>
-              <li className="hover:text-charcoal cursor-pointer transition-colors">Core Concepts</li>
+              <li>Quickstart Guide</li>
+              <li>Core Concepts</li>
             </ul>
           </div>
           <div>
             <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-4">API Reference</h4>
             <ul className="space-y-3 text-sm text-slate-500 font-bold">
-              <li className="hover:text-charcoal cursor-pointer transition-colors">Authentication</li>
-              <li className="hover:text-charcoal cursor-pointer transition-colors">Endpoints</li>
-              <li className="hover:text-charcoal cursor-pointer transition-colors">Rate Limits</li>
+              <li>Authentication</li>
+              <li>Endpoints</li>
+              <li>Rate Limits</li>
             </ul>
           </div>
         </aside>
@@ -124,7 +117,8 @@ export default function Documentation() {
             <div className="bg-slate-900 border border-black/10 rounded-xl p-6 font-mono text-sm overflow-x-auto mb-6 shadow-2xl relative group/code">
               <div className="flex justify-between items-center mb-4 border-b border-white/5 pb-4">
                 <span className="text-slate-500 font-bold">Bash</span>
-                <button 
+                <button
+                  type="button"
                   onClick={handleCopy}
                   className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-slate-400 hover:text-white transition-colors"
                 >
@@ -174,9 +168,9 @@ export default function Documentation() {
           <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-4">On this page</h4>
           <ul className="space-y-3 text-xs text-slate-500 font-bold">
             <li className="text-charcoal">Introduction</li>
-            <li className="hover:text-charcoal cursor-pointer transition-colors">Core Features</li>
-            <li className="hover:text-charcoal cursor-pointer transition-colors">Installation</li>
-            <li className="hover:text-charcoal cursor-pointer transition-colors">SDK Overview</li>
+            <li>Core Features</li>
+            <li>Installation</li>
+            <li>SDK Overview</li>
           </ul>
         </aside>
       </div>

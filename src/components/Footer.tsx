@@ -11,7 +11,7 @@ export default function Footer({ setActiveModal }: FooterProps) {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 mb-12">
           <div className="sm:col-span-2 md:col-span-2">
-            <a href="/" className="inline-flex items-center gap-3 mb-6" aria-label="Solid Solutions home">
+            <a href="/" className="inline-flex items-center gap-3 mb-6">
               <Logo size={32} className="shrink-0" />
               <span className="text-lg font-black tracking-tight text-charcoal uppercase">Solid Solutions</span>
             </a>
@@ -32,7 +32,8 @@ export default function Footer({ setActiveModal }: FooterProps) {
               <li><a href="/#platforms" className="hover:text-charcoal transition-colors">Platforms</a></li>
               <li><a href="/#sectors" className="hover:text-charcoal transition-colors">Sectors</a></li>
               <li><a href="/#roadmap" className="hover:text-charcoal transition-colors">Roadmap</a></li>
-              <li><a href="/#contact" className="hover:text-charcoal transition-colors">Contact</a></li>
+              <li><a href="/#faq" className="hover:text-charcoal transition-colors">FAQ</a></li>
+              <li><a href="/#contact" className="hover:text-charcoal transition-colors">Quote</a></li>
             </ul>
           </div>
           <div>
@@ -40,8 +41,8 @@ export default function Footer({ setActiveModal }: FooterProps) {
             <ul className="space-y-3 text-sm text-slate-500 font-bold uppercase tracking-wider">
               {setActiveModal ? (
                 <>
-                  <li><button onClick={() => setActiveModal('privacy')} className="hover:text-charcoal transition-colors">Privacy Policy</button></li>
-                  <li><button onClick={() => setActiveModal('terms')} className="hover:text-charcoal transition-colors">Terms of Service</button></li>
+                  <li><button type="button" onClick={() => setActiveModal('privacy')} className="hover:text-charcoal transition-colors">Privacy Policy</button></li>
+                  <li><button type="button" onClick={() => setActiveModal('terms')} className="hover:text-charcoal transition-colors">Terms of Service</button></li>
                 </>
               ) : (
                 <>
@@ -56,10 +57,12 @@ export default function Footer({ setActiveModal }: FooterProps) {
           <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] text-center md:text-left">
             © {new Date().getFullYear()} Solid Solutions. All rights reserved.
           </p>
-          <div className="flex gap-4 sm:gap-6 text-slate-400 font-bold uppercase tracking-widest text-[10px] items-center">
+          <div className="flex gap-4 sm:gap-6 text-slate-600 font-bold uppercase tracking-widest text-xs items-center">
             <a href="/documentation" title="Documentation" className="flex items-center gap-2 hover:text-charcoal transition-colors"><Globe size={18} aria-hidden="true" /> Docs</a>
             <a href="/beta" title="Developer Beta" className="flex items-center gap-2 hover:text-charcoal transition-colors"><Code size={18} aria-hidden="true" /> Beta</a>
             <a href="/solid-llm" title="SolidAI" className="flex items-center gap-2 hover:text-charcoal transition-colors"><Network size={18} aria-hidden="true" /> SolidAI</a>
+            <a href="https://t.me/solidsolutionsafrica" className="hover:text-charcoal transition-colors">Telegram</a>
+            <a href="https://github.com/YassinAliYassin" className="hover:text-charcoal transition-colors">GitHub</a>
           </div>
         </div>
       </div>

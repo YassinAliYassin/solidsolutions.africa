@@ -26,7 +26,7 @@ export default function Priorities() {
           {PRIORITIES.map((item, i) => (
             <Reveal key={i} delay={i * 80} className="glass-card p-6 bg-slate-50 border-black/5">
               <item.icon size={24} className="text-charcoal mb-4" />
-              <h4 className="text-sm font-black text-charcoal mb-2">{item.title}</h4>
+              <h3 className="text-sm font-black text-charcoal mb-2">{item.title}</h3>
               <p className="text-xs text-slate-500 font-medium leading-relaxed">{item.desc}</p>
             </Reveal>
           ))}
