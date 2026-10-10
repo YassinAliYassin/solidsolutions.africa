@@ -38,7 +38,7 @@ Solid Solutions is a unified technology studio — not a collection of isolated 
 flowchart TB
     USER[Visitor] -->|HTTPS| WEB[React SPA :3000]
     WEB -->|lazy routes| ROUTES[React Router 7]
-    WEB -->|/api/chat| CHAT[Chat assistant]<-->|OpenRouter| LLM[LLM provider]
+    WEB -->|in-browser replies| CHAT[Chat assistant]
     WEB -->|build| DIST[dist/ - static]
     DIST -->|deploy WFs| GH[GitHub Actions CI/CD]
     GH -->|SFTP| CPANEL[cPanel hosting]
@@ -74,7 +74,7 @@ flowchart TB
 | Routing | React Router 7 (lazy-loaded routes) |
 | Animation | Motion, Lenis smooth scroll |
 | Icons | Lucide React, Font Awesome |
-| Chat widget | Rule-based assistant (OpenRouter integration planned) |
+| Chat widget | Rule-based assistant (no serverless function) |
 | Hosting | cPanel via SFTP, GitHub Actions CI/CD |
 
 ---
@@ -118,7 +118,7 @@ GEMINI_API_KEY=your_gemini_api_key    # Reserved for future AI integrations
 APP_URL=https://solidsolutions.africa # Self-referential links and metadata
 ```
 
-The site runs without these values. The on-site chat widget currently uses built-in rule-based responses.
+The site runs without these values. The on-site chat widget uses built-in rule-based responses and does not call a server.
 
 ---
 
@@ -135,6 +135,8 @@ Pushes to `main` trigger the **Auto Deploy** GitHub Actions workflow:
 
 Custom domain: [solidsolutions.africa](https://solidsolutions.africa) (DNS must point at Vercel while Webway `zacp111` is offline).
 
+The GitHub Pages mirror workflow is manual (`workflow_dispatch`) so a push to `main` does not spend a second full build. CI runs on pull requests; production deploy lints, tests, and builds on `main`.
+
 
 ## Project structure
 
@@ -147,7 +149,6 @@ solidsolutions.africa/
 │   └── index.css       # Global styles and Tailwind imports
 ├── public/             # Static assets (images, .htaccess)
 ├── scripts/            # Maintainer utilities (screenshot capture)
-├── prisma/             # Prisma schema (SQLite, future CMS use)
 ├── .github/
 │   ├── workflows/      # CI (lint + build) and Auto Deploy
 │   ├── ISSUE_TEMPLATE/ # Bug report and feature request forms

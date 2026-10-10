@@ -17,13 +17,14 @@ import {
 } from "lucide-react";
 import { useState, useEffect, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import Lenis from "lenis";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export default function SolidAIAbout() {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
-  useDocumentTitle("About SolidAI");
+  useDocumentTitle("About SolidAI", {
+    description: "SolidAI is Solid Solutions' applied-AI program: practical agents for African SMEs, local conditions, and modest infrastructure.",
+  });
 
   const handleBack = (e: MouseEvent) => {
     e.preventDefault();
@@ -35,26 +36,10 @@ export default function SolidAIAbout() {
   };
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      lenis.destroy();
-    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -197,8 +182,8 @@ export default function SolidAIAbout() {
           <div className="flex gap-8 text-sm font-medium text-slate-500">
             <a href="/" className="hover:text-white transition-colors">Home</a>
             <a href="/solid-llm" className="hover:text-white transition-colors">SolidAI</a>
-            <a href="/coming-soon" className="hover:text-white transition-colors">Twitter</a>
-            <a href="/coming-soon" className="hover:text-white transition-colors">GitHub</a>
+            <a href="https://t.me/solidsolutionsafrica" className="hover:text-white transition-colors">Telegram</a>
+            <a href="https://github.com/YassinAliYassin" className="hover:text-white transition-colors">GitHub</a>
           </div>
           <p className="text-slate-600 text-sm">© {new Date().getFullYear()} Solid Solutions. Practical AI, cloud, and web systems.</p>
         </div>

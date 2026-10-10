@@ -5,19 +5,21 @@
 
 import { motion } from "motion/react";
 import { ArrowLeft, Home, Search, Mail, MapPin } from "lucide-react";
+import Logo from "../components/Logo";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export default function NotFound() {
-  useDocumentTitle("Page Not Found");
+  useDocumentTitle("Page Not Found", {
+    description: "That page is not on solidsolutions.africa.",
+    noindex: true,
+  });
   return (
     <div className="min-h-screen font-sans selection:bg-charcoal/10 bg-bg-main flex flex-col">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-bg-main/80 backdrop-blur-lg border-b border-black/5 py-6">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <a href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 bg-charcoal rounded flex items-center justify-center transition-transform group-hover:scale-110">
-              <div className="w-3 h-3 border-2 border-white rounded-sm"></div>
-            </div>
+          <a href="/" className="flex items-center gap-3 group" aria-label="Solid Solutions home">
+            <Logo className="h-8 w-8" aria-hidden="true" />
             <span className="text-xl font-bold tracking-tight text-charcoal uppercase">SOLID SOLUTIONS</span>
           </a>
           <a href="/" className="px-5 py-2 bg-charcoal text-white rounded-full text-sm font-medium hover:bg-charcoal/90 transition-all">
@@ -66,6 +68,7 @@ export default function NotFound() {
                 <Home size={18} /> Back to Homepage
               </a>
               <button
+                type="button"
                 onClick={() => window.history.back()}
                 className="px-8 py-4 bg-black/5 text-charcoal font-bold uppercase tracking-wider text-sm rounded border border-black/10 hover:bg-black/10 transition-all flex items-center justify-center"
               >

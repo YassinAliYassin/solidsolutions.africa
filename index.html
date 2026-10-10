@@ -12,15 +12,23 @@
     <meta property="og:image" content="https://solidsolutions.africa/images/homepage-screenshot.png" />
     <meta property="og:image:type" content="image/png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Solid Solutions | AI, Cloud & Web Systems for African SMEs" />
+    <meta name="twitter:description" content="An African SME technology studio building practical AI, cloud, and web systems. Based in Harare, Zimbabwe." />
     <meta name="twitter:image" content="https://solidsolutions.africa/images/homepage-screenshot.png" />
     <meta name="theme-color" content="#1A1A1A" />
     <link rel="canonical" href="https://solidsolutions.africa" />
     <link rel="icon" href="/images/logo.svg" type="image/svg+xml" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="preconnect" href="https://formspree.io" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var dark = stored === "dark" || (stored !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+          document.querySelector('meta[name="theme-color"]').setAttribute("content", dark ? "#0e0e11" : "#1A1A1A");
+        } catch (e) {}
+      })();
+    </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",

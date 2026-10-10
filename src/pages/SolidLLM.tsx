@@ -18,13 +18,14 @@ import Logo from '../components/Logo';
 import MobileNav from '../components/MobileNav';
 import { useState, useEffect, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import Lenis from "lenis";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export default function SolidLLM() {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
-  useDocumentTitle("SolidAI — Intelligence Optimized for Africa");
+  useDocumentTitle("SolidAI — Intelligence Optimized for Africa", {
+    description: "Sector-specific agents for African SMEs — practical tools that draft, plan, and triage. From Solid Solutions in Harare.",
+  });
 
   const handleBack = (e: MouseEvent) => {
     e.preventDefault();
@@ -36,26 +37,10 @@ export default function SolidLLM() {
   };
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      lenis.destroy();
-    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (

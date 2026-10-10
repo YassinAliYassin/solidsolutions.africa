@@ -1,14 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faBrain,
-  faRocket,
-  faShieldAlt,
-  faCode,
-  faChartLine,
-  faUsers
-} from '@fortawesome/free-solid-svg-icons';
+import { Brain, Rocket, Shield, Code, ChartLine, Users } from 'lucide-react';
 import AgentStatusBadge from '../components/solidai/AgentStatusBadge';
 import TaskProgressBar from '../components/solidai/TaskProgressBar';
 import QuickAgentSwitcher from '../components/solidai/QuickAgentSwitcher';
@@ -17,7 +9,9 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function SolidAI() {
   const heroRef = useRef(null);
-  useDocumentTitle("SolidAI Platform");
+  useDocumentTitle("SolidAI Platform", {
+    description: "Sector-specific AI agents for African SMEs — agriculture, health, education, finance, and beyond. In active development.",
+  });
 
   useEffect(() => {
     // Gradient animation for text
@@ -57,32 +51,32 @@ export default function SolidAI() {
 
   const features = [
     {
-      icon: faBrain,
+      icon: Brain,
       title: 'Sector-Specific Agents',
       desc: 'Agents scoped to real African SME workflows — agriculture, health, education, finance, and more — not general-purpose chat.'
     },
     {
-      icon: faRocket,
+      icon: Rocket,
       title: 'Built for Local Conditions',
       desc: 'Designed to stay useful on patchy connectivity and modest hardware, starting lightweight and adding capability as it’s validated.'
     },
     {
-      icon: faShieldAlt,
+      icon: Shield,
       title: 'Privacy-Conscious by Design',
       desc: 'Data handling built around minimal collection and local control. Formal compliance certifications are on the roadmap, not yet in place.'
     },
     {
-      icon: faCode,
+      icon: Code,
       title: 'Developer First',
       desc: 'Clear APIs and documentation planned alongside the platform, so integrations stay simple as agents mature.'
     },
     {
-      icon: faChartLine,
+      icon: ChartLine,
       title: 'Grows With Demand',
       desc: 'Infrastructure choices made to scale sensibly as usage grows, rather than over-provisioning for numbers we don’t have yet.'
     },
     {
-      icon: faUsers,
+      icon: Users,
       title: 'Team Collaboration',
       desc: 'Shared workspaces and role-based access planned for teams once the core agents are live.'
     }
@@ -112,7 +106,7 @@ export default function SolidAI() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between relative">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <FontAwesomeIcon icon={faBrain} className="text-white text-sm" />
+              <Brain size={16} className="text-white" aria-hidden="true" />
             </div>
             <span className="text-xl font-bold gradient-text">SolidAI</span>
           </div>
@@ -177,15 +171,15 @@ export default function SolidAI() {
 
             <div className="mt-16 flex items-center justify-center gap-8 text-sm text-gray-500">
               <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faShieldAlt} />
+                <Shield size={16} aria-hidden="true" />
                 <span>Privacy-Conscious Design</span>
               </div>
               <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faRocket} />
+                <Rocket size={16} aria-hidden="true" />
                 <span>Edge-First Architecture</span>
               </div>
               <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faUsers} />
+                <Users size={16} aria-hidden="true" />
                 <span>8 Sectors Targeted</span>
               </div>
             </div>
@@ -221,7 +215,7 @@ export default function SolidAI() {
                 className="glass-card rounded-2xl p-6"
               >
                 <div className="w-12 h-12 bg-blue-600/20 rounded-xl flex items-center justify-center mb-4">
-                  <FontAwesomeIcon icon={feature.icon} className="text-blue-400 text-xl" />
+                  <feature.icon size={22} className="text-blue-400" aria-hidden="true" />
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
@@ -315,7 +309,7 @@ export default function SolidAI() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <div className="w-6 h-6 bg-gradient-to-br from-blue-600 to-purple-600 rounded-md flex items-center justify-center">
-                <FontAwesomeIcon icon={faBrain} className="text-white text-xs" />
+                <Brain size={12} className="text-white" aria-hidden="true" />
               </div>
               <span className="font-bold gradient-text">SolidAI</span>
             </div>

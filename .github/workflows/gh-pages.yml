@@ -1,9 +1,8 @@
 name: GitHub Pages Mirror
 
+# Manual only. Production is the Vercel deploy in main.yml; running this
+# mirror on every push spent a full extra install and build.
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 # Serialize gh-pages mirror deploys: parallel "push to main" events (e.g.

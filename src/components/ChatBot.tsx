@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { MessageSquare, X, Send } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
 
 interface Message {
   role: "user" | "assistant";
@@ -47,7 +46,7 @@ Payment plans are available for SMEs. Email info@solidsolutions.africa and we wi
 🌐 solidsolutions.africa
 📍 Harare, Zimbabwe
 
-We typically reply within 24 hours.`;
+We typically reply within a working day.`;
   }
 
   if (
@@ -167,7 +166,7 @@ Which area interests you?`;
 
 I can help with services, pricing, getting started, and our platforms.
 
-For detailed or custom work, email info@solidsolutions.africa (we reply within 24 hours).
+For detailed or custom work, email info@solidsolutions.africa (we reply within a working day).
 
 What would you like to know?`;
 }
@@ -175,8 +174,8 @@ What would you like to know?`;
 const FAB_CLASS =
   "fixed z-[60] grid h-12 w-12 place-items-center rounded-full bg-charcoal text-white shadow-2xl transition-shadow hover:shadow-charcoal/30 sm:h-14 sm:w-14 bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] sm:bottom-6 sm:right-6";
 
-export function ChatBot() {
-  const [isOpen, setIsOpen] = useState(false);
+export function ChatBot({ initialOpen = false }: { initialOpen?: boolean }) {
+  const [isOpen, setIsOpen] = useState(initialOpen);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -184,7 +183,6 @@ export function ChatBot() {
     },
   ]);
   const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -196,7 +194,7 @@ export function ChatBot() {
     if (!isOpen) return;
     const el = listRef.current;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [messages, isLoading, isOpen]);
+  }, [messages, isOpen]);
 
   // Lock body scroll on small screens while open
   useEffect(() => {
@@ -262,87 +260,49 @@ export function ChatBot() {
     };
   }, [isOpen]);
 
-  const sendText = async (userMessage: string) => {
+  const sendText = (userMessage: string) => {
     const trimmed = userMessage.trim();
-    if (!trimmed || isLoading) return;
-
-    // Recent turns for context (server re-sanitises and caps this).
-    const history = messages
-      .filter((m) => m.role === "user" || m.role === "assistant")
-      .slice(-8)
-      .map((m) => ({ role: m.role, content: m.content }));
-
+    if (!trimmed) return;
     setInput("");
-    setMessages((prev) => [...prev, { role: "user", content: trimmed }]);
-    setIsLoading(true);
-
-    // Live LLM via same-origin serverless endpoint; falls back to the built-in
-    // rule-based assistant if the API is unreachable or not yet configured, so
-    // the widget always answers.
-    let reply: string;
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: trimmed, history }),
-      });
-      const data = res.ok ? await res.json().catch(() => null) : null;
-      reply =
-        data && typeof data.reply === "string" && data.reply.trim()
-          ? data.reply.trim()
-          : replyFor(trimmed);
-    } catch {
-      reply = replyFor(trimmed);
-    }
-
-    setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
-    setIsLoading(false);
+    setMessages((prev) => [
+      ...prev,
+      { role: "user", content: trimmed },
+      { role: "assistant", content: replyFor(trimmed) },
+    ]);
   };
 
-  const handleSend = () => void sendText(input);
+  const handleSend = () => sendText(input);
 
-  const showQuickPrompts = messages.length <= 1 && !isLoading;
+  const showQuickPrompts = messages.length <= 1;
 
   return (
     <>
       {/* FAB — hidden on mobile while open (header has close); visible on sm+ as toggle */}
-      <motion.button
+      <button
         type="button"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen((v) => !v)}
         aria-label={isOpen ? "Close chat" : "Open chat"}
         aria-expanded={isOpen}
-        className={`${FAB_CLASS} ${isOpen ? "hidden sm:grid" : "grid"}`}
+        className={`${FAB_CLASS} transition-transform hover:scale-105 active:scale-95 ${isOpen ? "hidden sm:grid" : "grid"}`}
       >
         {isOpen ? <X size={22} /> : <MessageSquare size={22} />}
-      </motion.button>
+      </button>
 
-      <AnimatePresence>
-        {isOpen && (
+      {isOpen && (
           <>
-            {/* Mobile scrim */}
-            <motion.button
+            <button
               type="button"
               aria-label="Dismiss chat"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
               onClick={close}
               className="fixed inset-0 z-[55] bg-black/40 backdrop-blur-[2px] sm:hidden"
             />
 
-            {/* Panel: full-bleed sheet on phones, floating card on sm+ */}
-            <motion.div
+            <div
               ref={panelRef}
               role="dialog"
               aria-modal="true"
               aria-label="Solid Solutions chat"
-              initial={{ opacity: 0, y: 28, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 28, scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 380, damping: 32 }}
-              className="
+              className="chat-panel
                 fixed z-[60] flex flex-col overflow-hidden bg-white shadow-2xl
                 /* mobile: nearly full viewport sheet */
                 inset-x-0 bottom-0
@@ -375,15 +335,15 @@ export function ChatBot() {
                   <h3 className="truncate text-base font-bold tracking-tight sm:text-lg">
                     Solid Solutions
                   </h3>
-                  <p className="truncate text-[11px] text-white/65 sm:text-xs">
-                    AI assistant · usually replies instantly
+                  <p className="truncate text-[11px] opacity-70 sm:text-xs">
+                    Studio assistant · answers from our public info
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={close}
                   aria-label="Close chat"
-                  className="grid h-10 w-10 shrink-0 place-items-center rounded-lg text-white/90 transition hover:bg-white/15"
+                  className="grid h-10 w-10 shrink-0 place-items-center rounded-lg text-current opacity-80 transition hover:bg-black/10"
                 >
                   <X size={18} />
                 </button>
@@ -426,17 +386,6 @@ export function ChatBot() {
                   </div>
                 )}
 
-                {isLoading && (
-                  <div className="flex justify-start">
-                    <div className="rounded-2xl rounded-bl-md border border-black/5 bg-white px-4 py-3 shadow-sm">
-                      <div className="flex gap-1.5">
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-400 [animation-delay:0ms]" />
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-400 [animation-delay:120ms]" />
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-400 [animation-delay:240ms]" />
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
 
               {/* Composer */}
@@ -454,7 +403,6 @@ export function ChatBot() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type your message…"
-                    disabled={isLoading}
                     enterKeyHint="send"
                     autoComplete="off"
                     // 16px on mobile avoids iOS input zoom
@@ -462,7 +410,7 @@ export function ChatBot() {
                   />
                   <button
                     type="submit"
-                    disabled={isLoading || !input.trim()}
+                    disabled={!input.trim()}
                     aria-label="Send message"
                     className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-charcoal text-white transition enabled:hover:bg-black disabled:cursor-not-allowed disabled:opacity-40"
                   >
@@ -473,10 +421,9 @@ export function ChatBot() {
                   For custom work: info@solidsolutions.africa
                 </p>
               </div>
-            </motion.div>
+            </div>
           </>
-        )}
-      </AnimatePresence>
+      )}
     </>
   );
 }

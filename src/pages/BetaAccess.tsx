@@ -7,11 +7,12 @@ import { motion } from "motion/react";
 import { ArrowLeft, Zap, Rocket, Users, Lock, ChevronRight } from "lucide-react";
 import { useState, useEffect, FormEvent, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import Lenis from "lenis";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export default function BetaAccess() {
-  useDocumentTitle("Request Early Access");
+  useDocumentTitle("Request Early Access", {
+    description: "Request early access to SolidAI. Solid Solutions will reply to the email you provide.",
+  });
   const [isScrolled, setIsScrolled] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -28,18 +29,10 @@ export default function BetaAccess() {
   };
 
   useEffect(() => {
-    const lenis = new Lenis();
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      lenis.destroy();
-    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

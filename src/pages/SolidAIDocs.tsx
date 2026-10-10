@@ -4,7 +4,9 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function SolidAIDocs() {
   const [copiedCode, setCopiedCode] = useState('');
-  useDocumentTitle("SolidAI API Docs");
+  useDocumentTitle("SolidAI API Docs", {
+    description: "Notes for the SolidAI API. The platform is in active development; request early access from the beta page.",
+  });
 
   const copyToClipboard = (code: string, id: string) => {
     navigator.clipboard.writeText(code);
@@ -18,8 +20,9 @@ export default function SolidAIDocs() {
         <code className="text-sm text-gray-300 font-mono">{code}</code>
       </pre>
       <button
+        type="button"
         onClick={() => copyToClipboard(code, id)}
-        className="absolute top-4 right-4 px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-xs transition opacity-0 group-hover:opacity-100"
+        className="absolute top-4 right-4 px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-xs transition"
       >
         {copiedCode === id ? '✓ Copied!' : 'Copy'}
       </button>

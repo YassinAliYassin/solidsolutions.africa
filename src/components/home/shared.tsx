@@ -49,29 +49,36 @@ export const Card = ({
   href?: string;
   onClick?: () => void;
   cta?: string;
-}) => (
-  <div
-    className={`glass-card hover-lift p-8 flex flex-col h-full ${highlight ? 'border-charcoal/15 bg-charcoal/5' : 'bg-white'}`}
-  >
-    <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-6 ${highlight ? 'bg-charcoal text-white shadow-lg' : 'bg-black/5 text-slate-500'}`}>
-      <Icon size={24} aria-hidden="true" />
-    </div>
-    <h3 className="text-xl font-bold text-charcoal mb-3">{title}</h3>
-    <p className="text-slate-600 leading-relaxed flex-grow font-medium">{description}</p>
-    {onClick ? (
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          onClick();
-        }}
-        className="mt-6 flex items-center text-charcoal text-sm font-bold group w-fit"
-      >
+}) => {
+  const className = `glass-card hover-lift p-8 flex flex-col h-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal ${highlight ? "border-charcoal/15 bg-charcoal/5" : "bg-white"}`;
+  const body = (
+    <>
+      <div className={`mb-6 flex h-12 w-12 items-center justify-center rounded-lg ${highlight ? "bg-charcoal text-white shadow-lg" : "bg-black/5 text-slate-500"}`}>
+        <Icon size={24} aria-hidden="true" />
+      </div>
+      <h3 className="mb-3 text-xl font-bold text-charcoal">{title}</h3>
+      <p className="flex-grow font-medium leading-relaxed text-slate-600">{description}</p>
+      <span className="mt-6 flex w-fit items-center text-sm font-bold text-charcoal">
         {cta} <ChevronRight size={16} className="ml-1 transition-transform group-hover:translate-x-1" />
+      </span>
+    </>
+  );
+
+  if (onClick) {
+    return (
+      <button type="button" onClick={onClick} className={`${className} group text-left`}>
+        {body}
       </button>
-    ) : href ? (
-      <a href={href} className="mt-6 flex items-center text-charcoal text-sm font-bold group w-fit">
-        {cta} <ChevronRight size={16} className="ml-1 transition-transform group-hover:translate-x-1" />
+    );
+  }
+
+  if (href) {
+    return (
+      <a href={href} className={`${className} group`}>
+        {body}
       </a>
-    ) : null}
-  </div>
-);
+    );
+  }
+
+  return <div className={className}>{body}</div>;
+};
